@@ -31,11 +31,11 @@ function applyTheme(t: Theme) {
 }
 
 export function ThemeProvider({ children }: { readonly children: ReactNode }) {
-  const [themeName, setThemeName] = useState<ThemeName>("ivory");
+  const [themeName, setThemeName] = useState<ThemeName>("onyx");
 
   useEffect(() => {
     const stored = localStorage.getItem("mahmoud-theme");
-    const initial: ThemeName = stored === "onyx" ? "onyx" : "ivory";
+    const initial: ThemeName = stored === "ivory" ? "ivory" : "onyx";
     setThemeName(initial);
     applyTheme(themes[initial]);
   }, []);
