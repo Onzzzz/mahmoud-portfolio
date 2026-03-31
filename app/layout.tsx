@@ -1,21 +1,30 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import { Outfit, Inter, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/lib/theme-context";
 import "./globals.css";
 
-const heading = Space_Grotesk({ variable: "--font-heading", subsets: ["latin"], weight: ["300", "500", "600", "700"], display: "swap" });
+const heading = Outfit({ variable: "--font-heading", subsets: ["latin"], weight: ["300", "500", "600", "700", "800"], display: "swap" });
 const body = Inter({ variable: "--font-body", subsets: ["latin"], display: "swap" });
 const mono = JetBrains_Mono({ variable: "--font-mono", subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Mahmoud Abdallah — Procurement & Supply Chain Professional",
-  description: "Strategic Procurement & Tender Specialist based in Dubai with 7+ years across UAE, KSA & Egypt. Specializing in sourcing, ERP systems, tender management, and cost optimization.",
-  keywords: ["procurement", "supply chain", "Dubai", "UAE", "tender management", "ERP", "vendor management"],
+  metadataBase: new URL("https://mahmoudabdallah.cloud"),
+  title: "Mahmoud Abdallah | Procurement & Supply Chain Professional",
+  description: "Strategic Procurement & Supply Chain Manager based in Dubai. AED 450K+ documented savings, 30+ major events procured, 7+ years across UAE, KSA & Egypt. Specializing in sourcing, ERP implementation, tender management, and cost optimization.",
+  keywords: ["procurement", "supply chain", "Dubai", "UAE", "tender management", "ERP", "vendor management", "Odoo", "strategic sourcing"],
   authors: [{ name: "Mahmoud Abdallah" }],
   openGraph: {
     title: "Mahmoud Abdallah — Procurement & Supply Chain",
-    description: "Strategic procurement professional with 7+ years across the Gulf.",
+    description: "AED 450K+ saved. 30+ world-class events procured. 7+ years turning spend into strategy.",
     type: "website",
+    url: "https://mahmoudabdallah.cloud",
+    siteName: "Mahmoud Abdallah",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mahmoud Abdallah — Procurement & Supply Chain",
+    description: "AED 450K+ saved. 30+ world-class events procured. 7+ years turning spend into strategy.",
   },
 };
 
@@ -27,7 +36,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify({
             "@context": "https://schema.org", "@type": "Person",
-            name: "Mahmoud Abdallah", jobTitle: "Procurement & Tender Expert",
+            name: "Mahmoud Abdallah", jobTitle: "Supply Chain & Operations Manager",
             url: "https://mahmoudabdallah.cloud", email: "mahmoudf.abdallah@outlook.com",
             telephone: "+971544720857",
             address: { "@type": "PostalAddress", addressLocality: "Dubai", addressCountry: "AE" },

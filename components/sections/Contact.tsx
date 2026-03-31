@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MessageCircle, MapPin } from "lucide-react";
+import { Mail, Phone, MessageCircle, MapPin, Loader2, CheckCircle2, Download } from "lucide-react";
 import { personal, contactTypes } from "@/lib/data";
 
 function LinkedinIcon({ size = 16 }: { readonly size?: number }) {
@@ -29,7 +29,7 @@ const fadeUp = {
   visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: [0.4, 0, 0.2, 1], delay },
+    transition: { duration: 0.55, ease: [0.4, 0, 0.2, 1] as const, delay },
   }),
 };
 
@@ -44,25 +44,15 @@ function ContactLink({ href, icon, label, external }: ContactLinkProps) {
   return (
     <a
       href={href}
-      className="flex items-center gap-3"
+      className="contact-link flex items-center gap-3"
       style={{ textDecoration: "none" }}
-      onMouseEnter={(e) => {
-        const spans = e.currentTarget.querySelectorAll("span");
-        spans.forEach((s) => {
-          (s as HTMLElement).style.color = "var(--text-primary)";
-        });
-      }}
-      onMouseLeave={(e) => {
-        const spans = e.currentTarget.querySelectorAll("span");
-        (spans[0] as HTMLElement).style.color = "var(--accent)";
-        (spans[1] as HTMLElement).style.color = "var(--text-secondary)";
-      }}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
-      <span style={{ color: "var(--accent)", flexShrink: 0, transition: "color 0.2s" }}>
+      <span className="contact-link-icon" style={{ color: "var(--accent)", flexShrink: 0, transition: "color 0.2s" }}>
         {icon}
       </span>
       <span
+        className="contact-link-label"
         style={{
           color: "var(--text-secondary)",
           transition: "color 0.2s",
@@ -77,8 +67,57 @@ function ContactLink({ href, icon, label, external }: ContactLinkProps) {
   );
 }
 
+type FormStatus = "idle" | "loading" | "success" | "error";
+
 export function Contact() {
   const [selected, setSelected] = useState<string>("hiring");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      setErrorMsg("Please fill in all fields.");
+      setStatus("error");
+      return;
+    }
+
+    setStatus("loading");
+    setErrorMsg("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          message: message.trim(),
+          type: selected,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        setErrorMsg(data.error || "Something went wrong. Please try again.");
+        setStatus("error");
+        return;
+      }
+
+      setStatus("success");
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch {
+      setErrorMsg("Failed to send. Please try again or contact directly.");
+      setStatus("error");
+    }
+  }, [name, email, message, selected]);
 
   return (
     <section
@@ -95,7 +134,7 @@ export function Contact() {
           width: "500px",
           height: "500px",
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(200,151,58,0.04) 0%, transparent 70%)",
+          background: "radial-gradient(circle, var(--accent-muted) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -145,7 +184,7 @@ export function Contact() {
               aria-hidden
               style={{ lineHeight: 0.85, marginTop: "-0.5rem" }}
             >
-              06
+              07
             </div>
           </div>
         </motion.div>
@@ -170,6 +209,7 @@ export function Contact() {
                     key={ct.type}
                     onClick={() => setSelected(ct.type)}
                     className="card text-left p-4 cursor-pointer"
+                    aria-selected={isSelected}
                     style={{
                       background: isSelected
                         ? "var(--accent-muted)"
@@ -206,29 +246,104 @@ export function Contact() {
               })}
             </div>
 
-            {/* Form */}
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              className="flex flex-col gap-4"
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <InputField type="text" placeholder="Your Name" />
-                <InputField type="email" placeholder="Your Email" />
-              </div>
-              <textarea
-                placeholder="Your Message"
-                rows={5}
-                className="resize-none"
-                style={inputStyle}
-                onFocus={(e) => applyFocusStyle(e.currentTarget)}
-                onBlur={(e) => removeFocusStyle(e.currentTarget)}
-              />
-              <div>
-                <button type="submit" className="btn-primary">
-                  Send Message
+            {/* Success State */}
+            {status === "success" ? (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex flex-col items-center gap-3 py-12 text-center"
+              >
+                <CheckCircle2 size={40} style={{ color: "var(--accent)" }} />
+                <p
+                  className="text-lg font-semibold"
+                  style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)" }}
+                >
+                  Message Sent!
+                </p>
+                <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  Thank you for reaching out. Mahmoud will get back to you soon.
+                </p>
+                <button
+                  onClick={() => setStatus("idle")}
+                  className="btn-outline mt-4"
+                >
+                  Send Another Message
                 </button>
-              </div>
-            </form>
+              </motion.div>
+            ) : (
+              /* Form */
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-4"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="contact-name" className="sr-only">Your Name</label>
+                    <input
+                      id="contact-name"
+                      type="text"
+                      placeholder="Your Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      style={inputStyle}
+                      onFocus={(e) => applyFocusStyle(e.currentTarget)}
+                      onBlur={(e) => removeFocusStyle(e.currentTarget)}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="contact-email" className="sr-only">Your Email</label>
+                    <input
+                      id="contact-email"
+                      type="email"
+                      placeholder="Your Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      style={inputStyle}
+                      onFocus={(e) => applyFocusStyle(e.currentTarget)}
+                      onBlur={(e) => removeFocusStyle(e.currentTarget)}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="contact-message" className="sr-only">Your Message</label>
+                  <textarea
+                    id="contact-message"
+                    placeholder="Your Message"
+                    rows={5}
+                    className="resize-none"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    style={inputStyle}
+                    onFocus={(e) => applyFocusStyle(e.currentTarget)}
+                    onBlur={(e) => removeFocusStyle(e.currentTarget)}
+                  />
+                </div>
+
+                {/* Error message */}
+                {status === "error" && errorMsg && (
+                  <p className="text-sm" style={{ color: "#ef4444" }}>
+                    {errorMsg}
+                  </p>
+                )}
+
+                <div>
+                  <button
+                    type="submit"
+                    className="btn-primary"
+                    disabled={status === "loading"}
+                  >
+                    {status === "loading" ? (
+                      <>
+                        <Loader2 size={15} className="animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      "Send Message"
+                    )}
+                  </button>
+                </div>
+              </form>
+            )}
           </motion.div>
 
           {/* RIGHT — Direct contact links */}
@@ -277,7 +392,7 @@ export function Contact() {
               <ContactLink
                 href={personal.whatsapp}
                 icon={<MessageCircle size={16} />}
-                label="WhatsApp"
+                label="Message on WhatsApp"
                 external
               />
               <ContactLink
@@ -294,6 +409,32 @@ export function Contact() {
             </div>
           </motion.div>
         </div>
+
+        {/* Download CV — bottom of contact */}
+        <motion.div
+          className="mt-16 pt-8 text-center"
+          style={{ borderTop: "1px solid var(--surface-border)" }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={fadeUp}
+          custom={0.3}
+        >
+          <p
+            className="text-sm mb-4"
+            style={{ color: "var(--text-muted)" }}
+          >
+            Prefer a traditional resume?
+          </p>
+          <a
+            href="/Mahmoud Abdallah.pdf"
+            download
+            className="btn-outline"
+          >
+            <Download size={15} />
+            Download CV
+          </a>
+        </motion.div>
       </div>
     </section>
   );
@@ -324,21 +465,4 @@ function removeFocusStyle(el: HTMLElement) {
   el.style.outline = "none";
   el.style.borderColor = "var(--surface-border)";
   el.style.boxShadow = "none";
-}
-
-interface InputFieldProps {
-  readonly type: string;
-  readonly placeholder: string;
-}
-
-function InputField({ type, placeholder }: InputFieldProps) {
-  return (
-    <input
-      type={type}
-      placeholder={placeholder}
-      style={inputStyle}
-      onFocus={(e) => applyFocusStyle(e.currentTarget)}
-      onBlur={(e) => removeFocusStyle(e.currentTarget)}
-    />
-  );
 }

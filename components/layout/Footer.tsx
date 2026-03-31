@@ -20,17 +20,16 @@ function LinkedinIcon({ size = 16 }: { readonly size?: number }) {
   );
 }
 
-const mutedColor = "rgba(255,255,255,0.35)";
 const iconHoverStyle = `
-  .footer-icon { color: ${mutedColor}; transition: color 0.2s; }
-  .footer-icon:hover { color: rgba(200,151,58,0.75); }
+  .footer-icon { color: var(--text-muted); transition: color 0.2s; }
+  .footer-icon:hover { color: var(--accent); }
 `;
 
 export function Footer() {
   return (
     <footer
       style={{
-        background: "#0A0A09",
+        background: "var(--bg)",
         borderTop: "1px solid var(--surface-border)",
       }}
     >
@@ -42,7 +41,7 @@ export function Footer() {
         <p
           style={{
             fontSize: "0.7rem",
-            color: mutedColor,
+            color: "var(--text-muted)",
             fontFamily: "var(--font-mono)",
             letterSpacing: "0.02em",
           }}
@@ -54,10 +53,11 @@ export function Footer() {
         <p
           style={{
             fontSize: "0.7rem",
-            color: "rgba(255,255,255,0.2)",
+            color: "var(--text-muted)",
             fontFamily: "var(--font-mono)",
             letterSpacing: "0.15em",
             textTransform: "uppercase",
+            opacity: 0.6,
           }}
         >
           Built to solve. Built to build.

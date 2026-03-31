@@ -16,7 +16,9 @@ function applyTheme(t: Theme) {
   root.style.setProperty("--bg", t.bg);
   root.style.setProperty("--bg-alt", t.bgAlt);
   root.style.setProperty("--surface", t.surface);
+  root.style.setProperty("--surface-2", t.surface2);
   root.style.setProperty("--surface-border", t.surfaceBorder);
+  root.style.setProperty("--surface-border-gold", t.surfaceBorderGold);
   root.style.setProperty("--accent", t.accent);
   root.style.setProperty("--accent-hover", t.accentHover);
   root.style.setProperty("--accent-muted", t.accentMuted);

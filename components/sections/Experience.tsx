@@ -2,18 +2,9 @@
 
 import { motion } from "framer-motion";
 import { experience } from "@/lib/data";
-
-const FADE_UP = {
-  hidden: { opacity: 0, y: 22 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] },
-  }),
-};
+import { slideInRight, staggerContainer } from "@/lib/animations";
 
 function parsePeriodYear(period: string): string {
-  // Return the start year from a period string like "Oct 2025 — Present"
   const match = period.match(/\d{4}/);
   return match ? match[0] : period;
 }
@@ -26,8 +17,7 @@ export function Experience() {
       style={{ background: "var(--bg)" }}
     >
       <div className="max-w-5xl mx-auto">
-
-        {/* ── Section Header ── */}
+        {/* Header */}
         <motion.div
           className="flex items-end justify-between mb-16 md:mb-20"
           initial={{ opacity: 0, y: 16 }}
@@ -48,18 +38,27 @@ export function Experience() {
               Where I&apos;ve Built Things
             </h2>
           </div>
-
-          {/* Decorative number — right side, hidden on small screens */}
-          <span
-            className="deco-num hidden md:block select-none"
-            aria-hidden="true"
-          >
-            01
+          <span className="deco-num hidden md:block select-none" aria-hidden="true">
+            02
           </span>
         </motion.div>
 
-        {/* ── Entry List ── */}
-        <div>
+        {/* Timeline */}
+        <motion.div
+          className="relative"
+          variants={staggerContainer(0.15)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+        >
+          {/* Timeline spine — desktop only */}
+          <div
+            className="hidden md:block absolute left-[3.25rem] top-0 bottom-0 w-[2px]"
+            style={{
+              background: "linear-gradient(to bottom, var(--accent), var(--surface-border) 30%, var(--surface-border) 80%, transparent)",
+            }}
+          />
+
           {experience.map((item, i) => {
             const isCurrent = item.current;
             const startYear = parsePeriodYear(item.period);
@@ -67,157 +66,147 @@ export function Experience() {
             return (
               <motion.div
                 key={i}
-                custom={i}
-                variants={FADE_UP}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
+                variants={slideInRight}
+                className="relative grid grid-cols-1 md:grid-cols-[7rem_1fr] gap-4 md:gap-8 mb-2"
               >
-                {/* Divider above each entry */}
-                <div className="divider" />
+                {/* Left column — year + dot */}
+                <div className="hidden md:flex flex-col items-center pt-8">
+                  {/* Year */}
+                  <span
+                    className="text-xs font-medium mb-3"
+                    style={{
+                      color: isCurrent ? "var(--accent)" : "var(--text-muted)",
+                      fontFamily: "var(--font-mono)",
+                      letterSpacing: "0.05em",
+                    }}
+                  >
+                    {startYear}
+                  </span>
 
-                {/* Entry row */}
-                <div
-                  className="group grid grid-cols-1 md:grid-cols-[6rem_1fr] gap-0 md:gap-8 py-8 md:py-10 rounded-sm transition-colors duration-300"
-                  style={{
-                    background: "transparent",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.background =
-                      "var(--surface-2)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.background =
-                      "transparent";
-                  }}
-                >
-                  {/* ── Left column: period (desktop only) ── */}
-                  <div className="hidden md:flex flex-col items-start pt-0.5">
+                  {/* Timeline dot */}
+                  <div className={`timeline-dot ${isCurrent ? "timeline-dot-active" : ""}`} />
+
+                  {isCurrent && (
                     <span
-                      className="text-xs leading-tight"
+                      className="text-[9px] mt-2 font-medium"
                       style={{
-                        color: "var(--text-muted)",
+                        color: "var(--accent)",
                         fontFamily: "var(--font-mono)",
-                        letterSpacing: "0.03em",
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
                       }}
                     >
-                      {startYear}
+                      now
+                    </span>
+                  )}
+                </div>
+
+                {/* Right column — card */}
+                <div
+                  className="card p-6 md:p-7 transition-all duration-300"
+                  style={{
+                    borderLeft: isCurrent ? "3px solid var(--accent)" : undefined,
+                  }}
+                >
+                  {/* Mobile year badge */}
+                  <div className="flex md:hidden items-center gap-2 mb-3">
+                    <span
+                      className="text-xs font-medium"
+                      style={{
+                        color: isCurrent ? "var(--accent)" : "var(--text-muted)",
+                        fontFamily: "var(--font-mono)",
+                      }}
+                    >
+                      {item.period}
                     </span>
                     {isCurrent && (
                       <span
-                        className="text-[10px] mt-1"
+                        className="text-[9px] font-semibold tracking-[0.18em] uppercase px-2 py-0.5 rounded-full"
                         style={{
                           color: "var(--accent)",
+                          border: "1px solid var(--accent)",
                           fontFamily: "var(--font-mono)",
-                          opacity: 0.7,
+                          background: "var(--accent-muted)",
                         }}
                       >
-                        now
+                        Current
                       </span>
                     )}
                   </div>
 
-                  {/* ── Main column ── */}
-                  <div
-                    style={
-                      isCurrent
-                        ? {
-                            borderLeft: "2px solid var(--accent)",
-                            paddingLeft: "1rem",
-                          }
-                        : undefined
-                    }
-                  >
-                    {/* Top row: role + CURRENT pill */}
-                    <div className="flex items-center gap-3 flex-wrap">
-                      <span
-                        className="text-lg font-semibold leading-snug"
-                        style={{
-                          color: "var(--text-primary)",
-                          fontFamily: "var(--font-heading)",
-                        }}
-                      >
-                        {item.role}
-                      </span>
-
-                      {isCurrent && (
-                        <span
-                          className="text-[9px] font-semibold tracking-[0.18em] uppercase px-2 py-0.5 rounded-full"
-                          style={{
-                            color: "var(--accent)",
-                            border: "1px solid var(--accent)",
-                            fontFamily: "var(--font-mono)",
-                            background: "var(--accent-muted)",
-                          }}
-                        >
-                          Current
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Company · Type */}
-                    <p className="mt-1 text-sm leading-snug">
-                      <span style={{ color: "var(--accent)", fontWeight: 500 }}>
-                        {item.company}
-                      </span>
-                      <span style={{ color: "var(--text-muted)", margin: "0 0.35rem" }}>
-                        ·
-                      </span>
-                      <span style={{ color: "var(--text-muted)" }}>
-                        {item.type}
-                      </span>
-                    </p>
-
-                    {/* Location — mono, xs */}
-                    <p
-                      className="mt-0.5 text-xs"
+                  {/* Role + Current pill (desktop) */}
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <h3
+                      className="text-lg font-bold leading-snug"
                       style={{
-                        color: "var(--text-muted)",
-                        fontFamily: "var(--font-mono)",
-                        letterSpacing: "0.04em",
+                        color: "var(--text-primary)",
+                        fontFamily: "var(--font-heading)",
                       }}
                     >
-                      {item.location}
-                    </p>
+                      {item.role}
+                    </h3>
+                    {isCurrent && (
+                      <span
+                        className="hidden md:inline-block text-[9px] font-semibold tracking-[0.18em] uppercase px-2 py-0.5 rounded-full"
+                        style={{
+                          color: "var(--accent)",
+                          border: "1px solid var(--accent)",
+                          fontFamily: "var(--font-mono)",
+                          background: "var(--accent-muted)",
+                        }}
+                      >
+                        Current
+                      </span>
+                    )}
+                  </div>
 
-                    {/* Highlights */}
-                    <ul className="mt-4 flex flex-col gap-2">
-                      {item.highlights.slice(0, 4).map((h, j) => (
-                        <li
-                          key={j}
-                          className="flex items-start gap-2 text-sm leading-relaxed"
-                        >
-                          <span
-                            className="flex-shrink-0 mt-0.5 font-medium"
-                            style={{
-                              color: "var(--accent)",
-                              lineHeight: "1.6",
-                            }}
-                          >
-                            —
-                          </span>
-                          <span style={{ color: "var(--text-secondary)" }}>{h}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  {/* Company + Type */}
+                  <p className="mt-1.5 text-sm">
+                    <span style={{ color: "var(--accent)", fontWeight: 600 }}>
+                      {item.company}
+                    </span>
+                    <span style={{ color: "var(--text-muted)", margin: "0 0.4rem" }}>·</span>
+                    <span style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}>
+                      {item.type}
+                    </span>
+                  </p>
 
-                    {/* Tags */}
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {item.tags.map((tag, k) => (
-                        <span key={k} className="tag">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                  {/* Location */}
+                  <p
+                    className="mt-0.5 text-xs"
+                    style={{
+                      color: "var(--text-muted)",
+                      fontFamily: "var(--font-mono)",
+                      letterSpacing: "0.04em",
+                    }}
+                  >
+                    {item.location}
+                  </p>
+
+                  {/* Highlights */}
+                  <ul className="mt-4 flex flex-col gap-2">
+                    {item.highlights.slice(0, 4).map((h, j) => (
+                      <li key={j} className="flex items-start gap-2.5 text-sm leading-relaxed">
+                        <span
+                          className="flex-shrink-0 mt-1 w-1.5 h-1.5 rounded-full"
+                          style={{ background: "var(--accent)", opacity: 0.6 }}
+                        />
+                        <span style={{ color: "var(--text-secondary)" }}>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Tags */}
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {item.tags.map((tag, k) => (
+                      <span key={k} className="tag">{tag}</span>
+                    ))}
                   </div>
                 </div>
               </motion.div>
             );
           })}
-
-          {/* Final bottom divider */}
-          <div className="divider" />
-        </div>
+        </motion.div>
       </div>
     </section>
   );

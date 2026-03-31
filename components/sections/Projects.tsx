@@ -68,7 +68,7 @@ export function Projects() {
           lineHeight: 1,
         }}
       >
-        <span className="deco-num">02</span>
+        <span className="deco-num">03</span>
       </div>
 
       <div
@@ -128,13 +128,14 @@ export function Projects() {
               <button
                 key={tab}
                 onClick={() => setActiveFilter(tab)}
+                className={`filter-tab ${isActive ? "filter-tab-active" : ""}`}
                 style={{
                   background: "none",
                   border: "none",
                   borderBottom: isActive
                     ? "1.5px solid var(--accent)"
                     : "1.5px solid transparent",
-                  padding: "0.25rem 0",
+                  padding: "0.5rem 0.25rem",
                   cursor: "pointer",
                   fontSize: "0.8125rem",
                   fontWeight: isActive ? 600 : 400,
@@ -143,18 +144,6 @@ export function Projects() {
                   fontFamily: "var(--font-heading)",
                   transition: "color 0.2s ease, border-color 0.2s ease",
                   lineHeight: 1.5,
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    (e.currentTarget as HTMLButtonElement).style.color =
-                      "var(--text-secondary)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    (e.currentTarget as HTMLButtonElement).style.color =
-                      "var(--text-muted)";
-                  }
                 }}
               >
                 {tab}
@@ -303,18 +292,6 @@ export function Projects() {
                       display: "flex",
                       flexDirection: "column",
                       gap: "0.875rem",
-                      transition:
-                        "border-color 0.25s ease, background 0.25s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      const el = e.currentTarget as HTMLElement;
-                      el.style.borderColor = "var(--surface-border-gold)";
-                      el.style.background = "var(--surface-2)";
-                    }}
-                    onMouseLeave={(e) => {
-                      const el = e.currentTarget as HTMLElement;
-                      el.style.borderColor = "var(--surface-border)";
-                      el.style.background = "var(--surface)";
                     }}
                   >
                     {/* Company */}

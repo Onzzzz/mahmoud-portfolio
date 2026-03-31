@@ -19,7 +19,7 @@ const fadeUpVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] as const },
   },
 };
 
@@ -38,7 +38,7 @@ const barRowVariants = {
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
   },
 };
 
@@ -57,14 +57,24 @@ const toolCardVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
   },
 };
 
 export function Skills() {
   return (
-    <section className="py-24 md:py-32 px-4 md:px-6" id="skills">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-24 md:py-32 px-4 md:px-6 relative overflow-hidden" id="skills">
+      {/* Dot grid decoration */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden="true"
+        style={{
+          backgroundImage: "radial-gradient(circle, var(--text-muted) 0.5px, transparent 0.5px)",
+          backgroundSize: "28px 28px",
+          opacity: 0.03,
+        }}
+      />
+      <div className="max-w-6xl mx-auto relative">
 
         {/* Section Header */}
         <motion.div
@@ -137,7 +147,7 @@ export function Skills() {
                   }}
                 >
                   <motion.div
-                    className="rounded-full"
+                    className="rounded-full relative overflow-hidden"
                     style={{
                       height: "8px",
                       background: "linear-gradient(90deg, var(--accent), var(--accent-hover))",
@@ -148,7 +158,7 @@ export function Skills() {
                     transition={{
                       duration: 1.1,
                       delay: 0.25,
-                      ease: [0.25, 0.46, 0.45, 0.94],
+                      ease: [0.25, 0.46, 0.45, 0.94] as const,
                     }}
                   />
                 </div>
