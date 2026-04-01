@@ -13,10 +13,12 @@ import { Testimonials } from "@/components/sections/Testimonials";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/layout/Footer";
 import AIChatbot from "@/components/ui/AIChatbot";
+import { PageLoader } from "@/components/effects/PageLoader";
 
 export default function Home() {
   return (
     <>
+      <PageLoader />
       <ScrollProgress />
       <Navbar />
       <main>

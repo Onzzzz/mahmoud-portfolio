@@ -1,201 +1,198 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { skillsRadar, toolGroups } from "@/lib/data";
 
 const sortedSkills = [...skillsRadar].sort((a, b) => b.level - a.level);
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const fadeUpVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  },
-};
-
-const barContainerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.09,
-      delayChildren: 0.15,
-    },
-  },
-};
-
-const barRowVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  },
-};
-
-const toolGroupVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const toolCardVariants = {
-  hidden: { opacity: 0, y: 28 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  },
-};
+type SkillTab = "core" | "tools";
 
 export function Skills() {
+  const [activeTab, setActiveTab] = useState<SkillTab>("core");
+
   return (
-    <section className="py-24 md:py-32 px-4 md:px-6 relative overflow-hidden" id="skills">
-      {/* Dot grid decoration */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          backgroundImage: "radial-gradient(circle, var(--text-muted) 0.5px, transparent 0.5px)",
-          backgroundSize: "28px 28px",
-          opacity: 0.03,
-        }}
-      />
-      <div className="max-w-6xl mx-auto relative">
-
-        {/* Section Header */}
+    <section className="py-24 md:py-32 px-4 md:px-6 relative" id="skills">
+      <div className="max-w-5xl mx-auto">
+        {/* Header */}
         <motion.div
-          className="mb-16 md:mb-20 relative"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
+          className="mb-14 md:mb-20"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.55 }}
         >
-          {/* Decorative number — positioned absolutely behind the heading */}
-          <span
-            className="deco-num absolute -top-6 -left-2 md:-left-4 select-none pointer-events-none"
-            aria-hidden="true"
-          >
-            03
-          </span>
-
-          <motion.span className="section-label block mb-4" variants={fadeUpVariants}>
-            Skills &amp; Tools
-          </motion.span>
-
-          <motion.h2
-            className="text-4xl md:text-5xl font-bold leading-tight relative z-10"
+          <span className="section-label block mb-3">Skills & Tools</span>
+          <h2
+            className="text-3xl md:text-5xl font-extrabold leading-tight"
             style={{
               color: "var(--text-primary)",
               fontFamily: "var(--font-heading)",
               letterSpacing: "-0.02em",
             }}
-            variants={fadeUpVariants}
           >
             What I Work With
-          </motion.h2>
+          </h2>
         </motion.div>
 
-        {/* Two-column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+        {/* Tab Switcher */}
+        <motion.div
+          className="flex gap-1 mb-10 p-1 rounded-xl w-fit"
+          style={{ background: "var(--surface)", border: "1px solid var(--surface-border)" }}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+        >
+          {([
+            { id: "core" as const, label: "Core Skills" },
+            { id: "tools" as const, label: "Platforms & Tools" },
+          ]).map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className="relative px-5 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200"
+              style={{
+                color: activeTab === tab.id ? "var(--bg)" : "var(--text-secondary)",
+                fontFamily: "var(--font-heading)",
+                background: activeTab === tab.id ? "var(--accent)" : "transparent",
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </motion.div>
 
-          {/* LEFT — Skill Bars */}
-          <motion.div
-            className="space-y-6"
-            variants={barContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
-          >
-            {sortedSkills.map((skill) => (
-              <motion.div key={skill.name} variants={barRowVariants}>
-                {/* Label row */}
-                <div className="flex items-center justify-between mb-2">
-                  <span
-                    className="text-sm font-medium"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    {skill.name}
-                  </span>
-                  <span
-                    className="text-sm font-mono tabular-nums"
-                    style={{ color: "var(--accent)" }}
-                  >
-                    {skill.level}%
-                  </span>
-                </div>
-
-                {/* Bar track */}
-                <div
-                  className="w-full rounded-full overflow-hidden"
+        {/* Content */}
+        <AnimatePresence mode="wait">
+          {activeTab === "core" ? (
+            <motion.div
+              key="core"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            >
+              {sortedSkills.map((skill, i) => (
+                <motion.div
+                  key={skill.name}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.06 }}
+                  className="p-5 rounded-xl flex items-center gap-5"
                   style={{
-                    height: "8px",
-                    background: "var(--surface-2)",
+                    background: "var(--surface)",
+                    border: "1px solid var(--surface-border)",
                   }}
                 >
-                  <motion.div
-                    className="rounded-full relative overflow-hidden"
-                    style={{
-                      height: "8px",
-                      background: "linear-gradient(90deg, var(--accent), var(--accent-hover))",
-                    }}
-                    initial={{ width: "0%" }}
-                    whileInView={{ width: `${skill.level}%` }}
-                    viewport={{ once: true, margin: "-60px" }}
-                    transition={{
-                      duration: 1.1,
-                      delay: 0.25,
-                      ease: [0.25, 0.46, 0.45, 0.94] as const,
-                    }}
-                  />
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* RIGHT — Tool Groups */}
-          <motion.div
-            className="flex flex-col gap-5"
-            variants={toolGroupVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
-          >
-            {toolGroups.map((group) => (
-              <motion.div
-                key={group.category}
-                className="card p-6"
-                variants={toolCardVariants}
-              >
-                <span className="section-label block mb-3">
-                  {group.category}
-                </span>
-
-                <div className="flex flex-wrap gap-2">
-                  {group.tools.map((tool) => (
-                    <span key={tool} className="tag">
-                      {tool}
+                  {/* Circular progress */}
+                  <div className="relative flex-shrink-0" style={{ width: 56, height: 56 }}>
+                    <svg width="56" height="56" viewBox="0 0 56 56">
+                      {/* Background circle */}
+                      <circle
+                        cx="28" cy="28" r="24"
+                        fill="none"
+                        stroke="var(--surface-2)"
+                        strokeWidth="4"
+                      />
+                      {/* Progress circle */}
+                      <motion.circle
+                        cx="28" cy="28" r="24"
+                        fill="none"
+                        stroke="var(--accent)"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                        strokeDasharray={`${2 * Math.PI * 24}`}
+                        initial={{ strokeDashoffset: 2 * Math.PI * 24 }}
+                        whileInView={{
+                          strokeDashoffset: 2 * Math.PI * 24 * (1 - skill.level / 100),
+                        }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.2, delay: i * 0.08, ease: "easeOut" }}
+                        style={{
+                          transform: "rotate(-90deg)",
+                          transformOrigin: "center",
+                        }}
+                      />
+                    </svg>
+                    {/* Percentage text */}
+                    <span
+                      className="absolute inset-0 flex items-center justify-center text-xs font-bold"
+                      style={{ color: "var(--accent)", fontFamily: "var(--font-mono)" }}
+                    >
+                      {skill.level}
                     </span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+                  </div>
 
-        </div>
+                  {/* Skill name */}
+                  <div>
+                    <p className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+                      {skill.name}
+                    </p>
+                    <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                      {skill.level >= 93 ? "Expert" : skill.level >= 88 ? "Advanced" : "Proficient"}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="tools"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-6"
+            >
+              {toolGroups.map((group, gi) => (
+                <motion.div
+                  key={group.category}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: gi * 0.1 }}
+                >
+                  <p
+                    className="text-xs font-semibold mb-3 tracking-widest uppercase"
+                    style={{ color: "var(--accent)", fontFamily: "var(--font-mono)" }}
+                  >
+                    {group.category}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {group.tools.map((tool, ti) => (
+                      <motion.span
+                        key={tool}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: gi * 0.1 + ti * 0.04 }}
+                        className="px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200"
+                        style={{
+                          background: "var(--surface)",
+                          border: "1px solid var(--surface-border)",
+                          color: "var(--text-primary)",
+                        }}
+                        onMouseEnter={(e) => {
+                          (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)";
+                          (e.currentTarget as HTMLElement).style.color = "var(--accent)";
+                        }}
+                        onMouseLeave={(e) => {
+                          (e.currentTarget as HTMLElement).style.borderColor = "var(--surface-border)";
+                          (e.currentTarget as HTMLElement).style.color = "var(--text-primary)";
+                        }}
+                      >
+                        {tool}
+                      </motion.span>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
