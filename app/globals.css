@@ -54,6 +54,7 @@ body {
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* === Grain Texture Overlay === */
@@ -225,7 +226,7 @@ body::after {
 /* === Pulse ring for timeline === */
 @keyframes pulse-ring {
   0% { transform: scale(1); opacity: 0.6; }
-  100% { transform: scale(2.5); opacity: 0; }
+  100% { transform: scale(2); opacity: 0; }
 }
 
 .pulse-ring::before {
@@ -235,6 +236,7 @@ body::after {
   border-radius: 50%;
   border: 2px solid var(--accent);
   animation: pulse-ring 2s ease-out infinite;
+  pointer-events: none;
 }
 
 
@@ -280,19 +282,19 @@ body::after {
 }
 
 .timeline-dot {
-  width: 12px;
-  height: 12px;
+  position: relative;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   border: 2px solid var(--surface-border);
   background: var(--bg);
-  position: relative;
-  z-index: 1;
+  z-index: 5;
 }
 
 .timeline-dot-active {
   border-color: var(--accent);
   background: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-muted), 0 0 12px var(--accent-glow);
+  box-shadow: 0 0 0 3px var(--accent-muted), 0 0 8px var(--accent-glow);
 }
 
 /* === Tag hover effect === */
@@ -417,6 +419,108 @@ body::after {
   background: var(--accent-muted);
   color: var(--text-secondary);
   font-family: var(--font-mono);
+}
+
+/* === Contact Input Focus (CSS only) === */
+.contact-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.contact-input:focus {
+  outline: 1px solid var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-muted);
+}
+
+.contact-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* === Floating Orbs === */
+.floating-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  will-change: transform;
+  contain: layout style paint;
+}
+
+.floating-orb-1 {
+  width: 600px;
+  height: 600px;
+  top: 5%;
+  right: -10%;
+  background: radial-gradient(circle, #D4A853, transparent 65%);
+  animation: floatOrb1 25s ease-in-out infinite;
+}
+
+.floating-orb-2 {
+  width: 500px;
+  height: 500px;
+  bottom: 15%;
+  left: -10%;
+  background: radial-gradient(circle, #C8963C, transparent 65%);
+  animation: floatOrb2 30s ease-in-out infinite;
+}
+
+.floating-orb-3 {
+  width: 450px;
+  height: 450px;
+  top: 45%;
+  left: 35%;
+  background: radial-gradient(circle, #E8C97A, transparent 65%);
+  animation: floatOrb3 22s ease-in-out infinite;
+  opacity: 0.2;
+}
+
+@keyframes floatOrb1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(8vw, 12vh) scale(1.15); }
+  50% { transform: translate(15vw, -6vh) scale(0.9); }
+  75% { transform: translate(-5vw, 8vh) scale(1.1); }
+}
+
+@keyframes floatOrb2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  30% { transform: translate(-10vw, 8vh) scale(1.1); }
+  60% { transform: translate(5vw, -12vh) scale(0.85); }
+}
+
+@keyframes floatOrb3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(10vw, -8vh) scale(1.12); }
+  66% { transform: translate(-8vw, 5vh) scale(0.92); }
+}
+
+/* Softer orbs in light mode */
+[data-theme="ivory"] .floating-orb {
+  opacity: 0.12;
+  filter: blur(120px);
+}
+
+[data-theme="ivory"] .floating-orb-3 {
+  opacity: 0.06;
+}
+
+/* Reduce orbs on mobile */
+@media (max-width: 640px) {
+  .floating-orb-2,
+  .floating-orb-3 { display: none; }
+  .floating-orb-1 {
+    width: 300px;
+    height: 300px;
+    opacity: 0.2;
+  }
 }
 
 /* === Focus ring === */

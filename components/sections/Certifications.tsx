@@ -2,12 +2,12 @@
 
 import { motion } from "framer-motion";
 import { certifications } from "@/lib/data";
-import { Award, BookOpen } from "lucide-react";
+import { BookOpen, Award, GraduationCap } from "lucide-react";
 
 const containerVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.12 },
+    transition: { staggerChildren: 0.15 },
   },
 };
 
@@ -20,6 +20,12 @@ const itemVariants = {
   },
 };
 
+function getIcon(index: number, isInProgress: boolean) {
+  if (index === 2) return <GraduationCap size={20} style={{ color: "var(--accent)" }} />;
+  if (isInProgress) return <BookOpen size={20} style={{ color: "var(--accent)" }} />;
+  return <Award size={20} style={{ color: "var(--accent)" }} />;
+}
+
 export function Certifications() {
   return (
     <section
@@ -27,7 +33,7 @@ export function Certifications() {
       className="relative py-24 md:py-32 px-4 md:px-6"
       style={{ background: "var(--bg-alt)" }}
     >
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
           className="relative mb-14 md:mb-20"
@@ -36,105 +42,177 @@ export function Certifications() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
         >
-          <span
-            className="deco-num absolute -top-6 right-0 select-none pointer-events-none"
-            aria-hidden="true"
-          >
-            04
-          </span>
-
-          <span className="section-label">Education & Certifications</span>
+          <span className="section-label">Education</span>
 
           <h2
-            className="mt-3 text-3xl md:text-4xl font-bold"
+            className="mt-3"
             style={{
+              fontSize: "clamp(2rem, 5vw, 3.5rem)",
+              fontWeight: 800,
               color: "var(--text-primary)",
               fontFamily: "var(--font-heading)",
               letterSpacing: "-0.02em",
+              lineHeight: 1.1,
             }}
           >
-            Credentials
+            Certifications &{" "}
+            <span style={{ color: "var(--accent)" }}>Education</span>
           </h2>
         </motion.div>
 
-        {/* Cards */}
+        {/* Timeline */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-5"
+          className="relative"
         >
-          {certifications.map((cert) => {
+          {certifications.map((cert, i) => {
             const isInProgress = cert.status === "in-progress";
+
             return (
               <motion.div
                 key={cert.name}
                 variants={itemVariants}
-                className="card p-6 flex flex-col gap-4"
+                className="relative flex gap-5 md:gap-7 pb-8 last:pb-0"
               >
-                {/* Icon + Status */}
-                <div className="flex items-start justify-between">
+                {/* Timeline dot + line */}
+                <div className="flex flex-col items-center shrink-0">
                   <div
-                    className="p-2.5 rounded-lg"
+                    className="w-3.5 h-3.5 rounded-full shrink-0 mt-1"
                     style={{
-                      background: "var(--accent-muted)",
+                      background: isInProgress ? "var(--accent)" : "#22c55e",
+                      boxShadow: isInProgress
+                        ? "0 0 0 4px var(--accent-muted)"
+                        : "0 0 0 4px rgba(34, 197, 94, 0.15)",
                     }}
-                  >
-                    {isInProgress ? (
-                      <BookOpen size={20} style={{ color: "var(--accent)" }} />
-                    ) : (
-                      <Award size={20} style={{ color: "var(--accent)" }} />
-                    )}
-                  </div>
-                  <span
-                    className="tag"
-                    style={
-                      isInProgress
-                        ? {
-                            background: "var(--accent-muted)",
-                            color: "var(--accent)",
-                            fontWeight: 600,
-                          }
-                        : {}
-                    }
-                  >
-                    {isInProgress ? "In Progress" : cert.year}
-                  </span>
+                  />
+                  {i < certifications.length - 1 && (
+                    <div
+                      className="w-px flex-1 mt-2"
+                      style={{ background: "var(--surface-border)" }}
+                    />
+                  )}
                 </div>
 
-                {/* Name */}
-                <h3
-                  className="text-sm font-semibold leading-snug"
-                  style={{
-                    color: "var(--text-primary)",
-                    fontFamily: "var(--font-heading)",
-                  }}
-                >
-                  {cert.name}
-                </h3>
+                {/* Card */}
+                <div className="card flex-1 p-6 mb-4">
+                  {/* Top row: icon + name + status badge */}
+                  <div className="flex items-start justify-between gap-4 mb-2">
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="p-2 rounded-lg shrink-0"
+                        style={{ background: "var(--accent-muted)" }}
+                      >
+                        {getIcon(i, isInProgress)}
+                      </div>
+                      <div>
+                        <h3
+                          className="text-base font-bold leading-snug"
+                          style={{
+                            color: "var(--text-primary)",
+                            fontFamily: "var(--font-heading)",
+                          }}
+                        >
+                          {cert.name}
+                        </h3>
+                        <p
+                          className="text-xs mt-0.5"
+                          style={{ color: "var(--text-muted)" }}
+                        >
+                          {cert.institution}
+                        </p>
+                      </div>
+                    </div>
 
-                {/* Institution */}
-                <p
-                  className="text-xs leading-relaxed"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  {cert.institution}
-                </p>
+                    {/* Status badge */}
+                    <span
+                      className="shrink-0 flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full"
+                      style={{
+                        background: isInProgress
+                          ? "var(--accent-muted)"
+                          : "rgba(34, 197, 94, 0.1)",
+                        color: isInProgress ? "var(--accent)" : "#22c55e",
+                        fontFamily: "var(--font-mono)",
+                        letterSpacing: "0.05em",
+                      }}
+                    >
+                      <span
+                        className="w-1.5 h-1.5 rounded-full"
+                        style={{
+                          background: isInProgress ? "var(--accent)" : "#22c55e",
+                        }}
+                      />
+                      {isInProgress ? "IN PROGRESS" : "COMPLETED"}
+                    </span>
+                  </div>
 
-                {/* Detail (if exists) */}
-                {"detail" in cert && cert.detail && (
+                  {/* Year */}
                   <p
-                    className="text-xs mt-auto pt-2"
-                    style={{
-                      color: "var(--text-secondary)",
-                      fontFamily: "var(--font-mono)",
-                      borderTop: "1px solid var(--surface-border)",
-                    }}
+                    className="text-sm font-medium mt-3 mb-2"
+                    style={{ color: "var(--accent)", fontFamily: "var(--font-mono)" }}
                   >
-                    {cert.detail}
+                    {cert.year}
                   </p>
-                )}
+
+                  {/* Progress bar (only for in-progress) */}
+                  {isInProgress && cert.progress !== null && (
+                    <div className="mt-3">
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span
+                          className="text-xs"
+                          style={{
+                            color: "var(--text-muted)",
+                            fontFamily: "var(--font-mono)",
+                            letterSpacing: "0.1em",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Progress
+                        </span>
+                        <span
+                          className="text-xs font-bold"
+                          style={{ color: "var(--text-primary)" }}
+                        >
+                          {cert.progress}%
+                        </span>
+                      </div>
+                      <div
+                        className="h-1.5 w-full rounded-full overflow-hidden"
+                        style={{ background: "var(--surface-border)" }}
+                      >
+                        <motion.div
+                          className="h-full rounded-full"
+                          style={{ background: "var(--gradient-accent)" }}
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${cert.progress}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] as const }}
+                        />
+                      </div>
+                      <p
+                        className="text-xs mt-2"
+                        style={{ color: "var(--text-secondary)" }}
+                      >
+                        {cert.completedModules} of {cert.totalModules} modules completed
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Detail */}
+                  {cert.detail && (
+                    <p
+                      className="text-xs mt-3"
+                      style={{
+                        color: "var(--text-secondary)",
+                        fontStyle: "italic",
+                      }}
+                    >
+                      {cert.detail}
+                    </p>
+                  )}
+                </div>
               </motion.div>
             );
           })}

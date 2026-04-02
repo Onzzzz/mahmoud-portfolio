@@ -26,7 +26,7 @@ export function Navbar() {
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      className="fixed top-[36px] left-0 right-0 z-50 transition-all duration-300"
       style={{
         backgroundColor: scrolled ? "var(--nav-bg)" : "transparent",
         backdropFilter: scrolled ? "blur(12px)" : "none",
@@ -35,7 +35,7 @@ export function Navbar() {
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <a href="#" className="text-sm font-medium tracking-wide hover:text-[var(--accent)] transition-colors" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-heading)" }}>
-          Mahmoud Abdallah
+          Mahmoud <span style={{ color: "var(--accent)" }}>Abdallah</span>
         </a>
 
         <div className="hidden md:flex items-center gap-8">

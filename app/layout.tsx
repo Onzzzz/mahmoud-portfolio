@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${heading.variable} ${body.variable} ${mono.variable} antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${heading.variable} ${body.variable} ${mono.variable} antialiased`} suppressHydrationWarning style={{ overflowX: "hidden" }}>
       <head>
         <script
           type="application/ld+json"

@@ -34,62 +34,74 @@ export function Footer() {
       }}
     >
       <style>{iconHoverStyle}</style>
-      <div
-        className="max-w-6xl mx-auto w-full flex flex-col md:flex-row items-center justify-between gap-3 py-6 px-4 md:px-6"
-      >
-        {/* Left — Copyright */}
-        <p
-          style={{
-            fontSize: "0.7rem",
-            color: "var(--text-muted)",
-            fontFamily: "var(--font-mono)",
-            letterSpacing: "0.02em",
-          }}
+      <div className="max-w-6xl mx-auto w-full py-5 px-4 md:px-6">
+        {/* Top row — tagline centered with decorative lines */}
+        <div
+          className="flex items-center gap-4 justify-center mb-4"
         >
-          &copy; 2026 Mahmoud Abdallah
-        </p>
+          <div
+            className="flex-1 h-px"
+            style={{ background: "linear-gradient(to right, transparent, var(--surface-border))" }}
+          />
+          <p
+            style={{
+              fontSize: "0.6rem",
+              color: "var(--accent)",
+              fontFamily: "var(--font-mono)",
+              letterSpacing: "0.25em",
+              textTransform: "uppercase",
+              opacity: 0.7,
+              whiteSpace: "nowrap",
+            }}
+          >
+            Built to solve. Built to build.
+          </p>
+          <div
+            className="flex-1 h-px"
+            style={{ background: "linear-gradient(to left, transparent, var(--surface-border))" }}
+          />
+        </div>
 
-        {/* Center — Tagline */}
-        <p
-          style={{
-            fontSize: "0.7rem",
-            color: "var(--text-muted)",
-            fontFamily: "var(--font-mono)",
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-            opacity: 0.6,
-          }}
-        >
-          Built to solve. Built to build.
-        </p>
+        {/* Bottom row — copyright left, icons right */}
+        <div className="flex items-center justify-between">
+          <p
+            style={{
+              fontSize: "0.65rem",
+              color: "var(--text-muted)",
+              fontFamily: "var(--font-mono)",
+              letterSpacing: "0.02em",
+            }}
+          >
+            &copy; 2026 Mahmoud Abdallah
+          </p>
 
-        {/* Right — Social icons */}
-        <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
-          <a
-            href={personal.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="footer-icon"
-          >
-            <LinkedinIcon size={15} />
-          </a>
-          <a
-            href={`mailto:${personal.email}`}
-            aria-label="Email"
-            className="footer-icon"
-          >
-            <Mail size={15} />
-          </a>
-          <a
-            href={personal.whatsapp}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="WhatsApp"
-            className="footer-icon"
-          >
-            <MessageCircle size={15} />
-          </a>
+          <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
+            <a
+              href={personal.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="footer-icon"
+            >
+              <LinkedinIcon size={14} />
+            </a>
+            <a
+              href={`mailto:${personal.email}`}
+              aria-label="Email"
+              className="footer-icon"
+            >
+              <Mail size={14} />
+            </a>
+            <a
+              href={personal.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+              className="footer-icon"
+            >
+              <MessageCircle size={14} />
+            </a>
+          </div>
         </div>
       </div>
     </footer>

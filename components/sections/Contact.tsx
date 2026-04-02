@@ -121,7 +121,7 @@ export function Contact() {
 
   return (
     <section
-      className="relative py-24 md:py-32 px-4 md:px-6 overflow-hidden"
+      className="relative pt-24 md:pt-32 pb-4 md:pb-6 px-4 md:px-6 overflow-hidden"
       id="contact"
     >
       {/* Subtle ambient glow */}
@@ -285,9 +285,7 @@ export function Contact() {
                       placeholder="Your Name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      style={inputStyle}
-                      onFocus={(e) => applyFocusStyle(e.currentTarget)}
-                      onBlur={(e) => removeFocusStyle(e.currentTarget)}
+                      className="contact-input"
                     />
                   </div>
                   <div>
@@ -298,9 +296,7 @@ export function Contact() {
                       placeholder="Your Email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      style={inputStyle}
-                      onFocus={(e) => applyFocusStyle(e.currentTarget)}
-                      onBlur={(e) => removeFocusStyle(e.currentTarget)}
+                      className="contact-input"
                     />
                   </div>
                 </div>
@@ -310,12 +306,9 @@ export function Contact() {
                     id="contact-message"
                     placeholder="Your Message"
                     rows={5}
-                    className="resize-none"
+                    className="contact-input resize-none"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    style={inputStyle}
-                    onFocus={(e) => applyFocusStyle(e.currentTarget)}
-                    onBlur={(e) => removeFocusStyle(e.currentTarget)}
                   />
                 </div>
 
@@ -412,7 +405,7 @@ export function Contact() {
 
         {/* Download CV — bottom of contact */}
         <motion.div
-          className="mt-16 pt-8 text-center"
+          className="mt-6 pt-4 text-center"
           style={{ borderTop: "1px solid var(--surface-border)" }}
           initial="hidden"
           whileInView="visible"
@@ -440,29 +433,3 @@ export function Contact() {
   );
 }
 
-/* ---- Helpers ---- */
-
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  background: "var(--surface)",
-  border: "1px solid var(--surface-border)",
-  borderRadius: "0.75rem",
-  padding: "0.75rem 1rem",
-  fontSize: "0.875rem",
-  color: "var(--text-primary)",
-  outline: "none",
-  transition: "border-color 0.2s, box-shadow 0.2s",
-  fontFamily: "inherit",
-};
-
-function applyFocusStyle(el: HTMLElement) {
-  el.style.outline = "1px solid var(--accent)";
-  el.style.borderColor = "var(--accent)";
-  el.style.boxShadow = "0 0 0 3px var(--accent-muted)";
-}
-
-function removeFocusStyle(el: HTMLElement) {
-  el.style.outline = "none";
-  el.style.borderColor = "var(--surface-border)";
-  el.style.boxShadow = "none";
-}

@@ -130,7 +130,7 @@ export function Hero() {
                 <a href="#contact" className="btn-primary">
                   Let&apos;s Talk <ArrowDownRight size={15} />
                 </a>
-                <a href="#experience" className="btn-outline">See My Work</a>
+                <a href="#projects" className="btn-outline">My Work</a>
                 <a href="/Mahmoud Abdallah.pdf" download className="btn-outline" style={{ gap: "0.375rem" }}>
                   <Download size={14} /> Resume
                 </a>
@@ -183,7 +183,7 @@ export function Hero() {
                     priority
                     quality={95}
                   />
-                  <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 60%, var(--bg) 100%)" }} />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 80%, var(--bg) 100%)" }} />
                 </div>
               </motion.div>
             </div>

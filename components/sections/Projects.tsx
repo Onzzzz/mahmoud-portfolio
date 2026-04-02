@@ -50,8 +50,14 @@ export function Projects() {
   }, []);
 
   const scrollFilmstrip = useCallback((dir: "left" | "right") => {
-    scrollRef.current?.scrollBy({ left: dir === "left" ? -260 : 260, behavior: "smooth" });
-  }, []);
+    // Pause auto-scroll while arrow scrolling
+    pausedRef.current = true;
+    scrollRef.current?.scrollBy({ left: dir === "left" ? -300 : 300, behavior: "smooth" });
+    // Resume auto-scroll after animation completes
+    setTimeout(() => {
+      if (!paused) pausedRef.current = false;
+    }, 600);
+  }, [paused]);
   const procurement = projects.filter((p) => p.category === "Procurement & Tenders");
   const operations = projects.filter((p) => p.category === "Operations & Systems");
 
@@ -120,7 +126,7 @@ export function Projects() {
                       <h4 className="mt-1.5 text-base font-bold leading-snug" style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)" }}>
                         {project.title}
                       </h4>
-                      <p className="mt-2 text-sm leading-relaxed line-clamp-2" style={{ color: "var(--text-secondary)" }}>
+                      <p className="mt-2 text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                         {project.description}
                       </p>
                     </div>
@@ -172,27 +178,30 @@ export function Projects() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  className="cursor-pointer rounded-lg px-5 py-4 flex items-center justify-between gap-4 transition-all duration-200 group"
+                  className="cursor-pointer rounded-lg px-5 py-5 transition-all duration-200 group"
                   style={{ background: "transparent", borderBottom: "1px solid var(--surface-border)" }}
                   onClick={() => setSelected(project)}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--surface)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
                 >
-                  <div className="flex items-center gap-4 flex-1 min-w-0">
-                    <span className="text-xs font-mono shrink-0" style={{ color: "var(--accent)", width: "1.5rem" }}>
+                  <div className="flex items-start gap-4">
+                    <span className="text-xs font-mono shrink-0 pt-1" style={{ color: "var(--accent)", width: "1.5rem" }}>
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <div className="min-w-0">
-                      <p className="text-sm font-semibold truncate" style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)" }}>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold" style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)" }}>
                         {project.title}
                       </p>
                       <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
                         {project.company}
                       </p>
+                      <p className="text-xs mt-2 leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                        {project.description}
+                      </p>
+                      <div className="flex flex-wrap gap-1.5 mt-3">
+                        {project.tools.map((t) => <span key={t} className="tag">{t}</span>)}
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5 shrink-0">
-                    {project.tools.slice(0, 2).map((t) => <span key={t} className="tag">{t}</span>)}
                   </div>
                 </motion.div>
               ))}
