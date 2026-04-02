@@ -131,7 +131,7 @@ export function Hero() {
                   Let&apos;s Talk <ArrowDownRight size={15} />
                 </a>
                 <a href="#projects" className="btn-outline">My Work</a>
-                <a href="/Mahmoud Abdallah.pdf" download className="btn-outline" style={{ gap: "0.375rem" }}>
+                <a href="/Mahmoud_Abdallah.pdf" download className="btn-outline" style={{ gap: "0.375rem" }}>
                   <Download size={14} /> Resume
                 </a>
               </motion.div>

@@ -420,7 +420,7 @@ export function Contact() {
             Prefer a traditional resume?
           </p>
           <a
-            href="/Mahmoud Abdallah.pdf"
+            href="/Mahmoud_Abdallah.pdf"
             download
             className="btn-outline"
           >

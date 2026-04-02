@@ -1,41 +1,56 @@
-interface ContactPayload {
-  name: string;
-  email: string;
-  message: string;
-  type: string;
-}
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import { sanitizeContactPayload } from "@/lib/sanitize";
 
-function isValidEmail(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+const contactLimiter = rateLimit("contact", {
+  maxRequests: 3,
+  windowMs: 10 * 60 * 1000, // 10 minutes
+});
 
 export async function POST(request: Request) {
-  const body = (await request.json()) as Partial<ContactPayload>;
+  // Rate limit check
+  const ip = getClientIp(request);
+  const limit = contactLimiter.check(ip);
 
-  // Validate required fields
-  if (!body.name?.trim() || !body.email?.trim() || !body.message?.trim()) {
+  if (!limit.allowed) {
     return Response.json(
-      { success: false, error: "Name, email, and message are required." },
+      { success: false, error: "Too many messages. Please try again in a few minutes." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(Math.ceil(limit.retryAfterMs / 1000)) },
+      }
+    );
+  }
+
+  // Parse and sanitize input
+  let body: Record<string, unknown>;
+  try {
+    body = await request.json();
+  } catch {
+    return Response.json(
+      { success: false, error: "Invalid request body." },
       { status: 400 }
     );
   }
 
-  if (!isValidEmail(body.email)) {
+  const result = sanitizeContactPayload(body);
+  if (!result.valid || !result.data) {
     return Response.json(
-      { success: false, error: "Please provide a valid email address." },
+      { success: false, error: result.error },
       { status: 400 }
     );
   }
+
+  const { name, email, message, type } = result.data;
 
   const webhookUrl = process.env.CONTACT_WEBHOOK_URL;
   const telegramToken = process.env.TELEGRAM_BOT_TOKEN;
   const telegramChatId = process.env.TELEGRAM_CHAT_ID;
 
   const payload = {
-    name: body.name.trim(),
-    email: body.email.trim(),
-    message: body.message.trim(),
-    type: body.type || "hello",
+    name,
+    email,
+    message,
+    type,
     timestamp: new Date().toISOString(),
     source: "portfolio-website",
   };

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 // ═══════════════════════════════════════════════════════════
 // ONZ AI — Powered by Gemini via OpenRouter
@@ -250,6 +251,11 @@ Weather, sports, politics, religion, coding, math, general knowledge → witty r
 9. When quoting testimonials, mention the person's name and role
 10. For "who is Mahmoud" type questions, give a compelling 3-4 sentence pitch, not a full CV dump`;
 
+const chatLimiter = rateLimit("chat", {
+  maxRequests: 30,
+  windowMs: 60 * 1000, // 1 minute
+});
+
 // Instant responses for common quick-action clicks (no API call needed = instant + free)
 const INSTANT_RESPONSES: Record<string, { response: string; suggestions: string[] }> = {
   "تواصل": {
@@ -269,6 +275,21 @@ function detectLanguage(text: string): "en" | "ar" {
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limit check
+    const ip = getClientIp(req);
+    const limit = chatLimiter.check(ip);
+    if (!limit.allowed) {
+      return NextResponse.json(
+        {
+          response: "Too many messages — slow down a bit and try again! 😊",
+          topicId: "",
+          language: "en",
+          suggestions: ["Who is Mahmoud?", "Experience", "Skills", "Contact"],
+        },
+        { status: 429, headers: { "Retry-After": String(Math.ceil(limit.retryAfterMs / 1000)) } }
+      );
+    }
+
     const { message, history = [] } = await req.json();
 
     if (!message?.trim()) {

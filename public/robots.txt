@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /Mahmoud_Abdallah.pdf
+Disallow: /api/

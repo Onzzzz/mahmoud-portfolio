@@ -8,7 +8,7 @@ const body = Inter({ variable: "--font-body", subsets: ["latin"], display: "swap
 const mono = JetBrains_Mono({ variable: "--font-mono", subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mahmoudabdallah.cloud"),
+  metadataBase: new URL("https://mahmoudabdallah.com"),
   title: "Mahmoud Abdallah | Procurement & Supply Chain Professional",
   description: "Strategic Procurement & Supply Chain Manager based in Dubai. AED 450K+ documented savings, 30+ major events procured, 7+ years across UAE, KSA & Egypt. Specializing in sourcing, ERP implementation, tender management, and cost optimization.",
   keywords: ["procurement", "supply chain", "Dubai", "UAE", "tender management", "ERP", "vendor management", "Odoo", "strategic sourcing"],
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: "Mahmoud Abdallah — Procurement & Supply Chain",
     description: "AED 450K+ saved. 30+ world-class events procured. 7+ years turning spend into strategy.",
     type: "website",
-    url: "https://mahmoudabdallah.cloud",
+    url: "https://mahmoudabdallah.com",
     siteName: "Mahmoud Abdallah",
     locale: "en_US",
   },
@@ -37,7 +37,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify({
             "@context": "https://schema.org", "@type": "Person",
             name: "Mahmoud Abdallah", jobTitle: "Supply Chain & Operations Manager",
-            url: "https://mahmoudabdallah.cloud", email: "mahmoudf.abdallah@outlook.com",
+            url: "https://mahmoudabdallah.com", email: "mahmoudf.abdallah@outlook.com",
             telephone: "+971544720857",
             address: { "@type": "PostalAddress", addressLocality: "Dubai", addressCountry: "AE" },
             sameAs: ["https://www.linkedin.com/in/mahmoudf-abdallah"],
