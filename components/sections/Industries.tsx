@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import { industries } from "@/lib/data";
 
 export function Industries() {
-  // Triple the items for seamless infinite scroll
-  const marqueeItems = [...industries, ...industries, ...industries];
+  // Duplicate for seamless CSS loop
+  const marqueeItems = [...industries, ...industries];
 
   return (
     <section
-      className="relative py-12 md:py-16 overflow-hidden"
+      className="relative pt-6 pb-12 md:pt-8 md:pb-16 overflow-hidden"
       style={{ background: "var(--bg)" }}
       aria-label="Industries worked across"
     >
@@ -34,13 +34,19 @@ export function Industries() {
         <span className="section-label">Industries & Sectors</span>
       </motion.div>
 
+      <style>{`
+        @keyframes industries-scroll {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .industries-marquee {
+          animation: industries-scroll 28s linear infinite;
+        }
+      `}</style>
+
       {/* Marquee */}
       <div className="relative overflow-hidden">
-        <motion.div
-          className="flex items-center gap-0 whitespace-nowrap industries-marquee"
-          animate={{ x: ["0%", "-33.333%"] }}
-          transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
-        >
+        <div className="industries-marquee flex items-center gap-0 whitespace-nowrap w-max">
           {marqueeItems.map((item, i) => (
             <div key={`${item.name}-${i}`} className="flex items-center shrink-0">
               {/* Divider dot */}
@@ -85,7 +91,7 @@ export function Industries() {
               </div>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Outfit, Inter, JetBrains_Mono } from "next/font/google";
+import { Outfit, Inter, JetBrains_Mono, EB_Garamond } from "next/font/google";
 import { ThemeProvider } from "@/lib/theme-context";
 import "./globals.css";
 
 const heading = Outfit({ variable: "--font-heading", subsets: ["latin"], weight: ["300", "500", "600", "700", "800"], display: "swap" });
+const serif = EB_Garamond({ variable: "--font-serif", subsets: ["latin"], weight: ["400", "500", "600", "700"], display: "swap" });
 const body = Inter({ variable: "--font-body", subsets: ["latin"], display: "swap" });
 const mono = JetBrains_Mono({ variable: "--font-mono", subsets: ["latin"], display: "swap" });
 
@@ -30,13 +31,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${heading.variable} ${body.variable} ${mono.variable} antialiased`} suppressHydrationWarning style={{ overflowX: "hidden" }}>
+    <html lang="en" className={`${heading.variable} ${serif.variable} ${body.variable} ${mono.variable} antialiased`} suppressHydrationWarning style={{ overflowX: "hidden" }}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify({
             "@context": "https://schema.org", "@type": "Person",
-            name: "Mahmoud Abdallah", jobTitle: "Supply Chain & Operations Manager",
+            name: "Mahmoud Abdallah", jobTitle: "Procurement & Supply Chain Operations Manager",
             url: "https://mahmoudabdallah.com", email: "mahmoudf.abdallah@outlook.com",
             telephone: "+971544720857",
             address: { "@type": "PostalAddress", addressLocality: "Dubai", addressCountry: "AE" },

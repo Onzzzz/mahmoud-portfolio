@@ -1,5 +1,5 @@
-import { Mail, MessageCircle } from "lucide-react";
-import { personal } from "@/lib/data";
+import { Mail, MessageCircle, Download } from "lucide-react";
+import { personal, certifications } from "@/lib/data";
 
 function LinkedinIcon({ size = 16 }: { readonly size?: number }) {
   return (
@@ -20,88 +20,140 @@ function LinkedinIcon({ size = 16 }: { readonly size?: number }) {
   );
 }
 
-const iconHoverStyle = `
-  .footer-icon { color: var(--text-muted); transition: color 0.2s; }
-  .footer-icon:hover { color: var(--accent); }
+const footerLinkStyle = `
+  .footer-link {
+    color: var(--text-secondary);
+    transition: color 0.2s;
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: 0.85rem;
+  }
+  .footer-link:hover { color: var(--accent); }
 `;
 
 export function Footer() {
   return (
     <footer
       style={{
-        background: "var(--bg)",
-        borderTop: "1px solid var(--surface-border)",
+        background: "#0e0e0e",
+        borderTop: "1px solid rgba(255, 255, 255, 0.06)",
       }}
     >
-      <style>{iconHoverStyle}</style>
-      <div className="max-w-6xl mx-auto w-full py-5 px-4 md:px-6">
-        {/* Top row — tagline centered with decorative lines */}
-        <div
-          className="flex items-center gap-4 justify-center mb-4"
+      <style>{footerLinkStyle}</style>
+
+      {/* Resume + Digital Badges section */}
+      <div
+        className="max-w-6xl mx-auto w-full pt-8 pb-4 px-4 md:px-6 flex flex-col items-center text-center"
+        style={{ gap: "1rem" }}
+      >
+        <p
+          style={{
+            fontFamily: "var(--font-heading)",
+            fontStyle: "italic",
+            fontSize: "0.95rem",
+            color: "var(--text-secondary)",
+          }}
         >
-          <div
-            className="flex-1 h-px"
-            style={{ background: "linear-gradient(to right, transparent, var(--surface-border))" }}
-          />
-          <p
-            style={{
-              fontSize: "0.6rem",
-              color: "var(--accent)",
-              fontFamily: "var(--font-mono)",
-              letterSpacing: "0.25em",
-              textTransform: "uppercase",
-              opacity: 0.7,
-              whiteSpace: "nowrap",
-            }}
-          >
-            Built to solve. Built to build.
-          </p>
-          <div
-            className="flex-1 h-px"
-            style={{ background: "linear-gradient(to left, transparent, var(--surface-border))" }}
-          />
-        </div>
+          Prefer a traditional resume?
+        </p>
+        <a
+          href="/Mahmoud_Abdallah.pdf"
+          download
+          className="inline-flex items-center gap-2 transition-all duration-200"
+          style={{
+            padding: "0.75rem 2rem",
+            border: "1px solid var(--accent)",
+            color: "var(--accent)",
+            fontFamily: "var(--font-heading)",
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            textDecoration: "none",
+            borderRadius: "10px",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "var(--accent)";
+            e.currentTarget.style.color = "var(--bg)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.color = "var(--accent)";
+          }}
+        >
+          <Download size={16} />
+          Download CV
+        </a>
 
-        {/* Bottom row — copyright left, icons right */}
-        <div className="flex items-center justify-between">
-          <p
-            style={{
-              fontSize: "0.65rem",
-              color: "var(--text-muted)",
-              fontFamily: "var(--font-mono)",
-              letterSpacing: "0.02em",
-            }}
-          >
-            &copy; 2026 Mahmoud Abdallah
-          </p>
+      </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
-            <a
-              href={personal.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="footer-icon"
-            >
-              <LinkedinIcon size={14} />
-            </a>
-            <a
-              href={`mailto:${personal.email}`}
-              aria-label="Email"
-              className="footer-icon"
-            >
-              <Mail size={14} />
-            </a>
-            <a
-              href={personal.whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="WhatsApp"
-              className="footer-icon"
-            >
-              <MessageCircle size={14} />
-            </a>
-          </div>
+      {/* Tagline divider */}
+      <div className="flex items-center gap-4 max-w-6xl mx-auto w-full px-4 md:px-6 py-3">
+        <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.08)" }} />
+        <span
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "0.55rem",
+            fontWeight: 600,
+            letterSpacing: "0.25em",
+            color: "var(--accent)",
+            textTransform: "uppercase",
+            whiteSpace: "nowrap",
+          }}
+        >
+          Built to solve. Built to build.
+        </span>
+        <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.08)" }} />
+      </div>
+
+      {/* Bottom bar — copyright left, icons right */}
+      <div
+        className="max-w-6xl mx-auto w-full px-4 md:px-6 py-3 flex items-center justify-between"
+      >
+        <p
+          style={{
+            fontSize: "0.65rem",
+            letterSpacing: "0.08em",
+            color: "var(--text-muted)",
+            fontFamily: "var(--font-mono)",
+          }}
+        >
+          &copy; 2026 Mahmoud Abdallah
+        </p>
+
+        <div className="flex items-center gap-4">
+          <a
+            href={personal.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--text-muted)", transition: "color 0.2s" }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "var(--accent)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-muted)"; }}
+            aria-label="LinkedIn"
+          >
+            <LinkedinIcon size={16} />
+          </a>
+          <a
+            href={`mailto:${personal.email}`}
+            style={{ color: "var(--text-muted)", transition: "color 0.2s" }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "var(--accent)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-muted)"; }}
+            aria-label="Email"
+          >
+            <Mail size={16} />
+          </a>
+          <a
+            href={personal.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--text-muted)", transition: "color 0.2s" }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "var(--accent)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-muted)"; }}
+            aria-label="WhatsApp"
+          >
+            <MessageCircle size={16} />
+          </a>
         </div>
       </div>
     </footer>

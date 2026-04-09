@@ -1,216 +1,422 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { experience } from "@/lib/data";
 
-function parsePeriodYear(period: string): string {
-  const match = period.match(/\d{4}/);
-  return match ? match[0] : period;
-}
+const mainEntries = experience.filter((e) => !("earlier" in e && e.earlier));
+const earlierEntries = experience.filter((e) => "earlier" in e && e.earlier);
 
 export function Experience() {
-  // Group consecutive roles at the same company
-  type ExpItem = (typeof experience)[number];
-  const grouped: { company: string; items: ExpItem[] }[] = [];
-  experience.forEach((item) => {
-    const last = grouped[grouped.length - 1];
-    if (last && last.company === item.company) {
-      last.items.push(item);
-    } else {
-      grouped.push({ company: item.company, items: [item] });
-    }
-  });
-
   return (
     <section
-      className="relative px-4 md:px-6 py-24 md:py-32"
+      className="relative px-4 md:px-6 pt-16 pb-8 md:pt-20 md:pb-10"
       id="experience"
       style={{ background: "var(--bg)" }}
     >
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
+      <div className="max-w-6xl mx-auto">
+        {/* Header — large text-stroke heading + italic subtitle */}
         <motion.div
-          className="flex items-end justify-between mb-16 md:mb-20"
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16 md:mb-20"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.55 }}
         >
-          <div>
-            <span className="section-label mb-3 block">Experience</span>
-            <h2
-              className="text-3xl md:text-5xl font-extrabold leading-tight tracking-tight"
-              style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)", letterSpacing: "-0.02em" }}
-            >
-              Where I&apos;ve Built Things
-            </h2>
-          </div>
-          <span className="deco-num hidden md:block select-none" aria-hidden="true">02</span>
+          <h2
+            style={{
+              fontSize: "clamp(2.5rem, 6vw, 5rem)",
+              fontWeight: 400,
+              fontFamily: "var(--font-serif)",
+              lineHeight: 1.05,
+              letterSpacing: "-0.02em",
+              color: "var(--text-primary)",
+            }}
+          >
+            Where I&apos;ve Built{" "}
+            <span style={{ color: "var(--accent)", fontStyle: "italic" }}>Things.</span>
+          </h2>
         </motion.div>
 
-        {/* Timeline entries */}
-        <div className="flex flex-col gap-4">
-          {grouped.map((group, idx) => {
-            const firstItem = group.items[0];
-            const isCurrent = firstItem.current;
-            const startYear = parsePeriodYear(firstItem.period);
+        {/* Detailed entries — 12-column grid per entry */}
+        <div className="flex flex-col gap-0">
+          {mainEntries.map((item, idx) => {
+            const isCurrent = item.current;
+            const hasPromotion = "promotion" in item && !!item.promotion;
 
             return (
               <motion.div
                 key={idx}
+                className="group"
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
+                style={{
+                  opacity: isCurrent ? 1 : undefined,
+                }}
               >
-                {/* 3-column grid: Year | Dot+Line | Card */}
-                <div className="hidden md:grid" style={{ gridTemplateColumns: "60px 30px 1fr" }}>
-                  {/* Column 1: Year */}
-                  <div className="flex justify-end items-start pt-5 pr-2">
+                <div
+                  className="grid grid-cols-1 md:grid-cols-12 gap-0"
+                  style={!isCurrent ? { opacity: 0.6 } : undefined}
+                  onMouseEnter={(e) => {
+                    if (!isCurrent) e.currentTarget.style.opacity = "1";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isCurrent) e.currentTarget.style.opacity = "0.6";
+                  }}
+                >
+                  {/* Left — date column (col-span-3) */}
+                  <div className="md:col-span-3 flex flex-col justify-start pt-6 pb-2 md:pb-0 md:pr-6">
                     <span
-                      className="text-[11px]"
+                      className="text-xs font-medium"
                       style={{
                         color: isCurrent ? "var(--accent)" : "var(--text-muted)",
                         fontFamily: "var(--font-mono)",
                         letterSpacing: "0.05em",
                       }}
                     >
-                      {startYear}
+                      {item.period}
+                    </span>
+                    <span
+                      className="text-[10px] mt-1"
+                      style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}
+                    >
+                      {item.location}
                     </span>
                   </div>
 
-                  {/* Column 2: Dot + Line */}
-                  <div className="flex flex-col items-center">
-                    <div style={{ height: 20 }} />
+                  {/* Right — content column (col-span-9) with border-left and dot */}
+                  <div
+                    className="md:col-span-9 relative py-6"
+                    style={{
+                      borderLeft: "1px solid var(--surface-border)",
+                      paddingLeft: "1.5rem",
+                    }}
+                  >
+                    {/* Dot on the border */}
                     <div
-                      className={`shrink-0 timeline-dot ${isCurrent ? "timeline-dot-active pulse-ring" : ""}`}
-                    />
-                    <div
-                      className="w-[2px] flex-1"
+                      className="absolute hidden md:block"
                       style={{
-                        background: isCurrent
-                          ? "linear-gradient(to bottom, var(--accent), var(--surface-border))"
-                          : "var(--surface-border)",
+                        left: "-5px",
+                        top: "1.75rem",
+                        width: "9px",
+                        height: "9px",
+                        borderRadius: "50%",
+                        background: isCurrent ? "var(--accent)" : "transparent",
+                        border: isCurrent ? "none" : "2px solid var(--text-muted)",
+                        boxShadow: isCurrent ? "0 0 0 3px var(--accent-muted)" : "none",
                       }}
                     />
-                  </div>
 
-                  {/* Column 3: Card */}
-                  <div
-                    className="rounded-xl px-5 py-5 transition-all duration-300"
-                    style={{
-                      background: "var(--surface)",
-                      border: `1px solid ${isCurrent ? "var(--surface-border-gold)" : "var(--surface-border)"}`,
-                      borderLeft: isCurrent ? "3px solid var(--accent)" : undefined,
-                    }}
-                  >
-                    {renderCardContent(group)}
+                    {/* Role + company */}
+                    <div className="flex items-start gap-3 mb-1">
+                      {item.logo && (
+                        <div
+                          className="shrink-0 mt-0.5"
+                          style={{
+                            width: "36px",
+                            height: "36px",
+                            minWidth: "36px",
+                            minHeight: "36px",
+                            borderRadius: "50%",
+                            border: "1px solid var(--surface-border)",
+                            backgroundColor: "#f5f4f0",
+                            overflow: "hidden",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Image
+                            src={item.logo}
+                            alt={item.company}
+                            width={36}
+                            height={36}
+                            style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                          />
+                        </div>
+                      )}
+                      <div>
+                        <h3
+                          className="text-base md:text-lg font-bold leading-snug"
+                          style={{
+                            color: "var(--text-primary)",
+                            fontFamily: "var(--font-heading)",
+                          }}
+                        >
+                          {item.role}
+                        </h3>
+                        <p className="text-sm mt-0.5">
+                          <span style={{ color: "var(--accent)", fontWeight: 600 }}>
+                            {item.company}
+                          </span>
+                          <span style={{ color: "var(--text-muted)", margin: "0 0.4rem" }}>
+                            ·
+                          </span>
+                          <span style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}>
+                            {item.type}
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Promoted badge */}
+                    {hasPromotion && (
+                      <span
+                        className="inline-block mt-2 text-[9px] font-bold uppercase"
+                        style={{
+                          color: "var(--accent)",
+                          fontFamily: "var(--font-mono)",
+                          letterSpacing: "0.15em",
+                        }}
+                      >
+                        ↑ {(item as { promotion: string }).promotion}
+                      </span>
+                    )}
+
+                    {/* Description */}
+                    <p
+                      className="mt-3 text-sm leading-relaxed"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
+                      {item.description}
+                    </p>
+
+                    {/* Tags — rectangular pills, NO rounded corners */}
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {item.tags.map((tag, k) => (
+                        <span
+                          key={k}
+                          className="text-[10px] font-medium px-2.5 py-1 transition-colors duration-200"
+                          style={{
+                            border: "1px solid var(--surface-border)",
+                            borderRadius: 0,
+                            color: "var(--text-secondary)",
+                            fontFamily: "var(--font-mono)",
+                            letterSpacing: "0.03em",
+                            background: "transparent",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.borderColor = "var(--accent)";
+                            e.currentTarget.style.color = "var(--accent)";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.borderColor = "var(--surface-border)";
+                            e.currentTarget.style.color = "var(--text-secondary)";
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
-                {/* Mobile: no grid, just card */}
-                <div className="md:hidden">
+                {/* Divider between entries */}
+                {idx < mainEntries.length - 1 && (
                   <div
-                    className="rounded-xl px-4 py-4"
+                    className="w-full"
                     style={{
-                      background: "var(--surface)",
-                      border: `1px solid ${isCurrent ? "var(--surface-border-gold)" : "var(--surface-border)"}`,
-                      borderLeft: isCurrent ? "3px solid var(--accent)" : undefined,
+                      height: "1px",
+                      background: "linear-gradient(90deg, transparent, var(--surface-border), transparent)",
                     }}
-                  >
-                    {renderCardContent(group)}
-                  </div>
-                </div>
+                  />
+                )}
               </motion.div>
             );
           })}
         </div>
+
+        {/* Earlier Experience */}
+        {earlierEntries.length > 0 && (
+          <div className="mt-16">
+            {/* Section label */}
+            <div className="flex items-center gap-4 mb-8">
+              <div style={{ flex: 1, height: "1px", background: "var(--surface-border)" }} />
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.65rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.18em",
+                  color: "var(--text-muted)",
+                  textTransform: "uppercase",
+                }}
+              >
+                Earlier Experience
+              </span>
+              <div style={{ flex: 1, height: "1px", background: "var(--surface-border)" }} />
+            </div>
+
+            {/* Entries — same 12-column grid structure as main entries */}
+            <div className="flex flex-col gap-0">
+              {earlierEntries.map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  className="group"
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5, delay: idx * 0.08 }}
+                >
+                  <div
+                    className="grid grid-cols-1 md:grid-cols-12 gap-0"
+                    style={{ opacity: 0.6 }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = "1";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = "0.6";
+                    }}
+                  >
+                    {/* Left — date column (col-span-3) */}
+                    <div className="md:col-span-3 flex flex-col justify-start pt-6 pb-2 md:pb-0 md:pr-6">
+                      <span
+                        className="text-xs font-medium"
+                        style={{
+                          color: "var(--text-muted)",
+                          fontFamily: "var(--font-mono)",
+                          letterSpacing: "0.05em",
+                        }}
+                      >
+                        {item.period}
+                      </span>
+                      <span
+                        className="text-[10px] mt-1"
+                        style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}
+                      >
+                        {item.location}
+                      </span>
+                    </div>
+
+                    {/* Right — content column (col-span-9) with border-left and dot */}
+                    <div
+                      className="md:col-span-9 relative py-6"
+                      style={{
+                        borderLeft: "1px solid var(--surface-border)",
+                        paddingLeft: "1.5rem",
+                      }}
+                    >
+                      {/* Dot on the border */}
+                      <div
+                        className="absolute hidden md:block"
+                        style={{
+                          left: "-5px",
+                          top: "1.75rem",
+                          width: "9px",
+                          height: "9px",
+                          borderRadius: "50%",
+                          background: "transparent",
+                          border: "2px solid var(--text-muted)",
+                          boxShadow: "none",
+                        }}
+                      />
+
+                      {/* Role + company */}
+                      <div className="flex items-start gap-3 mb-1">
+                        <div>
+                          <div className="flex items-center gap-3 flex-wrap mb-0.5">
+                            <h3
+                              className="text-base md:text-lg font-bold leading-snug"
+                              style={{
+                                color: "var(--text-primary)",
+                                fontFamily: "var(--font-heading)",
+                              }}
+                            >
+                              {item.role}
+                            </h3>
+                          </div>
+                          {"companies" in item && Array.isArray(item.companies) ? (
+                            <div>
+                              <p className="text-sm mt-0.5 flex flex-wrap items-center gap-x-1">
+                                {(item.companies as string[]).map((co, i) => (
+                                  <span key={co} className="flex items-center gap-x-1">
+                                    {i > 0 && (
+                                      <span style={{ color: "var(--text-muted)", margin: "0 0.1rem" }}>·</span>
+                                    )}
+                                    <span style={{ color: "var(--accent)", fontWeight: 600 }}>{co}</span>
+                                  </span>
+                                ))}
+                                <span style={{ color: "var(--text-muted)", margin: "0 0.1rem" }}>·</span>
+                                <span style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}>{item.type}</span>
+                              </p>
+                            </div>
+                          ) : (
+                            <p className="text-sm mt-0.5">
+                              <span style={{ color: "var(--accent)", fontWeight: 600 }}>
+                                {item.company}
+                              </span>
+                              <span style={{ color: "var(--text-muted)", margin: "0 0.4rem" }}>
+                                ·
+                              </span>
+                              <span style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}>
+                                {item.type}
+                              </span>
+                            </p>
+                          )}
+
+                          {/* Description (optional) */}
+                          {"description" in item && item.description ? (
+                            <p
+                              className="mt-3 text-sm leading-relaxed"
+                              style={{ color: "var(--text-secondary)" }}
+                            >
+                              {item.description}
+                            </p>
+                          ) : null}
+
+                          {/* Tags (optional) */}
+                          {"tags" in item && Array.isArray(item.tags) && item.tags.length > 0 ? (
+                            <div className="mt-4 flex flex-wrap gap-2">
+                              {item.tags.map((tag, k) => (
+                                <span
+                                  key={k}
+                                  className="text-[10px] font-medium px-2.5 py-1 transition-colors duration-200"
+                                  style={{
+                                    border: "1px solid var(--surface-border)",
+                                    borderRadius: 0,
+                                    color: "var(--text-secondary)",
+                                    fontFamily: "var(--font-mono)",
+                                    letterSpacing: "0.03em",
+                                    background: "transparent",
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.borderColor = "var(--accent)";
+                                    e.currentTarget.style.color = "var(--accent)";
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.borderColor = "var(--surface-border)";
+                                    e.currentTarget.style.color = "var(--text-secondary)";
+                                  }}
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          ) : null}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Divider between entries */}
+                  {idx < earlierEntries.length - 1 && (
+                    <div
+                      className="w-full"
+                      style={{
+                        height: "1px",
+                        background: "linear-gradient(90deg, transparent, var(--surface-border), transparent)",
+                      }}
+                    />
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        )}
+
       </div>
     </section>
   );
-}
-
-function renderCardContent(group: { company: string; items: readonly { role: string; company: string; type: string; logo: string; period: string; location: string; current: boolean; highlights: readonly string[]; tags: readonly string[] }[] }) {
-  return group.items.map((item, ri) => (
-    <div
-      key={ri}
-      className={ri > 0 ? "mt-6 pt-6" : ""}
-      style={ri > 0 ? { borderTop: "1px solid var(--surface-border)" } : {}}
-    >
-      {/* Role + badges */}
-      <div className="flex items-center gap-3 flex-wrap">
-        <h3
-          className="text-base md:text-lg font-bold leading-snug"
-          style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)" }}
-        >
-          {item.role}
-        </h3>
-        {item.current && (
-          <span
-            className="text-[9px] font-semibold tracking-[0.18em] uppercase px-2 py-0.5 rounded-full"
-            style={{
-              color: "var(--accent)",
-              border: "1px solid var(--accent)",
-              fontFamily: "var(--font-mono)",
-              background: "var(--accent-muted)",
-            }}
-          >
-            Current
-          </span>
-        )}
-      </div>
-
-      {/* Company — only show on first role */}
-      {ri === 0 && (
-        <div className="mt-1.5 flex items-center gap-2.5">
-          {item.logo && (
-            <img
-              src={item.logo}
-              alt={item.company}
-              className="shrink-0"
-              style={{
-                width: 28,
-                height: 28,
-                objectFit: "cover",
-                borderRadius: "50%",
-                border: "1px solid var(--surface-border)",
-              }}
-            />
-          )}
-          <p className="text-sm">
-            <span style={{ color: "var(--accent)", fontWeight: 600 }}>{item.company}</span>
-            <span style={{ color: "var(--text-muted)", margin: "0 0.4rem" }}>·</span>
-            <span style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}>{item.type}</span>
-          </p>
-        </div>
-      )}
-
-      {/* Period + Location */}
-      <div className="flex items-center gap-3 mt-1.5 text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-        <span>{item.period}</span>
-        <span>·</span>
-        <span>{item.location}</span>
-      </div>
-
-      {/* Highlights */}
-      <ul className="mt-4 flex flex-col gap-2">
-        {item.highlights.map((h, j) => (
-          <li key={j} className="flex items-start gap-2.5 text-sm leading-relaxed">
-            <span
-              className="flex-shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full"
-              style={{ background: "var(--accent)", opacity: 0.6 }}
-            />
-            <span style={{ color: "var(--text-secondary)" }}>{h}</span>
-          </li>
-        ))}
-      </ul>
-
-      {/* Tags */}
-      <div className="mt-4 flex flex-wrap gap-2">
-        {item.tags.map((tag, k) => (
-          <span key={k} className="tag">{tag}</span>
-        ))}
-      </div>
-    </div>
-  ));
 }

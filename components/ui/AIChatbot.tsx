@@ -197,7 +197,7 @@ export default function AIChatbot() {
         style={{
           position: "fixed",
           bottom: 16,
-          left: 16,
+          right: 16,
           zIndex: 45,
           cursor: "pointer",
         }}
@@ -210,10 +210,10 @@ export default function AIChatbot() {
           <div style={{
             position: "absolute",
             top: -6,
-            left: 52,
+            right: 52,
             background: theme.card,
             border: `1px solid ${theme.accent}35`,
-            borderRadius: "10px 10px 10px 2px",
+            borderRadius: "10px 10px 2px 10px",
             padding: "4px 8px",
             boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
             animation: "botBubblePulse 4s ease-in-out infinite",
@@ -411,7 +411,7 @@ export default function AIChatbot() {
         style={{
           position: "fixed",
           bottom: 24,
-          left: 24,
+          right: 24,
           padding: "10px 16px",
           borderRadius: 12,
           background: theme.card,
@@ -443,7 +443,7 @@ export default function AIChatbot() {
       style={{
         position: "fixed",
         bottom: 24,
-        left: 24,
+        right: 24,
         width: 370,
         maxHeight: 520,
         borderRadius: 16,
@@ -665,7 +665,8 @@ export default function AIChatbot() {
         @media (max-width: 480px) {
           .chatbot-panel {
             width: calc(100vw - 32px) !important;
-            left: 16px !important;
+            right: 16px !important;
+            left: auto !important;
             bottom: 16px !important;
             max-height: 70vh !important;
           }

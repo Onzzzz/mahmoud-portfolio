@@ -3,6 +3,14 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "eu.pdf.ms.credential.net",
+      },
+    ],
+  },
 
   async headers() {
     return [
@@ -19,6 +27,7 @@ const nextConfig: NextConfig = {
               "img-src 'self' data: https:",
               "font-src 'self' data: https://fonts.gstatic.com",
               "connect-src 'self' https:",
+              "frame-src https://www.youtube.com https://www.youtube-nocookie.com",
               "frame-ancestors 'none'",
             ].join("; "),
           },

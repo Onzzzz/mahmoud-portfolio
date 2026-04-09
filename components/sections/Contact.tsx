@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { motion } from "framer-motion";
-import { Mail, Phone, MessageCircle, MapPin, Loader2, CheckCircle2, Download } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Mail, Phone, MessageCircle, Loader2, CheckCircle2, Calendar, ChevronLeft, ChevronRight, Clock, X } from "lucide-react";
 import { personal, contactTypes } from "@/lib/data";
 
 function LinkedinIcon({ size = 16 }: { readonly size?: number }) {
@@ -33,32 +33,55 @@ const fadeUp = {
   }),
 };
 
-interface ContactLinkProps {
+// BookCall modal helpers
+const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const TIME_SLOTS = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+
+function getDaysInMonth(year: number, month: number) {
+  return new Date(year, month + 1, 0).getDate();
+}
+
+function getFirstDayOfMonth(year: number, month: number) {
+  return new Date(year, month, 1).getDay();
+}
+
+type FormStatus = "idle" | "loading" | "success" | "error";
+type BookStep = "date" | "time" | "details" | "success";
+
+interface ContactLinkItemProps {
   readonly href: string;
   readonly icon: React.ReactNode;
   readonly label: string;
   readonly external?: boolean;
 }
 
-function ContactLink({ href, icon, label, external }: ContactLinkProps) {
+function ContactLinkItem({ href, icon, label, external }: ContactLinkItemProps) {
   return (
     <a
       href={href}
-      className="contact-link flex items-center gap-3"
+      className="group flex items-center gap-4 py-3 transition-colors"
       style={{ textDecoration: "none" }}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
-      <span className="contact-link-icon" style={{ color: "var(--accent)", flexShrink: 0, transition: "color 0.2s" }}>
+      <span
+        className="flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-[var(--accent)]"
+        style={{
+          width: 40,
+          height: 40,
+          borderRadius: "50%",
+          border: "1px solid var(--surface-border)",
+          color: "var(--accent)",
+        }}
+      >
         {icon}
       </span>
       <span
-        className="contact-link-label"
+        className="transition-colors group-hover:text-[var(--text-primary)]"
         style={{
           color: "var(--text-secondary)",
-          transition: "color 0.2s",
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.8rem",
-          letterSpacing: "0.01em",
+          fontFamily: "var(--font-heading)",
+          fontSize: "0.9rem",
+          letterSpacing: "-0.01em",
         }}
       >
         {label}
@@ -67,8 +90,6 @@ function ContactLink({ href, icon, label, external }: ContactLinkProps) {
   );
 }
 
-type FormStatus = "idle" | "loading" | "success" | "error";
-
 export function Contact() {
   const [selected, setSelected] = useState<string>("hiring");
   const [name, setName] = useState("");
@@ -76,6 +97,99 @@ export function Contact() {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMsg, setErrorMsg] = useState("");
+
+  // BookCall modal state
+  const now = new Date();
+  const [showBookModal, setShowBookModal] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(now.getMonth());
+  const [currentYear, setCurrentYear] = useState(now.getFullYear());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [bookName, setBookName] = useState("");
+  const [bookEmail, setBookEmail] = useState("");
+  const [bookTopic, setBookTopic] = useState("");
+  const [bookStep, setBookStep] = useState<BookStep>("date");
+  const [bookStatus, setBookStatus] = useState<FormStatus>("idle");
+
+  const daysInMonth = getDaysInMonth(currentYear, currentMonth);
+  const firstDay = getFirstDayOfMonth(currentYear, currentMonth);
+  const monthName = new Date(currentYear, currentMonth).toLocaleString("en", { month: "long", year: "numeric" });
+
+  const isWeekend = (day: number) => {
+    const date = new Date(currentYear, currentMonth, day);
+    const dow = date.getDay();
+    return dow === 5 || dow === 6;
+  };
+
+  const isPast = (day: number) => {
+    const date = new Date(currentYear, currentMonth, day);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date < today;
+  };
+
+  const prevMonth = () => {
+    if (currentMonth === 0) { setCurrentMonth(11); setCurrentYear(currentYear - 1); }
+    else setCurrentMonth(currentMonth - 1);
+  };
+
+  const nextMonth = () => {
+    if (currentMonth === 11) { setCurrentMonth(0); setCurrentYear(currentYear + 1); }
+    else setCurrentMonth(currentMonth + 1);
+  };
+
+  const selectDate = (day: number) => {
+    setSelectedDate(new Date(currentYear, currentMonth, day));
+    setBookStep("time");
+  };
+
+  const selectTime = (time: string) => {
+    setSelectedTime(time);
+    setBookStep("details");
+  };
+
+  const handleBookSubmit = useCallback(async () => {
+    if (!bookName.trim() || !bookEmail.trim() || !selectedDate || !selectedTime) return;
+
+    setBookStatus("loading");
+
+    const dateStr = selectedDate.toLocaleDateString("en-GB", {
+      weekday: "long", day: "numeric", month: "long", year: "numeric",
+    });
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: bookName.trim(),
+          email: bookEmail.trim(),
+          message: `Meeting Request\nDate: ${dateStr}\nTime: ${selectedTime} GST\nTopic: ${bookTopic.trim() || "General discussion"}`,
+          type: "meeting",
+        }),
+      });
+
+      if (response.ok) {
+        setBookStatus("success");
+        setBookStep("success");
+      } else {
+        setBookStatus("error");
+      }
+    } catch {
+      setBookStatus("error");
+    }
+  }, [bookName, bookEmail, bookTopic, selectedDate, selectedTime]);
+
+  const resetBookModal = () => {
+    setShowBookModal(false);
+    setBookStep("date");
+    setSelectedDate(null);
+    setSelectedTime(null);
+    setBookName("");
+    setBookEmail("");
+    setBookTopic("");
+    setBookStatus("idle");
+  };
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
@@ -121,209 +235,420 @@ export function Contact() {
 
   return (
     <section
-      className="relative pt-24 md:pt-32 pb-4 md:pb-6 px-4 md:px-6 overflow-hidden"
+      className="relative pt-24 md:pt-32 pb-16 md:pb-24 px-4 md:px-6 overflow-hidden"
       id="contact"
     >
-      {/* Subtle ambient glow */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          top: "10%",
-          right: "-10%",
-          width: "500px",
-          height: "500px",
-          borderRadius: "50%",
-          background: "radial-gradient(circle, var(--accent-muted) 0%, transparent 70%)",
-          pointerEvents: "none",
-        }}
-      />
-
       <div className="max-w-6xl mx-auto w-full relative">
-        {/* Header */}
-        <motion.div
-          className="mb-16"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={fadeUp}
-          custom={0}
-        >
-          <div className="flex items-start gap-6">
-            <div className="flex-1">
-              <span className="section-label mb-3 block">Contact</span>
-              <h2
-                style={{
-                  fontFamily: "var(--font-heading)",
-                  fontSize: "clamp(2.4rem, 6vw, 4.5rem)",
-                  fontWeight: 800,
-                  lineHeight: 0.95,
-                  letterSpacing: "-0.025em",
-                  color: "var(--text-primary)",
-                  marginBottom: "1rem",
-                }}
-              >
-                Let&apos;s Build
-                <br />
-                <span style={{ color: "var(--accent)" }}>Something</span>
-              </h2>
-              <p
-                style={{
-                  color: "var(--text-secondary)",
-                  fontSize: "1rem",
-                  maxWidth: "420px",
-                  lineHeight: 1.6,
-                }}
-              >
-                Whether you&apos;re hiring, consulting, or just want to connect
-              </p>
-            </div>
-            {/* Decorative number */}
-            <div
-              className="deco-num hidden md:block"
-              aria-hidden
-              style={{ lineHeight: 0.85, marginTop: "-0.5rem" }}
-            >
-              07
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Two-column layout */}
-        <div className="grid md:grid-cols-5 gap-10 md:gap-14">
-          {/* LEFT — Contact type selector + Form */}
+        {/* Two-column STITCH layout */}
+        <div className="grid md:grid-cols-2 gap-12 md:gap-16">
+          {/* LEFT -- Heading + Contact Links */}
           <motion.div
-            className="md:col-span-3 flex flex-col gap-6"
+            className="flex flex-col justify-center"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeUp}
+            custom={0}
+          >
+            <h2
+              style={{
+                fontFamily: "var(--font-heading)",
+                fontSize: "clamp(3rem, 7vw, 5.5rem)",
+                fontWeight: 800,
+                lineHeight: 0.95,
+                letterSpacing: "-0.03em",
+                color: "var(--text-primary)",
+                marginBottom: "1.5rem",
+              }}
+            >
+              Let&apos;s{" "}
+              <span
+                style={{
+                  color: "var(--accent)",
+                  fontStyle: "italic",
+                }}
+              >
+                Talk.
+              </span>
+            </h2>
+
+            <p
+              style={{
+                color: "var(--text-secondary)",
+                fontSize: "1.05rem",
+                maxWidth: "400px",
+                lineHeight: 1.7,
+                marginBottom: "2.5rem",
+              }}
+            >
+              Whether you&apos;re hiring, looking for a freelancer, or just want to connect — I&apos;m always open to the right conversation.
+            </p>
+
+            {/* Contact links with circle icons */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+              <ContactLinkItem
+                href={`mailto:${personal.email}`}
+                icon={<Mail size={16} />}
+                label={personal.email}
+              />
+              <ContactLinkItem
+                href={`tel:${personal.phone}`}
+                icon={<Phone size={16} />}
+                label={personal.phone}
+              />
+              <ContactLinkItem
+                href={personal.whatsapp}
+                icon={<MessageCircle size={16} />}
+                label="Message on WhatsApp"
+                external
+              />
+              <ContactLinkItem
+                href={personal.linkedin}
+                icon={<LinkedinIcon size={16} />}
+                label="LinkedIn Profile"
+                external
+              />
+            </div>
+          </motion.div>
+
+          {/* RIGHT -- Form Card */}
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-60px" }}
             variants={fadeUp}
-            custom={0.1}
+            custom={0.15}
           >
-            {/* 2x2 contact type grid */}
-            <div className="grid grid-cols-2 gap-3">
-              {contactTypes.map((ct) => {
-                const isSelected = selected === ct.type;
-                return (
+            <div
+              style={{
+                background: "var(--surface)",
+                border: "1px solid var(--surface-border)",
+                padding: "2.5rem",
+              }}
+            >
+              {/* Success State */}
+              {status === "success" ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex flex-col items-center gap-3 py-12 text-center"
+                >
+                  <CheckCircle2 size={40} style={{ color: "var(--accent)" }} />
+                  <p
+                    className="text-lg font-semibold"
+                    style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)" }}
+                  >
+                    Message Sent!
+                  </p>
+                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                    Thank you for reaching out. Mahmoud will get back to you soon.
+                  </p>
                   <button
-                    key={ct.type}
-                    onClick={() => setSelected(ct.type)}
-                    className="card text-left p-4 cursor-pointer"
-                    aria-selected={isSelected}
+                    onClick={() => setStatus("idle")}
                     style={{
-                      background: isSelected
-                        ? "var(--accent-muted)"
-                        : "var(--card-bg)",
-                      borderColor: isSelected
-                        ? "var(--accent)"
-                        : "var(--surface-border)",
-                      transform: "none",
+                      marginTop: "1rem",
+                      color: "var(--accent)",
+                      fontFamily: "var(--font-heading)",
+                      fontSize: "0.8rem",
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase" as const,
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
                     }}
                   >
-                    <p
-                      style={{
-                        fontFamily: "var(--font-heading)",
-                        fontWeight: 700,
-                        fontSize: "0.875rem",
-                        color: isSelected ? "var(--accent)" : "var(--text-primary)",
-                        marginBottom: "0.25rem",
-                        transition: "color 0.2s",
-                      }}
-                    >
-                      {ct.label}
-                    </p>
-                    <p
-                      style={{
-                        fontSize: "0.75rem",
-                        color: "var(--text-muted)",
-                        lineHeight: 1.4,
-                      }}
-                    >
-                      {ct.description}
-                    </p>
+                    Send Another Message
                   </button>
-                );
-              })}
-            </div>
-
-            {/* Success State */}
-            {status === "success" ? (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex flex-col items-center gap-3 py-12 text-center"
-              >
-                <CheckCircle2 size={40} style={{ color: "var(--accent)" }} />
-                <p
-                  className="text-lg font-semibold"
-                  style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)" }}
-                >
-                  Message Sent!
-                </p>
-                <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                  Thank you for reaching out. Mahmoud will get back to you soon.
-                </p>
-                <button
-                  onClick={() => setStatus("idle")}
-                  className="btn-outline mt-4"
-                >
-                  Send Another Message
-                </button>
-              </motion.div>
-            ) : (
-              /* Form */
-              <form
-                onSubmit={handleSubmit}
-                className="flex flex-col gap-4"
-              >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                  {/* Name */}
                   <div>
-                    <label htmlFor="contact-name" className="sr-only">Your Name</label>
+                    <label
+                      htmlFor="contact-name"
+                      style={{
+                        display: "block",
+                        fontFamily: "var(--font-heading)",
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.2em",
+                        textTransform: "uppercase" as const,
+                        color: "var(--text-muted)",
+                        marginBottom: "0.5rem",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Name
+                    </label>
                     <input
                       id="contact-name"
                       type="text"
-                      placeholder="Your Name"
+                      placeholder="Your full name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="contact-input"
+                      style={{
+                        width: "100%",
+                        background: "transparent",
+                        border: "none",
+                        borderBottom: "1px solid var(--surface-border)",
+                        padding: "0.75rem 0",
+                        color: "var(--text-primary)",
+                        fontSize: "0.95rem",
+                        fontFamily: "inherit",
+                        outline: "none",
+                        transition: "border-color 0.2s",
+                      }}
+                      onFocus={(e) => { e.currentTarget.style.borderBottomColor = "var(--accent)"; }}
+                      onBlur={(e) => { e.currentTarget.style.borderBottomColor = "var(--surface-border)"; }}
                     />
                   </div>
+
+                  {/* Company */}
                   <div>
-                    <label htmlFor="contact-email" className="sr-only">Your Email</label>
+                    <label
+                      htmlFor="contact-company"
+                      style={{
+                        display: "block",
+                        fontFamily: "var(--font-heading)",
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.2em",
+                        textTransform: "uppercase" as const,
+                        color: "var(--text-muted)",
+                        marginBottom: "0.5rem",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Company
+                    </label>
+                    <input
+                      id="contact-company"
+                      type="text"
+                      placeholder="Your company name"
+                      style={{
+                        width: "100%",
+                        background: "transparent",
+                        border: "none",
+                        borderBottom: "1px solid var(--surface-border)",
+                        padding: "0.75rem 0",
+                        color: "var(--text-primary)",
+                        fontSize: "0.95rem",
+                        fontFamily: "inherit",
+                        outline: "none",
+                        transition: "border-color 0.2s",
+                      }}
+                      onFocus={(e) => { e.currentTarget.style.borderBottomColor = "var(--accent)"; }}
+                      onBlur={(e) => { e.currentTarget.style.borderBottomColor = "var(--surface-border)"; }}
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div>
+                    <label
+                      htmlFor="contact-email"
+                      style={{
+                        display: "block",
+                        fontFamily: "var(--font-heading)",
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.2em",
+                        textTransform: "uppercase" as const,
+                        color: "var(--text-muted)",
+                        marginBottom: "0.5rem",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Email
+                    </label>
                     <input
                       id="contact-email"
                       type="email"
-                      placeholder="Your Email"
+                      placeholder="your@email.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="contact-input"
+                      style={{
+                        width: "100%",
+                        background: "transparent",
+                        border: "none",
+                        borderBottom: "1px solid var(--surface-border)",
+                        padding: "0.75rem 0",
+                        color: "var(--text-primary)",
+                        fontSize: "0.95rem",
+                        fontFamily: "inherit",
+                        outline: "none",
+                        transition: "border-color 0.2s",
+                      }}
+                      onFocus={(e) => { e.currentTarget.style.borderBottomColor = "var(--accent)"; }}
+                      onBlur={(e) => { e.currentTarget.style.borderBottomColor = "var(--surface-border)"; }}
                     />
                   </div>
-                </div>
-                <div>
-                  <label htmlFor="contact-message" className="sr-only">Your Message</label>
-                  <textarea
-                    id="contact-message"
-                    placeholder="Your Message"
-                    rows={5}
-                    className="contact-input resize-none"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                  />
-                </div>
 
-                {/* Error message */}
-                {status === "error" && errorMsg && (
-                  <p className="text-sm" style={{ color: "#ef4444" }}>
-                    {errorMsg}
-                  </p>
-                )}
+                  {/* Phone */}
+                  <div>
+                    <label
+                      htmlFor="contact-phone"
+                      style={{
+                        display: "block",
+                        fontFamily: "var(--font-heading)",
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.2em",
+                        textTransform: "uppercase" as const,
+                        color: "var(--text-muted)",
+                        marginBottom: "0.5rem",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Phone
+                    </label>
+                    <input
+                      id="contact-phone"
+                      type="tel"
+                      placeholder="Your phone number"
+                      style={{
+                        width: "100%",
+                        background: "transparent",
+                        border: "none",
+                        borderBottom: "1px solid var(--surface-border)",
+                        padding: "0.75rem 0",
+                        color: "var(--text-primary)",
+                        fontSize: "0.95rem",
+                        fontFamily: "inherit",
+                        outline: "none",
+                        transition: "border-color 0.2s",
+                      }}
+                      onFocus={(e) => { e.currentTarget.style.borderBottomColor = "var(--accent)"; }}
+                      onBlur={(e) => { e.currentTarget.style.borderBottomColor = "var(--surface-border)"; }}
+                    />
+                  </div>
 
-                <div>
+                  {/* Inquiry Type */}
+                  <div>
+                    <span
+                      style={{
+                        display: "block",
+                        fontFamily: "var(--font-heading)",
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.2em",
+                        textTransform: "uppercase" as const,
+                        color: "var(--text-muted)",
+                        marginBottom: "0.75rem",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Inquiry Type
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {contactTypes.map((ct) => {
+                        const isActive = selected === ct.type;
+                        return (
+                          <button
+                            key={ct.type}
+                            type="button"
+                            onClick={() => setSelected(ct.type)}
+                            style={{
+                              padding: "0.35rem 0.9rem",
+                              border: `1px solid ${isActive ? "var(--accent)" : "rgba(255,255,255,0.12)"}`,
+                              background: isActive ? "var(--accent)" : "transparent",
+                              color: isActive ? "var(--bg)" : "var(--text-muted)",
+                              fontFamily: "var(--font-mono)",
+                              fontSize: "0.65rem",
+                              fontWeight: 600,
+                              letterSpacing: "0.12em",
+                              textTransform: "uppercase",
+                              cursor: "pointer",
+                              transition: "all 0.15s",
+                              borderRadius: 0,
+                            }}
+                            onMouseEnter={(e) => {
+                              if (!isActive) {
+                                e.currentTarget.style.borderColor = "var(--accent)";
+                                e.currentTarget.style.color = "var(--accent)";
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (!isActive) {
+                                e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+                                e.currentTarget.style.color = "var(--text-muted)";
+                              }
+                            }}
+                          >
+                            {ct.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Message */}
+                  <div>
+                    <label
+                      htmlFor="contact-message"
+                      style={{
+                        display: "block",
+                        fontFamily: "var(--font-heading)",
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.2em",
+                        textTransform: "uppercase" as const,
+                        color: "var(--text-muted)",
+                        marginBottom: "0.5rem",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Message
+                    </label>
+                    <textarea
+                      id="contact-message"
+                      placeholder="Tell me about your project or opportunity..."
+                      rows={4}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      style={{
+                        width: "100%",
+                        background: "transparent",
+                        border: "none",
+                        borderBottom: "1px solid var(--surface-border)",
+                        padding: "0.75rem 0",
+                        color: "var(--text-primary)",
+                        fontSize: "0.95rem",
+                        fontFamily: "inherit",
+                        outline: "none",
+                        resize: "none",
+                        transition: "border-color 0.2s",
+                      }}
+                      onFocus={(e) => { e.currentTarget.style.borderBottomColor = "var(--accent)"; }}
+                      onBlur={(e) => { e.currentTarget.style.borderBottomColor = "var(--surface-border)"; }}
+                    />
+                  </div>
+
+                  {/* Error message */}
+                  {status === "error" && errorMsg && (
+                    <p className="text-sm" style={{ color: "#ef4444" }}>
+                      {errorMsg}
+                    </p>
+                  )}
+
+                  {/* Submit button - full width, gold */}
                   <button
                     type="submit"
-                    className="btn-primary"
                     disabled={status === "loading"}
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.5rem",
+                      padding: "1rem",
+                      background: "var(--accent)",
+                      color: "var(--bg)",
+                      fontFamily: "var(--font-heading)",
+                      fontSize: "0.75rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.15em",
+                      textTransform: "uppercase" as const,
+                      border: "none",
+                      cursor: status === "loading" ? "not-allowed" : "pointer",
+                      transition: "background 0.2s, transform 0.1s",
+                      opacity: status === "loading" ? 0.7 : 1,
+                    }}
+                    onMouseEnter={(e) => { if (status !== "loading") e.currentTarget.style.background = "var(--accent-hover)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "var(--accent)"; }}
                   >
                     {status === "loading" ? (
                       <>
@@ -334,102 +659,280 @@ export function Contact() {
                       "Send Message"
                     )}
                   </button>
-                </div>
-              </form>
-            )}
-          </motion.div>
 
-          {/* RIGHT — Direct contact links */}
-          <motion.div
-            className="md:col-span-2"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
-            variants={fadeUp}
-            custom={0.2}
-          >
-            {/* Thin divider visible on desktop */}
-            <div
-              className="hidden md:block mb-8"
-              style={{
-                height: "1px",
-                background:
-                  "linear-gradient(90deg, var(--surface-border), transparent)",
-              }}
-            />
-
-            <p
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.625rem",
-                letterSpacing: "0.25em",
-                textTransform: "uppercase",
-                color: "var(--text-muted)",
-                marginBottom: "1.75rem",
-              }}
-            >
-              Or reach out directly
-            </p>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-              <ContactLink
-                href={`mailto:${personal.email}`}
-                icon={<Mail size={16} />}
-                label={personal.email}
-              />
-              <ContactLink
-                href={`tel:${personal.phone}`}
-                icon={<Phone size={16} />}
-                label={personal.phone}
-              />
-              <ContactLink
-                href={personal.whatsapp}
-                icon={<MessageCircle size={16} />}
-                label="Message on WhatsApp"
-                external
-              />
-              <ContactLink
-                href={personal.linkedin}
-                icon={<LinkedinIcon size={16} />}
-                label="LinkedIn Profile"
-                external
-              />
-              <ContactLink
-                href="#"
-                icon={<MapPin size={16} />}
-                label={personal.location}
-              />
+                  {/* Book a Call button */}
+                  <button
+                    type="button"
+                    onClick={() => setShowBookModal(true)}
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.5rem",
+                      padding: "0.85rem",
+                      background: "transparent",
+                      border: "1px solid var(--accent)",
+                      color: "var(--accent)",
+                      fontFamily: "var(--font-heading)",
+                      fontSize: "0.75rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.15em",
+                      textTransform: "uppercase" as const,
+                      cursor: "pointer",
+                      transition: "all 0.2s",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "var(--accent)";
+                      e.currentTarget.style.color = "var(--bg)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.color = "var(--accent)";
+                    }}
+                  >
+                    <Calendar size={15} />
+                    Book a Call
+                  </button>
+                </form>
+              )}
             </div>
           </motion.div>
         </div>
-
-        {/* Download CV — bottom of contact */}
-        <motion.div
-          className="mt-6 pt-4 text-center"
-          style={{ borderTop: "1px solid var(--surface-border)" }}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={fadeUp}
-          custom={0.3}
-        >
-          <p
-            className="text-sm mb-4"
-            style={{ color: "var(--text-muted)" }}
-          >
-            Prefer a traditional resume?
-          </p>
-          <a
-            href="/Mahmoud_Abdallah.pdf"
-            download
-            className="btn-outline"
-          >
-            <Download size={15} />
-            Download CV
-          </a>
-        </motion.div>
       </div>
+
+      {/* BookCall Modal */}
+      <AnimatePresence>
+        {showBookModal && (
+          <motion.div
+            className="fixed inset-0 flex items-center justify-center px-4"
+            style={{ zIndex: 9999, background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={resetBookModal}
+          >
+            <motion.div
+              className="w-full max-w-md p-6 relative"
+              style={{ background: "var(--surface)", border: "1px solid var(--surface-border-gold)" }}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-2">
+                  <Calendar size={18} style={{ color: "var(--accent)" }} />
+                  <span className="font-semibold" style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)" }}>
+                    Schedule a Meeting
+                  </span>
+                </div>
+                <button onClick={resetBookModal} className="p-1 transition-colors hover:bg-[var(--surface-2)]">
+                  <X size={18} style={{ color: "var(--text-muted)" }} />
+                </button>
+              </div>
+
+              {/* Step indicators */}
+              <div className="flex gap-1.5 justify-center mb-5">
+                {["date", "time", "details"].map((s, i) => (
+                  <div
+                    key={s}
+                    className="h-1.5 transition-all duration-300"
+                    style={{
+                      width: bookStep === s || (bookStep === "success" && i < 3) ? 24 : 8,
+                      background: ["date", "time", "details", "success"].indexOf(bookStep) >= i
+                        ? "var(--accent)"
+                        : "var(--surface-border)",
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* Step: Date */}
+              {bookStep === "date" && (
+                <div>
+                  <p className="text-sm font-semibold text-center mb-4" style={{ color: "var(--text-primary)" }}>
+                    Pick a Date
+                  </p>
+
+                  <div className="flex items-center justify-between mb-4">
+                    <button onClick={prevMonth} className="p-2" style={{ border: "1px solid var(--surface-border)", color: "var(--text-secondary)" }}>
+                      <ChevronLeft size={14} />
+                    </button>
+                    <span className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>{monthName}</span>
+                    <button onClick={nextMonth} className="p-2" style={{ border: "1px solid var(--surface-border)", color: "var(--text-secondary)" }}>
+                      <ChevronRight size={14} />
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-7 gap-1 mb-2">
+                    {DAYS.map((d) => (
+                      <div key={d} className="text-center text-xs py-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
+                        {d}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="grid grid-cols-7 gap-1">
+                    {Array.from({ length: firstDay }).map((_, i) => (
+                      <div key={`empty-${i}`} />
+                    ))}
+                    {Array.from({ length: daysInMonth }).map((_, i) => {
+                      const day = i + 1;
+                      const disabled = isWeekend(day) || isPast(day);
+                      return (
+                        <button
+                          key={day}
+                          disabled={disabled}
+                          onClick={() => selectDate(day)}
+                          className="aspect-square text-sm font-medium transition-all duration-200"
+                          style={{
+                            color: disabled ? "var(--text-muted)" : "var(--text-primary)",
+                            background: "transparent",
+                            border: selectedDate?.getDate() === day ? "1px solid var(--accent)" : "1px solid transparent",
+                            cursor: disabled ? "not-allowed" : "pointer",
+                            opacity: disabled ? 0.4 : 1,
+                          }}
+                          onMouseEnter={(e) => { if (!disabled) (e.currentTarget as HTMLElement).style.background = "var(--accent-muted)"; }}
+                          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+                        >
+                          {day}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <p className="text-xs text-center mt-4" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
+                    Timezone: Asia/Dubai (GST) · Fri-Sat unavailable
+                  </p>
+                </div>
+              )}
+
+              {/* Step: Time */}
+              {bookStep === "time" && (
+                <div>
+                  <p className="text-sm font-semibold text-center mb-1" style={{ color: "var(--text-primary)" }}>
+                    Pick a Time
+                  </p>
+                  <p className="text-xs text-center mb-5" style={{ color: "var(--text-muted)" }}>
+                    {selectedDate?.toLocaleDateString("en", { weekday: "long", day: "numeric", month: "long" })}
+                  </p>
+
+                  <div className="grid grid-cols-3 gap-2">
+                    {TIME_SLOTS.map((time) => (
+                      <button
+                        key={time}
+                        onClick={() => selectTime(time)}
+                        className="py-2.5 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1.5"
+                        style={{
+                          border: "1px solid var(--surface-border)",
+                          color: "var(--text-primary)",
+                          background: selectedTime === time ? "var(--accent-muted)" : "transparent",
+                        }}
+                        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--accent)"; }}
+                        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--surface-border)"; }}
+                      >
+                        <Clock size={12} style={{ color: "var(--accent)" }} />
+                        {time}
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => setBookStep("date")}
+                    className="mt-4 text-xs w-full text-center"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    &larr; Back to calendar
+                  </button>
+                </div>
+              )}
+
+              {/* Step: Details */}
+              {bookStep === "details" && (
+                <div>
+                  <p className="text-sm font-semibold text-center mb-1" style={{ color: "var(--text-primary)" }}>
+                    Your Details
+                  </p>
+                  <p className="text-xs text-center mb-5" style={{ color: "var(--text-muted)" }}>
+                    {selectedDate?.toLocaleDateString("en", { weekday: "long", day: "numeric", month: "long" })} at {selectedTime} GST
+                  </p>
+
+                  <div className="space-y-3">
+                    <input
+                      type="text"
+                      placeholder="Your Name"
+                      value={bookName}
+                      onChange={(e) => setBookName(e.target.value)}
+                      className="contact-input"
+                    />
+                    <input
+                      type="email"
+                      placeholder="Your Email"
+                      value={bookEmail}
+                      onChange={(e) => setBookEmail(e.target.value)}
+                      className="contact-input"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Topic (optional)"
+                      value={bookTopic}
+                      onChange={(e) => setBookTopic(e.target.value)}
+                      className="contact-input"
+                    />
+                  </div>
+
+                  {bookStatus === "error" && (
+                    <p className="text-xs mt-3 text-center" style={{ color: "#ef4444" }}>
+                      Failed to book. Please try again.
+                    </p>
+                  )}
+
+                  <button
+                    onClick={handleBookSubmit}
+                    disabled={!bookName.trim() || !bookEmail.trim() || bookStatus === "loading"}
+                    className="btn-primary w-full mt-5 justify-center"
+                  >
+                    {bookStatus === "loading" ? (
+                      <><Loader2 size={15} className="animate-spin" /> Booking...</>
+                    ) : (
+                      "Confirm Booking"
+                    )}
+                  </button>
+
+                  <button
+                    onClick={() => setBookStep("time")}
+                    className="mt-3 text-xs w-full text-center"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    &larr; Change time
+                  </button>
+                </div>
+              )}
+
+              {/* Step: Success */}
+              {bookStep === "success" && (
+                <div className="text-center py-6">
+                  <CheckCircle2 size={40} style={{ color: "var(--accent)", margin: "0 auto 1rem" }} />
+                  <p className="text-lg font-semibold mb-2" style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)" }}>
+                    Booking Confirmed!
+                  </p>
+                  <p className="text-sm mb-1" style={{ color: "var(--text-secondary)" }}>
+                    {selectedDate?.toLocaleDateString("en", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
+                  </p>
+                  <p className="text-sm mb-4" style={{ color: "var(--accent)", fontFamily: "var(--font-mono)" }}>
+                    {selectedTime} GST
+                  </p>
+                  <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                    Mahmoud will confirm your booking shortly.
+                  </p>
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
-

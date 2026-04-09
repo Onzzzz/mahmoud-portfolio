@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { testimonials } from "@/lib/data";
-import { fadeUp, staggerContainer } from "@/lib/animations";
 
 function LinkedinIcon({ size = 14 }: { readonly size?: number }) {
   return (
@@ -14,130 +13,181 @@ function LinkedinIcon({ size = 14 }: { readonly size?: number }) {
   );
 }
 
+function truncateQuote(quote: string, maxLength: number): string {
+  if (quote.length <= maxLength) return quote;
+  const chunk = quote.slice(0, maxLength);
+  const lastPeriod = Math.max(chunk.lastIndexOf(". "), chunk.lastIndexOf("! "), chunk.lastIndexOf("? "));
+  if (lastPeriod > maxLength * 0.5) {
+    return chunk.slice(0, lastPeriod + 1);
+  }
+  return chunk.trimEnd() + "...";
+}
+
 export function Testimonials() {
-  // Duplicate grid items for infinite marquee
-  const marqueeItems = [...testimonials.grid, ...testimonials.grid];
+  const featured = testimonials.items[0];
+  const gridItems = testimonials.items.slice(1);
+
+  // Key excerpt from Avil's long recommendation
+  const featuredExcerpt =
+    "Mahmoud consistently demonstrated strong strategic thinking, commercial awareness, and a deep understanding of technically driven procurement. What stood out most was his ability to bridge the gap between technical teams, creative stakeholders, and suppliers.";
 
   return (
     <section
       id="testimonials"
-      className="relative overflow-hidden py-24 md:py-36"
+      className="relative overflow-hidden pt-10 pb-24 md:pt-14 md:pb-36"
       style={{ background: "var(--bg-alt)" }}
     >
-      {/* Radial glow */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        aria-hidden="true"
-        style={{
-          background: "radial-gradient(ellipse 70% 45% at 50% -5%, var(--accent-muted) 0%, transparent 70%)",
-        }}
-      />
+      <div className="relative mx-auto max-w-7xl px-4 md:px-6">
+        {/* 12-column grid: left heading + right content */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
 
-      <div className="relative mx-auto max-w-6xl px-6">
-        {/* Header */}
-        <motion.div
-          className="relative mb-16 md:mb-24"
-          initial={{ opacity: 0, y: 22 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] as const }}
-        >
-          <span className="deco-num pointer-events-none absolute -top-8 right-0 select-none" aria-hidden="true">06</span>
-          <span className="section-label mb-4 block">Testimonials</span>
-          <h2
-            className="mb-5 font-bold leading-tight tracking-tight"
-            style={{ fontSize: "clamp(2.25rem, 6vw, 4rem)", color: "var(--text-primary)" }}
-          >
-            What People Say
-          </h2>
-          <a
-            href="https://www.linkedin.com/in/mahmoudf-abdallah"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 transition-opacity hover:opacity-70"
-            style={{ color: "var(--text-muted)" }}
-            aria-label={`View ${testimonials.linkedinCount} recommendations on LinkedIn`}
-          >
-            <LinkedinIcon size={14} />
-            <span className="text-xs font-medium tracking-wide" style={{ fontFamily: "var(--font-mono)" }}>
-              {testimonials.linkedinCount} recommendations on LinkedIn
-            </span>
-          </a>
-        </motion.div>
-
-        {/* Featured cards */}
-        <motion.div
-          variants={staggerContainer(0.15)}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          className="mb-10 grid grid-cols-1 gap-6 md:grid-cols-2"
-        >
-          {testimonials.featured.map((t) => (
-            <motion.article key={t.name} variants={fadeUp} className="h-full">
-              <div className="card relative flex h-full flex-col p-8" style={{ borderLeft: "3px solid var(--accent)" }}>
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute left-6 top-4 select-none leading-none"
-                  style={{ fontSize: "2.5rem", color: "var(--accent)", opacity: 0.3, fontFamily: "Georgia, serif" }}
-                >
-                  ❝
-                </span>
-                <blockquote className="relative mt-8 flex-1">
-                  <p className="text-base italic leading-relaxed md:text-lg" style={{ color: "var(--text-secondary)" }}>
-                    {t.quote}
-                  </p>
-                </blockquote>
-                <div className="my-6" aria-hidden="true" style={{ height: "1px", background: "linear-gradient(90deg, var(--accent) 0%, transparent 100%)", opacity: 0.3 }} />
-                <footer className="flex items-center justify-between gap-4">
-                  <div>
-                    <p className="font-semibold leading-snug" style={{ color: "var(--text-primary)" }}>{t.name}</p>
-                    <p className="mt-0.5 text-sm" style={{ color: "var(--text-muted)" }}>{t.role}</p>
-                  </div>
-                  <span className="tag shrink-0">{t.relationship}</span>
-                </footer>
-              </div>
-            </motion.article>
-          ))}
-        </motion.div>
-
-        {/* Marquee — auto-scrolling testimonials */}
-        <div className="relative overflow-hidden">
-          {/* Fade edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style={{ background: "linear-gradient(to right, var(--bg-alt), transparent)" }} />
-          <div className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style={{ background: "linear-gradient(to left, var(--bg-alt), transparent)" }} />
-
+          {/* Left column (col-span-4): Heading + LinkedIn link */}
           <motion.div
-            className="flex gap-5"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-            whileHover={{ animationPlayState: "paused" }}
+            className="md:col-span-4"
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] as const }}
           >
-            {marqueeItems.map((t, i) => (
-              <div
-                key={`${t.name}-${i}`}
-                className="card flex-shrink-0 flex flex-col p-6"
-                style={{ width: "320px" }}
-              >
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none select-none leading-none mb-3"
-                  style={{ fontSize: "1.5rem", color: "var(--accent)", opacity: 0.25, fontFamily: "Georgia, serif" }}
+            <h2
+              className="text-3xl md:text-5xl leading-tight mb-6"
+              style={{
+                fontFamily: "var(--font-serif)",
+                color: "var(--text-primary)",
+                fontWeight: 400,
+              }}
+            >
+              What People{" "}
+              <span style={{ color: "var(--accent)", fontStyle: "italic" }}>
+                Say.
+              </span>
+            </h2>
+
+            <a
+              href={testimonials.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 transition-all duration-200"
+              style={{
+                color: "var(--accent)",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.7rem",
+                fontWeight: 600,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                border: "1px solid var(--accent)",
+                padding: "0.4rem 0.8rem",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--accent)";
+                e.currentTarget.style.color = "var(--bg)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.color = "var(--accent)";
+              }}
+              aria-label="More on LinkedIn"
+            >
+              <LinkedinIcon size={14} />
+              More on LinkedIn ↗
+            </a>
+          </motion.div>
+
+          {/* Right column (col-span-8): Pull-quote + grid */}
+          <div className="md:col-span-8">
+
+            {/* Large pull-quote */}
+            <motion.div
+              className="mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <blockquote>
+                <p
+                  className="text-xl md:text-2xl leading-relaxed"
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    fontStyle: "italic",
+                    color: "var(--accent)",
+                    fontWeight: 400,
+                    opacity: 0.85,
+                  }}
                 >
-                  ❝
-                </span>
-                <blockquote className="flex-1">
-                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                    {t.quote}
+                  &ldquo;{featuredExcerpt}&rdquo;
+                </p>
+              </blockquote>
+
+              {/* Gold line + author */}
+              <div className="mt-6 flex items-center gap-4">
+                <div
+                  className="w-12 h-px"
+                  style={{ background: "var(--accent)" }}
+                />
+                <div>
+                  <p
+                    className="text-sm font-semibold"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    {featured.name}
                   </p>
-                </blockquote>
-                <div className="mt-4 pt-4" style={{ borderTop: "1px solid var(--surface-border)" }}>
-                  <p className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>{t.name}</p>
-                  <p className="mt-0.5 text-xs" style={{ color: "var(--text-muted)" }}>{t.role}</p>
+                  <p
+                    className="text-xs mt-0.5"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    {featured.role}
+                  </p>
                 </div>
               </div>
-            ))}
-          </motion.div>
+            </motion.div>
+
+            {/* 2x2 grid of remaining quotes */}
+            <div
+              className="grid grid-cols-1 md:grid-cols-2 gap-0"
+              style={{ gap: "1px", background: "var(--surface-border)" }}
+            >
+              {gridItems.map((t, i) => (
+                <motion.div
+                  key={t.name}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  className="p-6 transition-colors duration-300 hover:bg-[var(--surface-2)]"
+                  style={{ background: "var(--surface)" }}
+                >
+                  <blockquote>
+                    <p
+                      className="text-sm leading-relaxed mb-4"
+                      style={{
+                        color: "var(--accent)",
+                        fontStyle: "italic",
+                        opacity: 0.75,
+                      }}
+                    >
+                      &ldquo;{truncateQuote(t.quote, 420)}&rdquo;
+                    </p>
+                  </blockquote>
+                  <div>
+                    <p
+                      className="text-sm font-semibold"
+                      style={{ color: "var(--text-primary)" }}
+                    >
+                      {t.name}
+                    </p>
+                    <p
+                      className="text-xs mt-0.5"
+                      style={{ color: "var(--text-muted)" }}
+                    >
+                      {t.role}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
