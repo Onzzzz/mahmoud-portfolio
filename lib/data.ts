@@ -40,18 +40,18 @@ export const about = {
   sections: [
     {
       label: "Who I Am",
-      text: "7+ years in procurement, supply chain, and operations across the GCC and Egypt. I've worked FMCG, oil & gas, event technology, and heavy equipment — and in every company, I left behind systems, results, and impact that didn't exist before I walked in.",
+      text: "7+ years across procurement, supply chain, and operations in the GCC and MENA — spanning FMCG, oil & gas, event technology, and heavy equipment. Every role I've held, I've left behind systems, governance, and operational infrastructure that didn't exist before I walked in.",
     },
     {
       label: "What I Do",
-      text: "Full procurement lifecycle — from sourcing strategy and vendor negotiations to contract execution and source-to-pay. I manage RFQ cycles, evaluate and develop suppliers, and track vendor performance to drive continuous improvement. On the supply chain and operations side, I design workflows, streamline processes, and drive cross-functional alignment.",
+      text: "End-to-end procurement and supply chain management — sourcing strategy, vendor negotiations, contract execution, and source-to-pay. I build the workflows, scoring models, and reporting structures that drive measurable improvement, not just manage existing cycles. On the operations side, I design cross-functional processes and streamline execution across departments.",
     },
     {
       label: "What Sets Me Apart",
-      text: "Beyond procurement, I build the operational backbone — SOPs, governance frameworks, compliance policies, and process automation powered by AI-driven workflows. I lead digital transformation initiatives including ERP implementations and system design. I also leverage vibe coding — AI-assisted development — to rapidly build internal tools, dashboards, and automation scripts that solve real operational problems. And I support business growth by managing the full bid lifecycle and equipping teams with the structure and tools they need to win contracts and scale.",
+      text: "I build the operational backbone — SOPs, governance frameworks, compliance policies, and process automation powered by AI-driven workflows. I lead ERP implementations, design internal systems, and use AI-assisted development to rapidly build tools, dashboards, and automation that solve real operational problems. I also manage the full bid lifecycle and equip teams with the structure they need to win contracts and scale.",
     },
   ],
-  tags: ["Dubai, UAE", "7+ Years", "6 Industries", "GCC & Egypt", "Arabic & English", "Budgets up to AED 10M"],
+  tags: ["Dubai, UAE", "7+ Years", "6 Industries", "GCC & MENA", "Arabic & English", "Budgets up to AED 10M"],
 } as const;
 
 export const experience = [

@@ -35,8 +35,8 @@ function NodeNetwork({ isDark }: { readonly isDark: boolean }) {
     window.addEventListener("mouseleave", onMouseLeave);
 
     const COLOR = isDark ? "212,168,83" : "160,120,45";
-    const COUNT = 85;
-    const CONNECT_DIST = 130;
+    const COUNT = 150;
+    const CONNECT_DIST = 120;
     const REPEL_DIST = 140;
 
     interface Node {
@@ -67,6 +67,8 @@ function NodeNetwork({ isDark }: { readonly isDark: boolean }) {
 
     let animId: number;
     let tick = 0;
+
+    // World map is now rendered as SVG behind the canvas
 
     const draw = () => {
       tick++;
@@ -118,7 +120,7 @@ function NodeNetwork({ isDark }: { readonly isDark: boolean }) {
         (n as Node & { _breathe: number })._breathe = breathe;
       }
 
-      // Connections
+      // Node-to-node connections
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const dx = nodes[i].x - nodes[j].x;
@@ -131,7 +133,6 @@ function NodeNetwork({ isDark }: { readonly isDark: boolean }) {
             const cDy = midY - my;
             const mouseDist = Math.sqrt(cDx * cDx + cDy * cDy);
             const glow = mouseDist < 160 ? 1 - mouseDist / 160 : 0;
-            // Lines breathe too: alpha pulses with average phase of two endpoints
             const lineBreath = 0.85 + 0.15 * Math.sin(tick * 0.015 + (nodes[i].phase + nodes[j].phase) / 2);
             const baseAlpha = (1 - d / CONNECT_DIST) * 0.18 * lineBreath;
             const alpha = Math.min(baseAlpha + glow * 0.45, 0.7);
@@ -217,6 +218,23 @@ export function Hero() {
     <section ref={sectionRef} className="relative min-h-screen flex flex-col overflow-hidden" id="hero">
       {/* Background layer */}
       <motion.div className="absolute inset-0 pointer-events-none" style={{ y: bgY }}>
+        {/* World map — subtle SVG background */}
+        <div className="absolute inset-x-0 top-16 bottom-0 flex items-center justify-center overflow-hidden">
+          <img
+            src="/images/world-map.svg"
+            alt=""
+            className="w-full h-full object-cover pointer-events-none select-none"
+            draggable={false}
+            style={{
+              objectPosition: "center 45%",
+              opacity: isDark ? 0.55 : 0.10,
+              filter: isDark
+                ? "sepia(1) saturate(3) hue-rotate(15deg) brightness(1.5)"
+                : "sepia(1) saturate(2) hue-rotate(15deg) brightness(0.8)",
+            }}
+          />
+        </div>
+        {/* Interactive node network on top of map */}
         <div className="absolute inset-0">
           <NodeNetwork isDark={isDark} />
         </div>

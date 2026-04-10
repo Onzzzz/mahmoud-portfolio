@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { dailyStack } from "@/lib/data";
 
 // ── Kanban Data ────────────────────────────────────────────────
@@ -94,9 +94,9 @@ const toolLogos: Record<string, string> = {
   "Coupa": "https://www.google.com/s2/favicons?domain=coupa.com&sz=32",
   "eSupply Dubai": "https://www.google.com/s2/favicons?domain=esupply.dubai.gov.ae&sz=32",
   "Etimad": "https://www.google.com/s2/favicons?domain=etimad.sa&sz=32",
-  "SABER": "https://logo.clearbit.com/saber.sa",
-  "Tejari": "https://logo.clearbit.com/tejari.com",
-  "Ariba": "https://logo.clearbit.com/ariba.com",
+  "SABER": "https://www.google.com/s2/favicons?domain=saber.sa&sz=32",
+  "Tejari": "https://www.google.com/s2/favicons?domain=tejari.com&sz=32",
+  "Ariba": "https://cdn.simpleicons.org/sap/0FAAFF",
   "Jaggaer": "https://www.google.com/s2/favicons?domain=jaggaer.com&sz=32",
   "n8n": "https://cdn.simpleicons.org/n8n/EA4B71",
   "Claude": "https://cdn.simpleicons.org/anthropic/D4A853",
@@ -114,7 +114,7 @@ const toolLogos: Record<string, string> = {
   "Laserfiche": "https://www.google.com/s2/favicons?domain=laserfiche.com&sz=32",
   "DHL": "https://cdn.simpleicons.org/dhl/D40511",
   "FedEx": "https://img.icons8.com/color/32/fedex.png",
-  "Aramex": "https://logo.clearbit.com/aramex.com",
+  "Aramex": "https://www.google.com/s2/favicons?domain=aramex.com&sz=32",
   "Tenders on Time": "https://www.google.com/s2/favicons?domain=tendersontime.com&sz=32",
   "Canva": "https://www.google.com/s2/favicons?domain=canva.com&sz=32",
   "Notion": "https://www.google.com/s2/favicons?domain=notion.so&sz=32",
@@ -125,7 +125,10 @@ const toolLogos: Record<string, string> = {
 };
 
 // ── ToolBadge ─────────────────────────────────────────────────
-function ToolBadge({ item }: { item: { tool: string; category: string } }) {
+function ToolBadge({ item }: { readonly item: { readonly tool: string; readonly category: string } }) {
+  const [imgFailed, setImgFailed] = useState(false);
+  const logoUrl = toolLogos[item.tool] ?? "";
+
   return (
     <span
       className="inline-flex items-center gap-2.5 px-4 py-2.5 shrink-0 transition-colors duration-300"
@@ -146,15 +149,33 @@ function ToolBadge({ item }: { item: { tool: string; category: string } }) {
         e.currentTarget.style.color = "var(--text-secondary)";
       }}
     >
-      <img
-        src={toolLogos[item.tool] ?? ""}
-        alt=""
-        width={18}
-        height={18}
-        className="shrink-0"
-        style={{ borderRadius: 2 }}
-        onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-      />
+      {!imgFailed && logoUrl ? (
+        <img
+          src={logoUrl}
+          alt=""
+          width={18}
+          height={18}
+          className="shrink-0"
+          style={{ borderRadius: 2 }}
+          onError={() => setImgFailed(true)}
+        />
+      ) : (
+        <span
+          className="shrink-0 flex items-center justify-center"
+          style={{
+            width: 18,
+            height: 18,
+            borderRadius: 4,
+            background: "var(--accent)",
+            color: "var(--bg)",
+            fontSize: "0.6rem",
+            fontWeight: 700,
+            lineHeight: 1,
+          }}
+        >
+          {item.tool.charAt(0)}
+        </span>
+      )}
       {item.tool}
     </span>
   );
