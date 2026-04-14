@@ -49,7 +49,7 @@
 }
 
 /* === Base Reset === */
-html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+html { scroll-behavior: smooth; scroll-padding-top: 4rem; }
 
 body {
   background-color: var(--bg);
@@ -452,6 +452,29 @@ body::after {
   background: var(--accent-muted);
   color: var(--text-secondary);
   font-family: var(--font-mono);
+}
+
+/* === Contact Form Field (compact underline style) === */
+.contact-field {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--surface-border);
+  padding: 0.5rem 0;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.contact-field:focus {
+  border-bottom-color: var(--accent);
+}
+
+.contact-field::placeholder {
+  color: var(--text-muted);
+  font-size: 0.8rem;
 }
 
 /* === Contact Input Focus (CSS only) === */

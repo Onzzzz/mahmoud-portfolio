@@ -4,7 +4,7 @@ import { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTyping } from "@/lib/hooks";
 import { personal, hero } from "@/lib/data";
-import { ArrowDownRight, Download } from "lucide-react";
+import { ArrowDownRight } from "lucide-react";
 import { CountUp } from "@/components/ui/CountUp";
 import { useTheme } from "@/lib/theme-context";
 
@@ -302,15 +302,33 @@ export function Hero() {
               </motion.h1>
             </div>
 
-            {/* Tagline */}
+            {/* Tagline — word-by-word stagger */}
             <motion.p
-              className="mt-5 text-base md:text-lg font-light max-w-lg"
-              style={{ color: "var(--text-secondary)", fontFamily: "var(--font-heading)" }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 2.6 }}
+              className="mt-5 text-base md:text-lg font-normal max-w-lg flex flex-wrap"
+              style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)", gap: "0 0.3em" }}
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.08, delayChildren: 2.6 } },
+              }}
             >
-              {personal.tagline}
+              {personal.tagline.split(" ").map((word, i) => (
+                <motion.span
+                  key={i}
+                  variants={{
+                    hidden: { opacity: 0, y: 14, filter: "blur(4px)" },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      filter: "blur(0px)",
+                      transition: { duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] },
+                    },
+                  }}
+                >
+                  {word}
+                </motion.span>
+              ))}
             </motion.p>
 
             {/* Typing line */}
@@ -336,10 +354,7 @@ export function Hero() {
               <a href="#contact" className="btn-primary">
                 Let&apos;s Talk <ArrowDownRight size={15} />
               </a>
-              <a href="#projects" className="btn-outline">My Work</a>
-              <a href="/Mahmoud_Abdallah.pdf" download className="btn-outline" style={{ gap: "0.375rem" }}>
-                <Download size={14} /> Resume
-              </a>
+              <a href="#projects" className="btn-outline">Projects</a>
             </motion.div>
           </motion.div>
         </div>
@@ -357,7 +372,7 @@ export function Hero() {
         transition={{ delay: 3.1 }}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 py-6 gap-y-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 pt-6 pb-6 gap-y-4">
             {hero.stats.map((s, i) => {
               const parsed = parseStatNumber(s.value);
               return (

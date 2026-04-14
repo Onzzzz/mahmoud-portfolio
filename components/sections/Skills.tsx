@@ -86,42 +86,42 @@ const kanbanColumns = [
   },
 ] as const;
 
-// ── Tool logos ────────────────────────────────────────────────
+// ── Tool logos (local) ────────────────────────────────────────
 const toolLogos: Record<string, string> = {
-  "Oracle": "https://img.icons8.com/color/32/oracle-logo.png",
-  "Odoo": "https://www.google.com/s2/favicons?domain=odoo.com&sz=32",
-  "SAP": "https://cdn.simpleicons.org/sap/0FAAFF",
-  "Coupa": "https://www.google.com/s2/favicons?domain=coupa.com&sz=32",
-  "eSupply Dubai": "https://www.google.com/s2/favicons?domain=esupply.dubai.gov.ae&sz=32",
-  "Etimad": "https://www.google.com/s2/favicons?domain=etimad.sa&sz=32",
-  "SABER": "https://www.google.com/s2/favicons?domain=saber.sa&sz=32",
-  "Tejari": "https://www.google.com/s2/favicons?domain=tejari.com&sz=32",
-  "Ariba": "https://cdn.simpleicons.org/sap/0FAAFF",
-  "Jaggaer": "https://www.google.com/s2/favicons?domain=jaggaer.com&sz=32",
-  "n8n": "https://cdn.simpleicons.org/n8n/EA4B71",
-  "Claude": "https://cdn.simpleicons.org/anthropic/D4A853",
-  "ChatGPT": "https://img.icons8.com/color/32/chatgpt.png",
-  "Gemini": "https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64",
-  "Sora": "https://cdn.simpleicons.org/openai/10A37F",
-  "GLM": "https://img.icons8.com/fluency/32/artificial-intelligence.png",
-  "Nano Banan": "https://img.icons8.com/fluency/32/artificial-intelligence.png",
-  "Advanced Excel": "https://img.icons8.com/color/32/microsoft-excel-2019.png",
-  "Power BI": "https://img.icons8.com/color/32/power-bi-2021.png",
-  "Mermaid Diagrams": "https://avatars.githubusercontent.com/u/57169982?s=32&v=4",
-  "MS Office": "https://img.icons8.com/color/32/microsoft-office-2019.png",
-  "Outlook": "https://img.icons8.com/color/32/microsoft-outlook-2019.png",
-  "Zoho": "https://cdn.simpleicons.org/zoho/C8202B",
-  "Laserfiche": "https://www.google.com/s2/favicons?domain=laserfiche.com&sz=32",
-  "DHL": "https://cdn.simpleicons.org/dhl/D40511",
-  "FedEx": "https://img.icons8.com/color/32/fedex.png",
-  "Aramex": "https://www.google.com/s2/favicons?domain=aramex.com&sz=32",
-  "Tenders on Time": "https://www.google.com/s2/favicons?domain=tendersontime.com&sz=32",
-  "Canva": "https://www.google.com/s2/favicons?domain=canva.com&sz=32",
-  "Notion": "https://www.google.com/s2/favicons?domain=notion.so&sz=32",
-  "ClickUp": "https://www.google.com/s2/favicons?domain=clickup.com&sz=32",
-  "Monday": "https://www.google.com/s2/favicons?domain=monday.com&sz=32",
-  "Microsoft Teams": "https://img.icons8.com/color/32/microsoft-teams.png",
-  "Google Meet": "https://img.icons8.com/color/32/google-meet.png",
+  "Oracle": "/images/stack/oracle.png",
+  "Odoo": "/images/stack/odoo.png",
+  "SAP": "/images/stack/sap.svg",
+  "Coupa": "/images/stack/coupa.png",
+  "eSupply Dubai": "/images/stack/esupply-dubai.jpg",
+  "Etimad": "/images/stack/etimad.png",
+  "SABER": "/images/stack/saber.png",
+  "Tejari": "/images/stack/tejari.png",
+  "Ariba": "/images/stack/ariba.svg",
+  "Jaggaer": "/images/stack/jaggaer.png",
+  "n8n": "/images/stack/n8n.svg",
+  "Claude": "/images/stack/claude.svg",
+  "ChatGPT": "/images/stack/chatgpt.png",
+  "Gemini": "/images/stack/gemini.png",
+  "Sora": "/images/stack/sora.png",
+  "GLM": "/images/stack/glm.png",
+  "Nano Banan": "/images/stack/nano-banan.png",
+  "Advanced Excel": "/images/stack/excel.png",
+  "Power BI": "/images/stack/power-bi.png",
+  "Mermaid Diagrams": "/images/stack/mermaid.png",
+  "MS Office": "/images/stack/ms-office.png",
+  "Outlook": "/images/stack/outlook.png",
+  "Zoho": "/images/stack/zoho.svg",
+  "Laserfiche": "/images/stack/laserfiche.png",
+  "DHL": "/images/stack/dhl.svg",
+  "FedEx": "/images/stack/fedex.png",
+  "Aramex": "/images/stack/aramex.png",
+  "Tenders on Time": "/images/stack/tenders-on-time.png",
+  "Canva": "/images/stack/canva.png",
+  "Notion": "/images/stack/notion.png",
+  "ClickUp": "/images/stack/clickup.png",
+  "Monday": "/images/stack/monday.png",
+  "Microsoft Teams": "/images/stack/microsoft-teams.png",
+  "Google Meet": "/images/stack/google-meet.png",
 };
 
 // ── ToolBadge ─────────────────────────────────────────────────
@@ -306,6 +306,25 @@ export function Skills() {
         }
         @media (max-width: 639px) {
           .kanban-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        /* Reset index-based inline padding/borders when grid reflows to fewer columns */
+        @media (max-width: 1023px) {
+          .kanban-grid > * {
+            padding-left: 0.6rem !important;
+            padding-right: 0.6rem !important;
+            border-right: none !important;
+          }
+          .kanban-grid > *:nth-child(3n+1) { padding-left: 0 !important; }
+          .kanban-grid > *:nth-child(3n)   { padding-right: 0 !important; }
+        }
+        @media (max-width: 639px) {
+          .kanban-grid > * {
+            padding-left: 0.6rem !important;
+            padding-right: 0.6rem !important;
+            border-right: none !important;
+          }
+          .kanban-grid > *:nth-child(odd)  { padding-left: 0 !important; }
+          .kanban-grid > *:nth-child(even) { padding-right: 0 !important; }
         }
       `}</style>
 

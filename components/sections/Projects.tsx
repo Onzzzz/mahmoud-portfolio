@@ -259,9 +259,10 @@ export function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="flex flex-wrap items-end gap-6 mb-10"
+                className="flex items-stretch gap-8 mb-10"
               >
-                <div className="flex items-baseline gap-4">
+                {/* Left: counter block */}
+                <div className="flex flex-col justify-center shrink-0">
                   <span
                     style={{
                       fontFamily: "var(--font-serif)",
@@ -277,24 +278,31 @@ export function Projects() {
                   <span
                     style={{
                       fontFamily: "var(--font-mono)",
-                      fontSize: "0.65rem",
+                      fontSize: "0.6rem",
                       fontWeight: 700,
                       letterSpacing: "0.14em",
                       textTransform: "uppercase",
                       color: "var(--text-primary)",
+                      marginTop: "0.4rem",
                     }}
                   >
-                    Projects Delivered
+                    Projects<br />Delivered
                   </span>
                 </div>
+
+                {/* Vertical divider */}
+                <div style={{ width: "1px", background: "var(--accent)", opacity: 0.4, alignSelf: "stretch" }} />
+
+                {/* Right: description */}
                 <p style={{
                   fontFamily: "var(--font-heading)",
                   fontSize: "0.9rem",
                   color: "var(--text-muted)",
                   lineHeight: 1.75,
-                  maxWidth: "640px",
+                  maxWidth: "900px",
+                  alignSelf: "center",
                 }}>
-                  End-to-end procurement across event technology, exhibitions, façade & LED media installations, AV immersive experiences, and XR environments — delivering world-class events for global brands across UAE and KSA, on time and on budget.
+                  I managed end-to-end procurement across these projects at Fractal Systems — including events, exhibitions, outdoor digital signage, façade lighting, LED installations, immersive AV, and XR environments for global brands across the GCC, MENA, and Europe. On time, on budget.
                 </p>
               </motion.div>
 

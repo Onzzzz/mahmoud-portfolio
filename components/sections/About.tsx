@@ -19,7 +19,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="relative pt-8 md:pt-10 pb-8 px-4 md:px-6"
+      className="relative pt-4 md:pt-5 pb-4 px-4 md:px-6"
       style={{ background: "var(--bg-alt)" }}
     >
       <div className="max-w-7xl mx-auto">
@@ -66,7 +66,7 @@ export function About() {
             </motion.h2>
 
             {/* 3 text paragraphs with numbered labels */}
-            <div className="mt-3 flex flex-col gap-3">
+            <div className="mt-2 flex flex-col gap-2">
               {about.sections.map((section, i) => (
                 <motion.div
                   key={section.label}
@@ -100,8 +100,8 @@ export function About() {
 
             {/* Education & Certifications */}
             <motion.div
-              className="mt-5 flex flex-col gap-3"
-              style={{ borderTop: "1px solid var(--surface-border)", paddingTop: "1.25rem" }}
+              className="mt-3 flex flex-col gap-2"
+              style={{ borderTop: "1px solid var(--surface-border)", paddingTop: "0.75rem" }}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
@@ -213,6 +213,16 @@ export function About() {
                     background: "linear-gradient(to bottom, transparent 70%, var(--bg-alt) 100%)",
                   }}
                 />
+                {/* Light mode ray damper */}
+                {themeName !== "onyx" && (
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(180,160,120,0.25) 0%, transparent 60%)",
+                      mixBlendMode: "multiply",
+                    }}
+                  />
+                )}
               </div>
 
             </motion.div>

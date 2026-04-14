@@ -4,8 +4,9 @@
     {
       "name": "dev",
       "runtimeExecutable": "/bin/bash",
-      "runtimeArgs": ["-c", "export PATH=/usr/local/bin:$PATH && exec node node_modules/.bin/next dev --port 3002"],
-      "port": 3002
+      "runtimeArgs": ["-c", "export PATH=/usr/local/bin:$PATH && exec node node_modules/.bin/next dev --port 3003"],
+      "autoPort": false,
+      "port": 3003
     }
   ]
 }

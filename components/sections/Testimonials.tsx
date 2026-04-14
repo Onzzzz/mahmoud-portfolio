@@ -24,9 +24,6 @@ function truncateQuote(quote: string, maxLength: number): string {
 }
 
 export function Testimonials() {
-  const featured = testimonials.items[0];
-  const gridItems = testimonials.items.slice(1);
-
   // Key excerpt from Avil's long recommendation
   const featuredExcerpt =
     "Mahmoud consistently demonstrated strong strategic thinking, commercial awareness, and a deep understanding of technically driven procurement. What stood out most was his ability to bridge the gap between technical teams, creative stakeholders, and suppliers.";
@@ -99,7 +96,7 @@ export function Testimonials() {
 
             {/* Large pull-quote */}
             <motion.div
-              className="mb-12"
+              className="mb-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
@@ -131,31 +128,31 @@ export function Testimonials() {
                     className="text-sm font-semibold"
                     style={{ color: "var(--text-primary)" }}
                   >
-                    {featured.name}
+                    {testimonials.items[0].name}
                   </p>
                   <p
                     className="text-xs mt-0.5"
                     style={{ color: "var(--text-muted)" }}
                   >
-                    {featured.role}
+                    {testimonials.items[0].role}
                   </p>
                 </div>
               </div>
             </motion.div>
 
-            {/* 2x2 grid of remaining quotes */}
+            {/* Grid of remaining quotes — all uniform */}
             <div
               className="grid grid-cols-1 md:grid-cols-2 gap-0"
               style={{ gap: "1px", background: "var(--surface-border)" }}
             >
-              {gridItems.map((t, i) => (
+              {testimonials.items.slice(1).map((t, i) => (
                 <motion.div
                   key={t.name}
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  className="p-6 transition-colors duration-300 hover:bg-[var(--surface-2)]"
+                  className="p-6 transition-colors duration-300 hover:bg-[var(--surface-2)] flex flex-col h-full"
                   style={{ background: "var(--surface)" }}
                 >
                   <blockquote>
@@ -170,7 +167,7 @@ export function Testimonials() {
                       &ldquo;{truncateQuote(t.quote, 420)}&rdquo;
                     </p>
                   </blockquote>
-                  <div>
+                  <div style={{ marginTop: "auto" }}>
                     <p
                       className="text-sm font-semibold"
                       style={{ color: "var(--text-primary)" }}

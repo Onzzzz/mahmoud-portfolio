@@ -226,7 +226,7 @@ export default function AIChatbot() {
           </div>
 
           {/* Robot SVG — detailed 3D character */}
-          <svg width="64" height="84" viewBox="0 0 80 105" fill="none" xmlns="http://www.w3.org/2000/svg"
+          <svg width="48" height="63" viewBox="0 0 80 105" fill="none" xmlns="http://www.w3.org/2000/svg"
             style={{ filter: `drop-shadow(0 8px 20px ${theme.accent}35)`, transition: "transform 0.2s" }}
             onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.08)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; }}

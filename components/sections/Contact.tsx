@@ -235,7 +235,7 @@ export function Contact() {
 
   return (
     <section
-      className="relative pt-24 md:pt-32 pb-16 md:pb-24 px-4 md:px-6 overflow-hidden"
+      className="relative pt-12 md:pt-16 pb-16 md:pb-24 px-4 md:px-6 overflow-hidden"
       id="contact"
     >
       <div className="max-w-6xl mx-auto w-full relative">
@@ -318,341 +318,179 @@ export function Contact() {
             viewport={{ once: true, margin: "-60px" }}
             variants={fadeUp}
             custom={0.15}
+            className="flex flex-col"
           >
             <div
+              className="flex flex-col flex-1"
               style={{
                 background: "var(--surface)",
                 border: "1px solid var(--surface-border)",
-                padding: "2.5rem",
+                padding: "1.25rem 1.5rem",
               }}
             >
-              {/* Success State */}
-              {status === "success" ? (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex flex-col items-center gap-3 py-12 text-center"
+            {/* Success State */}
+            {status === "success" ? (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex flex-col items-center gap-3 py-8 text-center"
+              >
+                <CheckCircle2 size={36} style={{ color: "var(--accent)" }} />
+                <p
+                  className="text-lg font-semibold"
+                  style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)" }}
                 >
-                  <CheckCircle2 size={40} style={{ color: "var(--accent)" }} />
+                  Message Sent!
+                </p>
+                <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  Thank you for reaching out. Mahmoud will get back to you soon.
+                </p>
+                <button
+                  onClick={() => setStatus("idle")}
+                  style={{
+                    marginTop: "0.75rem",
+                    color: "var(--accent)",
+                    fontFamily: "var(--font-heading)",
+                    fontSize: "0.8rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase" as const,
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  Send Another Message
+                </button>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3 flex-1">
+                {/* Inquiry context line + pills */}
+                <div>
                   <p
-                    className="text-lg font-semibold"
-                    style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)" }}
-                  >
-                    Message Sent!
-                  </p>
-                  <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                    Thank you for reaching out. Mahmoud will get back to you soon.
-                  </p>
-                  <button
-                    onClick={() => setStatus("idle")}
+                    className="mb-2.5"
                     style={{
-                      marginTop: "1rem",
-                      color: "var(--accent)",
-                      fontFamily: "var(--font-heading)",
-                      fontSize: "0.8rem",
-                      letterSpacing: "0.1em",
-                      textTransform: "uppercase" as const,
-                      background: "none",
-                      border: "none",
-                      cursor: "pointer",
+                      color: "var(--text-primary)",
+                      fontSize: "1.1rem",
+                      fontFamily: "var(--font-serif)",
+                      fontStyle: "italic",
+                      fontWeight: 400,
                     }}
                   >
-                    Send Another Message
-                  </button>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                  {/* Name */}
-                  <div>
-                    <label
-                      htmlFor="contact-name"
-                      style={{
-                        display: "block",
-                        fontFamily: "var(--font-heading)",
-                        fontSize: "0.65rem",
-                        letterSpacing: "0.2em",
-                        textTransform: "uppercase" as const,
-                        color: "var(--text-muted)",
-                        marginBottom: "0.5rem",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Name
-                    </label>
-                    <input
-                      id="contact-name"
-                      type="text"
-                      placeholder="Your full name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      style={{
-                        width: "100%",
-                        background: "transparent",
-                        border: "none",
-                        borderBottom: "1px solid var(--surface-border)",
-                        padding: "0.75rem 0",
-                        color: "var(--text-primary)",
-                        fontSize: "0.95rem",
-                        fontFamily: "inherit",
-                        outline: "none",
-                        transition: "border-color 0.2s",
-                      }}
-                      onFocus={(e) => { e.currentTarget.style.borderBottomColor = "var(--accent)"; }}
-                      onBlur={(e) => { e.currentTarget.style.borderBottomColor = "var(--surface-border)"; }}
-                    />
+                    What brings you here?
+                  </p>
+                  <div className="flex gap-1 flex-wrap sm:flex-nowrap">
+                  {contactTypes.map((ct) => {
+                    const isActive = selected === ct.type;
+                    return (
+                      <button
+                        key={ct.type}
+                        type="button"
+                        onClick={() => setSelected(ct.type)}
+                        style={{
+                          padding: "0.25rem 0.5rem",
+                          border: `1px solid ${isActive ? "var(--accent)" : "var(--surface-border)"}`,
+                          background: isActive ? "var(--accent)" : "transparent",
+                          color: isActive ? "var(--bg)" : "var(--text-muted)",
+                          fontFamily: "var(--font-mono)",
+                          fontSize: "0.55rem",
+                          fontWeight: 600,
+                          letterSpacing: "0.06em",
+                          textTransform: "uppercase",
+                          cursor: "pointer",
+                          transition: "all 0.15s",
+                          borderRadius: 0,
+                          whiteSpace: "nowrap",
+                          flexShrink: 0,
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!isActive) {
+                            e.currentTarget.style.borderColor = "var(--accent)";
+                            e.currentTarget.style.color = "var(--accent)";
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!isActive) {
+                            e.currentTarget.style.borderColor = "var(--surface-border)";
+                            e.currentTarget.style.color = "var(--text-muted)";
+                          }
+                        }}
+                      >
+                        {ct.label}
+                      </button>
+                    );
+                  })}
                   </div>
+                </div>
 
-                  {/* Company */}
-                  <div>
-                    <label
-                      htmlFor="contact-company"
-                      style={{
-                        display: "block",
-                        fontFamily: "var(--font-heading)",
-                        fontSize: "0.65rem",
-                        letterSpacing: "0.2em",
-                        textTransform: "uppercase" as const,
-                        color: "var(--text-muted)",
-                        marginBottom: "0.5rem",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Company
-                    </label>
-                    <input
-                      id="contact-company"
-                      type="text"
-                      placeholder="Your company name"
-                      style={{
-                        width: "100%",
-                        background: "transparent",
-                        border: "none",
-                        borderBottom: "1px solid var(--surface-border)",
-                        padding: "0.75rem 0",
-                        color: "var(--text-primary)",
-                        fontSize: "0.95rem",
-                        fontFamily: "inherit",
-                        outline: "none",
-                        transition: "border-color 0.2s",
-                      }}
-                      onFocus={(e) => { e.currentTarget.style.borderBottomColor = "var(--accent)"; }}
-                      onBlur={(e) => { e.currentTarget.style.borderBottomColor = "var(--surface-border)"; }}
-                    />
-                  </div>
+                {/* Name + Email row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <input
+                    id="contact-name"
+                    type="text"
+                    placeholder="Name *"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="contact-field"
+                  />
+                  <input
+                    id="contact-email"
+                    type="email"
+                    placeholder="Email *"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="contact-field"
+                  />
+                </div>
 
-                  {/* Email */}
-                  <div>
-                    <label
-                      htmlFor="contact-email"
-                      style={{
-                        display: "block",
-                        fontFamily: "var(--font-heading)",
-                        fontSize: "0.65rem",
-                        letterSpacing: "0.2em",
-                        textTransform: "uppercase" as const,
-                        color: "var(--text-muted)",
-                        marginBottom: "0.5rem",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Email
-                    </label>
-                    <input
-                      id="contact-email"
-                      type="email"
-                      placeholder="your@email.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      style={{
-                        width: "100%",
-                        background: "transparent",
-                        border: "none",
-                        borderBottom: "1px solid var(--surface-border)",
-                        padding: "0.75rem 0",
-                        color: "var(--text-primary)",
-                        fontSize: "0.95rem",
-                        fontFamily: "inherit",
-                        outline: "none",
-                        transition: "border-color 0.2s",
-                      }}
-                      onFocus={(e) => { e.currentTarget.style.borderBottomColor = "var(--accent)"; }}
-                      onBlur={(e) => { e.currentTarget.style.borderBottomColor = "var(--surface-border)"; }}
-                    />
-                  </div>
+                {/* Company + Phone row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <input
+                    id="contact-company"
+                    type="text"
+                    placeholder="Company"
+                    className="contact-field"
+                  />
+                  <input
+                    id="contact-phone"
+                    type="tel"
+                    placeholder="Phone"
+                    className="contact-field"
+                  />
+                </div>
 
-                  {/* Phone */}
-                  <div>
-                    <label
-                      htmlFor="contact-phone"
-                      style={{
-                        display: "block",
-                        fontFamily: "var(--font-heading)",
-                        fontSize: "0.65rem",
-                        letterSpacing: "0.2em",
-                        textTransform: "uppercase" as const,
-                        color: "var(--text-muted)",
-                        marginBottom: "0.5rem",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Phone
-                    </label>
-                    <input
-                      id="contact-phone"
-                      type="tel"
-                      placeholder="Your phone number"
-                      style={{
-                        width: "100%",
-                        background: "transparent",
-                        border: "none",
-                        borderBottom: "1px solid var(--surface-border)",
-                        padding: "0.75rem 0",
-                        color: "var(--text-primary)",
-                        fontSize: "0.95rem",
-                        fontFamily: "inherit",
-                        outline: "none",
-                        transition: "border-color 0.2s",
-                      }}
-                      onFocus={(e) => { e.currentTarget.style.borderBottomColor = "var(--accent)"; }}
-                      onBlur={(e) => { e.currentTarget.style.borderBottomColor = "var(--surface-border)"; }}
-                    />
-                  </div>
+                {/* Message — stretches to fill remaining space */}
+                <textarea
+                  id="contact-message"
+                  placeholder="Tell me about your project or opportunity..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="contact-field flex-1"
+                  style={{ resize: "none", minHeight: "60px" }}
+                />
 
-                  {/* Inquiry Type */}
-                  <div>
-                    <span
-                      style={{
-                        display: "block",
-                        fontFamily: "var(--font-heading)",
-                        fontSize: "0.65rem",
-                        letterSpacing: "0.2em",
-                        textTransform: "uppercase" as const,
-                        color: "var(--text-muted)",
-                        marginBottom: "0.75rem",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Inquiry Type
-                    </span>
-                    <div className="flex flex-wrap gap-2">
-                      {contactTypes.map((ct) => {
-                        const isActive = selected === ct.type;
-                        return (
-                          <button
-                            key={ct.type}
-                            type="button"
-                            onClick={() => setSelected(ct.type)}
-                            style={{
-                              padding: "0.35rem 0.9rem",
-                              border: `1px solid ${isActive ? "var(--accent)" : "rgba(255,255,255,0.12)"}`,
-                              background: isActive ? "var(--accent)" : "transparent",
-                              color: isActive ? "var(--bg)" : "var(--text-muted)",
-                              fontFamily: "var(--font-mono)",
-                              fontSize: "0.65rem",
-                              fontWeight: 600,
-                              letterSpacing: "0.12em",
-                              textTransform: "uppercase",
-                              cursor: "pointer",
-                              transition: "all 0.15s",
-                              borderRadius: 0,
-                            }}
-                            onMouseEnter={(e) => {
-                              if (!isActive) {
-                                e.currentTarget.style.borderColor = "var(--accent)";
-                                e.currentTarget.style.color = "var(--accent)";
-                              }
-                            }}
-                            onMouseLeave={(e) => {
-                              if (!isActive) {
-                                e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
-                                e.currentTarget.style.color = "var(--text-muted)";
-                              }
-                            }}
-                          >
-                            {ct.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
+                {/* Error message */}
+                {status === "error" && errorMsg && (
+                  <p className="text-sm" style={{ color: "#ef4444" }}>
+                    {errorMsg}
+                  </p>
+                )}
 
-                  {/* Message */}
-                  <div>
-                    <label
-                      htmlFor="contact-message"
-                      style={{
-                        display: "block",
-                        fontFamily: "var(--font-heading)",
-                        fontSize: "0.65rem",
-                        letterSpacing: "0.2em",
-                        textTransform: "uppercase" as const,
-                        color: "var(--text-muted)",
-                        marginBottom: "0.5rem",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Message
-                    </label>
-                    <textarea
-                      id="contact-message"
-                      placeholder="Tell me about your project or opportunity..."
-                      rows={4}
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      style={{
-                        width: "100%",
-                        background: "transparent",
-                        border: "none",
-                        borderBottom: "1px solid var(--surface-border)",
-                        padding: "0.75rem 0",
-                        color: "var(--text-primary)",
-                        fontSize: "0.95rem",
-                        fontFamily: "inherit",
-                        outline: "none",
-                        resize: "none",
-                        transition: "border-color 0.2s",
-                      }}
-                      onFocus={(e) => { e.currentTarget.style.borderBottomColor = "var(--accent)"; }}
-                      onBlur={(e) => { e.currentTarget.style.borderBottomColor = "var(--surface-border)"; }}
-                    />
-                  </div>
-
-                  {/* Error message */}
-                  {status === "error" && errorMsg && (
-                    <p className="text-sm" style={{ color: "#ef4444" }}>
-                      {errorMsg}
-                    </p>
-                  )}
-
-                  {/* Submit button - full width, gold */}
+                {/* Buttons stacked — pushed to bottom */}
+                <div className="flex flex-col gap-2 mt-auto">
                   <button
                     type="submit"
                     disabled={status === "loading"}
+                    className="btn-primary justify-center"
                     style={{
                       width: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "0.5rem",
-                      padding: "1rem",
-                      background: "var(--accent)",
-                      color: "var(--bg)",
-                      fontFamily: "var(--font-heading)",
-                      fontSize: "0.75rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.15em",
-                      textTransform: "uppercase" as const,
-                      border: "none",
-                      cursor: status === "loading" ? "not-allowed" : "pointer",
-                      transition: "background 0.2s, transform 0.1s",
+                      padding: "0.7rem",
                       opacity: status === "loading" ? 0.7 : 1,
+                      cursor: status === "loading" ? "not-allowed" : "pointer",
                     }}
-                    onMouseEnter={(e) => { if (status !== "loading") e.currentTarget.style.background = "var(--accent-hover)"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = "var(--accent)"; }}
                   >
                     {status === "loading" ? (
                       <>
-                        <Loader2 size={15} className="animate-spin" />
+                        <Loader2 size={14} className="animate-spin" />
                         Sending...
                       </>
                     ) : (
@@ -660,43 +498,20 @@ export function Contact() {
                     )}
                   </button>
 
-                  {/* Book a Call button */}
                   <button
                     type="button"
                     onClick={() => setShowBookModal(true)}
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "0.5rem",
-                      padding: "0.85rem",
-                      background: "transparent",
-                      border: "1px solid var(--accent)",
-                      color: "var(--accent)",
-                      fontFamily: "var(--font-heading)",
-                      fontSize: "0.75rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.15em",
-                      textTransform: "uppercase" as const,
-                      cursor: "pointer",
-                      transition: "all 0.2s",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "var(--accent)";
-                      e.currentTarget.style.color = "var(--bg)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "transparent";
-                      e.currentTarget.style.color = "var(--accent)";
-                    }}
+                    className="btn-outline justify-center"
+                    style={{ width: "100%", padding: "0.7rem" }}
                   >
-                    <Calendar size={15} />
+                    <Calendar size={14} />
                     Book a Call
                   </button>
-                </form>
-              )}
+                </div>
+              </form>
+            )}
             </div>
+            {/* end form card */}
           </motion.div>
         </div>
       </div>
