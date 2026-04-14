@@ -289,7 +289,7 @@ export function Skills() {
   const row2 = allTools.slice(Math.ceil(allTools.length / 2));
 
   return (
-    <section className="pt-10 md:pt-14 pb-2 overflow-hidden relative" id="skills">
+    <section className="pt-10 md:pt-14 pb-16 md:pb-24 overflow-hidden relative" id="skills">
       <style>{`
         @keyframes marquee-left {
           0%   { transform: translateX(0); }

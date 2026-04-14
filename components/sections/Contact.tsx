@@ -321,19 +321,21 @@ export function Contact() {
             className="flex flex-col"
           >
             <div
-              className="flex flex-col flex-1"
+              className="relative flex flex-col flex-1 overflow-hidden"
               style={{
                 background: "var(--surface)",
                 border: "1px solid var(--surface-border)",
-                padding: "1.25rem 1.5rem",
+                borderTop: "3px solid var(--accent)",
+                padding: "1.75rem 1.75rem 1.5rem",
               }}
             >
+
             {/* Success State */}
             {status === "success" ? (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex flex-col items-center gap-3 py-8 text-center"
+                className="flex flex-col items-center gap-3 py-8 text-center flex-1"
               >
                 <CheckCircle2 size={36} style={{ color: "var(--accent)" }} />
                 <p
@@ -363,14 +365,14 @@ export function Contact() {
                 </button>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-3 flex-1">
-                {/* Inquiry context line + pills */}
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4 flex-1">
+                {/* Inquiry type */}
                 <div>
                   <p
-                    className="mb-2.5"
+                    className="mb-3"
                     style={{
                       color: "var(--text-primary)",
-                      fontSize: "1.1rem",
+                      fontSize: "1.05rem",
                       fontFamily: "var(--font-serif)",
                       fontStyle: "italic",
                       fontWeight: 400,
@@ -378,52 +380,51 @@ export function Contact() {
                   >
                     What brings you here?
                   </p>
-                  <div className="flex gap-1 flex-wrap sm:flex-nowrap">
-                  {contactTypes.map((ct) => {
-                    const isActive = selected === ct.type;
-                    return (
-                      <button
-                        key={ct.type}
-                        type="button"
-                        onClick={() => setSelected(ct.type)}
-                        style={{
-                          padding: "0.25rem 0.5rem",
-                          border: `1px solid ${isActive ? "var(--accent)" : "var(--surface-border)"}`,
-                          background: isActive ? "var(--accent)" : "transparent",
-                          color: isActive ? "var(--bg)" : "var(--text-muted)",
-                          fontFamily: "var(--font-mono)",
-                          fontSize: "0.55rem",
-                          fontWeight: 600,
-                          letterSpacing: "0.06em",
-                          textTransform: "uppercase",
-                          cursor: "pointer",
-                          transition: "all 0.15s",
-                          borderRadius: 0,
-                          whiteSpace: "nowrap",
-                          flexShrink: 0,
-                        }}
-                        onMouseEnter={(e) => {
-                          if (!isActive) {
-                            e.currentTarget.style.borderColor = "var(--accent)";
-                            e.currentTarget.style.color = "var(--accent)";
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (!isActive) {
-                            e.currentTarget.style.borderColor = "var(--surface-border)";
-                            e.currentTarget.style.color = "var(--text-muted)";
-                          }
-                        }}
-                      >
-                        {ct.label}
-                      </button>
-                    );
-                  })}
+                  <div className="flex gap-1.5 flex-wrap">
+                    {contactTypes.map((ct) => {
+                      const isActive = selected === ct.type;
+                      return (
+                        <button
+                          key={ct.type}
+                          type="button"
+                          onClick={() => setSelected(ct.type)}
+                          style={{
+                            padding: "0.3rem 0.7rem",
+                            border: `1px solid ${isActive ? "var(--accent)" : "var(--surface-border)"}`,
+                            background: isActive ? "var(--accent)" : "transparent",
+                            color: isActive ? "var(--bg)" : "var(--text-muted)",
+                            fontFamily: "var(--font-mono)",
+                            fontSize: "0.55rem",
+                            fontWeight: 600,
+                            letterSpacing: "0.08em",
+                            textTransform: "uppercase",
+                            cursor: "pointer",
+                            transition: "all 0.15s",
+                            borderRadius: 0,
+                            whiteSpace: "nowrap",
+                          }}
+                          onMouseEnter={(e) => {
+                            if (!isActive) {
+                              e.currentTarget.style.borderColor = "var(--accent)";
+                              e.currentTarget.style.color = "var(--accent)";
+                            }
+                          }}
+                          onMouseLeave={(e) => {
+                            if (!isActive) {
+                              e.currentTarget.style.borderColor = "var(--surface-border)";
+                              e.currentTarget.style.color = "var(--text-muted)";
+                            }
+                          }}
+                        >
+                          {ct.label}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 
                 {/* Name + Email row */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input
                     id="contact-name"
                     type="text"
@@ -443,7 +444,7 @@ export function Contact() {
                 </div>
 
                 {/* Company + Phone row */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input
                     id="contact-company"
                     type="text"
@@ -458,24 +459,23 @@ export function Contact() {
                   />
                 </div>
 
-                {/* Message — stretches to fill remaining space */}
+                {/* Message */}
                 <textarea
                   id="contact-message"
                   placeholder="Tell me about your project or opportunity..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className="contact-field flex-1"
-                  style={{ resize: "none", minHeight: "60px" }}
+                  style={{ resize: "none", minHeight: "80px" }}
                 />
 
-                {/* Error message */}
                 {status === "error" && errorMsg && (
                   <p className="text-sm" style={{ color: "#ef4444" }}>
                     {errorMsg}
                   </p>
                 )}
 
-                {/* Buttons stacked — pushed to bottom */}
+                {/* Buttons */}
                 <div className="flex flex-col gap-2 mt-auto">
                   <button
                     type="submit"

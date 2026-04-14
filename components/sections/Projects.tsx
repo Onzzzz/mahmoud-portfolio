@@ -210,8 +210,8 @@ export function Projects() {
     <>
       <section
         id="projects"
-        className="relative pt-10 pb-24 md:pt-12 md:pb-32 overflow-hidden"
-        style={{ background: "var(--bg-alt)", scrollMarginTop: "64px" }}
+        className="relative pt-8 pb-24 md:pt-10 md:pb-32 overflow-hidden"
+        style={{ background: "var(--bg-alt)" }}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-6">
 
@@ -221,7 +221,7 @@ export function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
-            className="mb-16"
+            className="mb-4"
           >
             <h2
               className="text-3xl md:text-5xl leading-tight"
@@ -247,7 +247,7 @@ export function Projects() {
               className="mb-20"
             >
               <span
-                className="text-[10px] font-medium uppercase block mb-8"
+                className="text-[10px] font-medium uppercase block mb-2"
                 style={{ color: "var(--accent)", fontFamily: "var(--font-mono)", letterSpacing: "0.2em" }}
               >
                 Project Showcase
@@ -259,14 +259,14 @@ export function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="flex items-stretch gap-8 mb-10"
+                className="flex items-stretch gap-8 mb-8 md:mb-10"
               >
                 {/* Left: counter block */}
                 <div className="flex flex-col justify-center shrink-0">
                   <span
                     style={{
                       fontFamily: "var(--font-serif)",
-                      fontSize: "clamp(3.5rem, 7vw, 5.5rem)",
+                      fontSize: "clamp(2rem, 3.5vw, 2.8rem)",
                       fontWeight: 400,
                       fontStyle: "italic",
                       color: "var(--accent)",
@@ -400,10 +400,10 @@ export function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
-            className="mb-20"
+            className="mb-8"
           >
             <span
-              className="text-[10px] font-medium uppercase block mb-8"
+              className="text-[10px] font-medium uppercase block mb-4"
               style={{ color: "var(--accent)", fontFamily: "var(--font-mono)", letterSpacing: "0.2em" }}
             >
               Systems I Built
@@ -416,19 +416,19 @@ export function Projects() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  className="p-8 md:p-10 transition-all duration-300 group cursor-pointer"
+                  className="p-5 md:p-6 transition-all duration-300 group cursor-pointer"
                   style={{ background: "var(--bg-alt)" }}
                   onMouseEnter={(e) => { e.currentTarget.style.background = "var(--surface)"; }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = "var(--bg-alt)"; }}
                 >
                   <span
-                    className="text-xs block mb-3 transition-colors duration-300"
+                    className="text-xs block mb-2 transition-colors duration-300"
                     style={{ fontFamily: "var(--font-mono)", color: "var(--accent)" }}
                   >
                     {item.number}
                   </span>
                   <h3
-                    className="text-lg font-semibold mb-2"
+                    className="text-base font-semibold mb-1"
                     style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)" }}
                   >
                     {item.title}

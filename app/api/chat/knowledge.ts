@@ -128,12 +128,12 @@ export const KNOWLEDGE: KnowledgeBase = {
   // ═══ SUPPLY CHAIN ═══
   supply_chain: {
     en: {
-      short: "Experienced in supply chain — international logistics, inventory, warehouse ops, 50+ vendor network.",
-      detail: "Mahmoud's **supply chain** expertise 🚛:\n\n• **International Logistics** — Air, land & sea freight coordination (Hafa Trading)\n• **Inventory Management** — Egyptian Army retail operations foundation\n• **Warehouse Operations** — Part of the 11-phase Operations Portal\n• **Vendor Network** — 50+ suppliers across UAE, KSA, Europe & Asia\n• **Cross-border Operations** — Experience in 3 countries with different regulations\n\nHis supply chain knowledge spans the full spectrum from inventory management to international logistics to strategic supply chain design.",
+      short: "Experienced in supply chain — international logistics, inventory, warehouse ops, thousands of vendors sourced & managed.",
+      detail: "Mahmoud's **supply chain** expertise 🚛:\n\n• **International Logistics** — Air, land & sea freight coordination (Hafa Trading)\n• **Inventory Management** — Egyptian Army retail operations foundation\n• **Warehouse Operations** — Part of the 11-phase Operations Portal\n• **Vendor Network** — Thousands of vendors sourced, evaluated & managed across UAE, KSA, Europe & Asia\n• **Cross-border Operations** — Experience in 3 countries with different regulations\n\nHis supply chain knowledge spans the full spectrum from inventory management to international logistics to strategic supply chain design.",
     },
     ar: {
-      short: "خبرة واسعة في سلسلة التوريد — لوجستيات دولية، مخزون، عمليات مخازن، 50+ مورد.",
-      detail: "**خبرة سلسلة التوريد** عند أونز 🚛:\n\n• **لوجستيات دولية** — تنسيق شحن جوي وبري وبحري (هافا)\n• **إدارة مخزون** — من أساسيات الجيش المصري\n• **عمليات مخازن** — جزء من بوابة العمليات\n• **شبكة موردين** — 50+ مورد عبر 4 مناطق\n• **عمليات عبر الحدود** — خبرة في 3 دول بأنظمة مختلفة",
+      short: "خبرة واسعة في سلسلة التوريد — لوجستيات دولية، مخزون، عمليات مخازن، آلاف الموردين.",
+      detail: "**خبرة سلسلة التوريد** عند أونز 🚛:\n\n• **لوجستيات دولية** — تنسيق شحن جوي وبري وبحري (هافا)\n• **إدارة مخزون** — من أساسيات الجيش المصري\n• **عمليات مخازن** — جزء من بوابة العمليات\n• **شبكة موردين** — آلاف الموردين تم استقطابهم وتقييمهم وإدارتهم عبر 4 مناطق\n• **عمليات عبر الحدود** — خبرة في 3 دول بأنظمة مختلفة",
     },
   },
 
@@ -177,11 +177,11 @@ export const KNOWLEDGE: KnowledgeBase = {
   achievements: {
     en: {
       short: "AED 450K+ on a single project + millions across his career, 3-month promotion, 30+ events, award-winning projects. 📊",
-      detail: "Mahmoud's **key achievements** are backed by real numbers 📊:\n\n💰 **AED 450K+** documented on a single project through strategic sourcing\n💰 **Millions saved** across his career through smarter sourcing and cost control\n⚡ **3-month promotion** — fastest at Golden Sparrow Trading (Procurement Expert → Operations Manager)\n🏗️ **11-phase Operations Portal** — 280+ workflow nodes, 45+ SOPs, 9 departments covered\n🎪 **30+ major events** delivered including COP28, Esports World Cup, Art Dubai\n🏆 **\"Best Use of Technology\"** award for 1001 Seasons of Elie Saab project\n📈 **10-20% cost savings** per project consistently\n🌐 **50+ vendor network** built across UAE, KSA, Europe & Asia\n💼 **AED 600K** single contract negotiation\n📉 Reduced procurement error rate from **~25% to <5%**\n⏱️ Cut process time from **5 days to 1.5 days**",
+      detail: "Mahmoud's **key achievements** are backed by real numbers 📊:\n\n💰 **AED 450K+** documented on a single project through strategic sourcing\n💰 **Millions saved** across his career through smarter sourcing and cost control\n⚡ **3-month promotion** — fastest at Golden Sparrow Trading (Procurement Expert → Operations Manager)\n🏗️ **11-phase Operations Portal** — 280+ workflow nodes, 45+ SOPs, 9 departments covered\n🎪 **30+ major events** delivered including COP28, Esports World Cup, Art Dubai\n🏆 **\"Best Use of Technology\"** award for 1001 Seasons of Elie Saab project\n📈 **10-20% cost savings** per project consistently\n🌐 **Thousands of vendors** sourced, evaluated & managed across UAE, KSA, Europe & Asia\n💼 **AED 600K** single contract negotiation\n📉 Reduced procurement error rate from **~25% to <5%**\n⏱️ Cut process time from **5 days to 1.5 days**",
     },
     ar: {
       short: "450+ ألف درهم توفير، ترقية في 3 شهور، 30+ فعالية، مشاريع حائزة على جوائز. 📊",
-      detail: "**إنجازات أونز** مبنية على أرقام حقيقية 📊:\n\n💰 **450+ ألف درهم** توفير موثق من خلال التوريد الاستراتيجي\n⚡ **ترقية في 3 شهور** — الأسرع في جولدن سبارو (من مسؤول مشتريات لمدير عمليات)\n🏗️ **بوابة عمليات من 11 مرحلة** — 280+ عقدة workflow، 45+ إجراء تشغيلي\n🎪 **30+ فعالية كبرى** منهم COP28 وكأس العالم للرياضات الإلكترونية\n🏆 جائزة **\"أفضل استخدام للتكنولوجيا\"** لمشروع 1001 Seasons of Elie Saab\n📈 **10-20% توفير** في كل مشروع\n🌐 بنى شبكة **50+ مورد** عبر 4 مناطق\n📉 قلل نسبة الأخطاء من **~25% لأقل من 5%**\n⏱️ قلل وقت العمليات من **5 أيام لـ 1.5 يوم**",
+      detail: "**إنجازات أونز** مبنية على أرقام حقيقية 📊:\n\n💰 **450+ ألف درهم** توفير موثق من خلال التوريد الاستراتيجي\n⚡ **ترقية في 3 شهور** — الأسرع في جولدن سبارو (من مسؤول مشتريات لمدير عمليات)\n🏗️ **بوابة عمليات من 11 مرحلة** — 280+ عقدة workflow، 45+ إجراء تشغيلي\n🎪 **30+ فعالية كبرى** منهم COP28 وكأس العالم للرياضات الإلكترونية\n🏆 جائزة **\"أفضل استخدام للتكنولوجيا\"** لمشروع 1001 Seasons of Elie Saab\n📈 **10-20% توفير** في كل مشروع\n🌐 **آلاف الموردين** تم استقطابهم وتقييمهم وإدارتهم عبر 4 مناطق\n📉 قلل نسبة الأخطاء من **~25% لأقل من 5%**\n⏱️ قلل وقت العمليات من **5 أيام لـ 1.5 يوم**",
     },
   },
 

@@ -69,7 +69,6 @@ export function Navbar() {
       style={{
         backgroundColor: scrolled ? "var(--nav-bg)" : "transparent",
         backdropFilter: scrolled ? "blur(12px)" : "none",
-        borderBottom: scrolled ? "1px solid var(--surface-border)" : "none",
       }}
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">

@@ -10,13 +10,13 @@ const mono = JetBrains_Mono({ variable: "--font-mono", subsets: ["latin"], displ
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mahmoudabdallah.com"),
-  title: "Mahmoud Abdallah | Procurement & Supply Chain Professional",
+  title: "Mahmoud Abdallah | Procurement & Supply Chain Manager",
   description: "Strategic Procurement & Supply Chain Manager based in Dubai. AED 450K+ documented savings, 30+ major events procured, 7+ years across UAE, KSA & Egypt. Specializing in sourcing, ERP implementation, tender management, and cost optimization.",
   keywords: ["procurement", "supply chain", "Dubai", "UAE", "tender management", "ERP", "vendor management", "Odoo", "strategic sourcing"],
   authors: [{ name: "Mahmoud Abdallah" }],
   openGraph: {
-    title: "Mahmoud Abdallah — Procurement & Supply Chain",
-    description: "AED 450K+ saved. 30+ world-class events procured. 7+ years turning spend into strategy.",
+    title: "Mahmoud Abdallah | Procurement, Supply Chain & Operations Manager",
+    description: "Procurement, Supply Chain & Operations Manager across the GCC & MENA — strategic sourcing, tender management & vendor management.",
     type: "website",
     url: "https://mahmoudabdallah.com",
     siteName: "Mahmoud Abdallah",
@@ -24,8 +24,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mahmoud Abdallah — Procurement & Supply Chain",
-    description: "AED 450K+ saved. 30+ world-class events procured. 7+ years turning spend into strategy.",
+    title: "Mahmoud Abdallah | Procurement, Supply Chain & Operations Manager",
+    description: "Procurement, Supply Chain & Operations Manager across the GCC & MENA — strategic sourcing, tender management & vendor management.",
   },
 };
 

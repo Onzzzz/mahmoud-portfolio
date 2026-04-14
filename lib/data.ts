@@ -30,7 +30,7 @@ export const hero = {
   stats: [
     { value: "7+ Years", label: "Procurement, Supply Chain & Operations" },
     { value: "Millions Saved", label: "Through Strategic Sourcing" },
-    { value: "Hundreds of Vendors", label: "Sourced, Evaluated & Managed" },
+    { value: "Thousands of Vendors", label: "Sourced, Evaluated & Managed" },
     { value: "Multiple Industries", label: "Events · Equipment · FMCG · Oil & Gas · Retail · Trading" },
   ],
 } as const;
