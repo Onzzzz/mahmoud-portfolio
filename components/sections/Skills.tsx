@@ -301,14 +301,14 @@ export function Skills() {
         }
         .marquee-left  { animation: marquee-left  30s linear infinite; }
         .marquee-right { animation: marquee-right 35s linear infinite; }
-        @media (max-width: 1023px) {
+        @media (min-width: 640px) and (max-width: 1023px) {
           .kanban-grid { grid-template-columns: repeat(3, 1fr) !important; }
         }
         @media (max-width: 639px) {
           .kanban-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
         /* Reset index-based inline padding/borders when grid reflows to fewer columns */
-        @media (max-width: 1023px) {
+        @media (min-width: 640px) and (max-width: 1023px) {
           .kanban-grid > * {
             padding-left: 0.6rem !important;
             padding-right: 0.6rem !important;
@@ -323,8 +323,8 @@ export function Skills() {
             padding-right: 0.6rem !important;
             border-right: none !important;
           }
-          .kanban-grid > *:nth-child(odd)  { padding-left: 0 !important; }
-          .kanban-grid > *:nth-child(even) { padding-right: 0 !important; }
+          .kanban-grid > *:nth-child(odd)  { padding-left: 0 !important; padding-right: 0.6rem !important; }
+          .kanban-grid > *:nth-child(even) { padding-left: 0.6rem !important; padding-right: 0 !important; }
         }
       `}</style>
 
