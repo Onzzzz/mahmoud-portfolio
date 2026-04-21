@@ -304,7 +304,7 @@ export function Hero() {
 
             {/* Tagline — word-by-word stagger */}
             <motion.p
-              className="mt-5 text-base md:text-lg font-normal max-w-lg flex flex-wrap"
+              className="mt-5 text-xs md:text-lg font-normal flex flex-nowrap whitespace-nowrap"
               style={{ color: "var(--text-primary)", fontFamily: "var(--font-heading)", gap: "0 0.3em" }}
               initial="hidden"
               animate="visible"
