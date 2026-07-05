@@ -1,5 +1,5 @@
 import { Mail, MessageCircle, Download } from "lucide-react";
-import { personal, certifications } from "@/lib/data";
+import { personal } from "@/lib/data";
 
 function LinkedinIcon({ size = 16 }: { readonly size?: number }) {
   return (

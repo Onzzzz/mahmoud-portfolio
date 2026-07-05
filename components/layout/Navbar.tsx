@@ -133,7 +133,9 @@ export function Navbar() {
           onClick={() => setOpen(!open)}
           className="md:hidden p-2"
           style={{ color: "var(--text-secondary)" }}
-          aria-label="Menu"
+          aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={open}
+          aria-controls="mobile-nav"
         >
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -141,7 +143,7 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden px-6 pb-6 pt-2" style={{ backgroundColor: "var(--nav-bg)", backdropFilter: "blur(12px)" }}>
+        <div id="mobile-nav" className="md:hidden px-6 pb-6 pt-2" style={{ backgroundColor: "var(--nav-bg)", backdropFilter: "blur(12px)" }}>
           {links.map((l) => {
             const sectionId = l.href.replace("#", "");
             const isActive = activeSection === sectionId;

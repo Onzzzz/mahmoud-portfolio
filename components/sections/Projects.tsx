@@ -773,6 +773,15 @@ function ProjectCard({ project, cover, onSelect }: ProjectCardProps) {
         flexShrink: 0,
       }}
       onClick={() => onSelect(project)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect(project);
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`Open project: ${project.title}`}
     >
       {/* Image */}
       {cover && (
