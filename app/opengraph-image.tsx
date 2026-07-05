@@ -67,9 +67,9 @@ export default function OGImage() {
           }}
         >
           {[
-            { value: "AED 450K+", label: "Documented Savings" },
+            { value: "AED 10M", label: "Budgets Managed" },
             { value: "30+", label: "Major Events" },
-            { value: "7+", label: "Years Experience" },
+            { value: "45+", label: "SOPs Built" },
           ].map((stat) => (
             <div key={stat.label} style={{ display: "flex", flexDirection: "column" }}>
               <div style={{ fontSize: "32px", fontWeight: 700, color: "#C9A84C" }}>

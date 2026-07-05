@@ -23,10 +23,10 @@ type SelectedProject = typeof projects[number] | null;
 
 const achievements = [
   {
-    value: "450K+",
-    label: "AED Saved",
-    tag: "Single Project",
-    desc: "Documented cost savings on a single procurement engagement through strategic sourcing and competitive negotiation.",
+    value: "10–20%",
+    label: "Avg Cost Reduction",
+    tag: "Across 30+ Events",
+    desc: "Documented average cost savings across projects through strategic sourcing and competitive negotiation.",
   },
   {
     value: "30+",

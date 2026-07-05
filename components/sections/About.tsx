@@ -6,7 +6,7 @@ import { about, certifications } from "@/lib/data";
 import { useTheme } from "@/lib/theme-context";
 
 const stats = [
-  { value: "7+", label: "Years Experience" },
+  { value: "280+", label: "Workflow Nodes" },
   { value: "6", label: "Industries" },
   { value: "3", label: "Countries" },
   { value: "10M", label: "AED Budgets" },

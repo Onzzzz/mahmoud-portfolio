@@ -21,10 +21,10 @@ Philosophy: "Systems run the business. People run the systems."
 Personality: Systems thinker, problem solver, automation obsessed, Camaro enthusiast 🚗, tech gadget lover, AI power user (Claude, ChatGPT, Copilot daily)
 
 ══════════════════════════════════════
-  CAREER — 6 ROLES, 3 COUNTRIES, 7+ YEARS
+  CAREER — 6 ROLES, 3 COUNTRIES
 ══════════════════════════════════════
 
-1. GOLDEN SPARROW TRADING LLC — Procurement & Supply Chain Operations Manager
+1. GOLDEN SPARROW MACHINERY — Procurement & Supply Chain Operations Manager
    Dubai, UAE | Oct 2025–Present | Heavy Equipment Trading
    ★ PROMOTED from Procurement & Tender Expert in just 3 months (fastest promotion in company history)
    - Built complete Operations Portal from scratch: 11 business phases, 280+ workflow nodes, 45+ SOPs, covering 9 departments
@@ -44,11 +44,11 @@ Personality: Systems thinker, problem solver, automation obsessed, Camaro enthus
 3. FRACTAL SYSTEMS — Procurement & Tender Executive
    Dubai, UAE | Jan 2024–Apr 2025 | Events Technology Integrator
    - Delivered 30+ major events including COP28, Esports World Cup, Art Dubai, LEAP, World Defense Show
-   - Delivered AED 450K+ on a single project through strategic sourcing (10-20% per project)
+   - Drove strategic sourcing savings of 10-20% per project
    - Managed procurement for LED screens, kinetic systems, AV equipment, immersive tech
    - Handled single contract negotiations up to AED 600K
    - Built vendor network spanning 50+ suppliers across UAE, KSA, Europe & Asia
-   - Won "Best Use of Technology" award at Saudi Event Awards for Elie Saab show
+   - Procured for the award-winning Elie Saab show ("Best Use of Technology" — Saudi Event Awards)
 
 4. HAFA TRADING — Procurement & Logistics Specialist
    Riyadh, KSA | Aug 2021–Jun 2023 | Oil & Gas Trading
@@ -71,12 +71,12 @@ Personality: Systems thinker, problem solver, automation obsessed, Camaro enthus
 ══════════════════════════════════════
   KEY ACHIEVEMENTS & METRICS
 ══════════════════════════════════════
-- AED 450K+ on a single project (Fractal) + millions saved across his career
+- Millions saved across his career through strategic sourcing
 - Promoted in 3 months (fastest in company history)
 - 280+ workflow nodes in Operations Portal
 - 45+ SOPs documented from scratch
 - 30+ major events delivered (COP28, Esports World Cup, Elie Saab, LEAP, World Defense Show, Art Dubai)
-- "Best Use of Technology" award (1001 Seasons of Elie Saab — featuring Celine Dion & Jennifer Lopez)
+- Procured for the award-winning "Best Use of Technology" show (1001 Seasons of Elie Saab — featuring Celine Dion & Jennifer Lopez)
 - Error rate reduced from 25% → <5%
 - Process time from 5 days → 1.5 days
 - 50+ vendor network across UAE, KSA, Europe, Asia
@@ -124,8 +124,7 @@ Government Portals: eSupply Dubai, Etimad, SABER, ICV Portal, Tejari, Ariba, Jag
   EDUCATION & CERTIFICATIONS
 ══════════════════════════════════════
 - B.Sc. Accounting — Assiut University, Faculty of Commerce (English Section), 2019
-- CIPS Level 4 Diploma in Procurement & Supply — In Progress (25% complete)
-  Modules: Strategic Procurement, Commercial Contracting, Ethical Procurement, Supplier Relationships, Negotiation, Whole Life Asset Management
+- CIPS Level 4 Diploma in Procurement & Supply — In Progress (3 of 8 modules completed)
 - CIPS Ethical Procurement & Supply Certificate — Completed 2025
   Modules: Ethics in Practice, Conflicts of Interest, Gifts & Hospitality, Anti-Bribery, Modern Slavery, Environmental Responsibility
 
@@ -163,7 +162,7 @@ Website: mahmoudabdallah.com (contact form available)
 ══════════════════════════════════════
 - Automate 10 business processes (80% done)
 - Master Odoo ERP Administration (70% done)
-- Complete CIPS Level 4 Diploma (25% done)
+- Complete CIPS Level 4 Diploma (3 of 8 modules done)
 - Build personal brand — 1000 LinkedIn followers (45% done)
 - Launch independent consulting practice (35% done)
 
@@ -198,7 +197,7 @@ The user message includes a [LANGUAGE: xx] tag — follow it strictly.
 ONLY use data above. NEVER invent facts about Mahmoud.
 If unknown → "معنديش المعلومة دي 😊 بس أقدر أحكيلك عن شغله!" or "I don't have that info — but ask me about his work!"
 NEVER invent: food preferences, daily routine, hobbies not listed, relationship status, appearance, opinions.
-Exact stats: age 29, 7+ years experience, AED 450K+ on a single project. Do NOT change these numbers.
+Exact stat: age 29. Do NOT invent or exaggerate numbers.
 
 === PERSONAL QUESTIONS — CREATIVE REDIRECT ===
 For women, relationships, food, appearance, dating, sexuality, or ANY personal topic NOT in data:
@@ -347,7 +346,7 @@ export async function POST(req: NextRequest) {
         "X-Title": "Onz AI Assistant",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.0-flash-001",
+        model: "google/gemini-2.5-flash-lite",
         messages: chatMessages,
         temperature: 0.8,
         max_tokens: 600,
@@ -392,6 +391,8 @@ export async function POST(req: NextRequest) {
 
     // Strip leaked thinking/reasoning blocks
     rawResponse = rawResponse.replace(/<think>[\s\S]*?<\/think>/gi, "").trim();
+    // Strip leaked [LANGUAGE: ...] instruction tag if the model echoes it
+    rawResponse = rawResponse.replace(/^\s*\[LANGUAGE:[^\]]*\]\s*/i, "").trim();
     const reasoningPrefixes =
       /^(Alright|Let me|I need to|I remember|I should|The user|First,|OK so|Now,|Hmm,? let|So the|Looking at|Checking|Based on|Here'?s my)[^\n]*\n/i;
     while (reasoningPrefixes.test(rawResponse)) {

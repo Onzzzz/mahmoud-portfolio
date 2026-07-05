@@ -28,7 +28,7 @@ export const hero = {
     "contract management",
   ],
   stats: [
-    { value: "7+ Years", label: "Procurement, Supply Chain & Operations" },
+    { value: "Years of Experience", label: "Procurement, Supply Chain & Operations" },
     { value: "Millions Saved", label: "Through Strategic Sourcing" },
     { value: "Thousands of Vendors", label: "Sourced, Evaluated & Managed" },
     { value: "Multiple Industries", label: "Events · Equipment · FMCG · Oil & Gas · Retail · Trading" },
@@ -51,13 +51,13 @@ export const about = {
       text: "I build the operational backbone — SOPs, governance frameworks, compliance policies, and process automation powered by AI-driven workflows. I lead ERP implementations, design internal systems, and use AI-assisted development to rapidly build tools, dashboards, and automation that solve real operational problems. I also manage the full bid lifecycle and equip teams to win contracts and scale. But what really sets me apart isn't the toolset — it's the curiosity to learn whatever the business needs next, and the belief that the best operators are the ones who never stop learning.",
     },
   ],
-  tags: ["Dubai, UAE", "7+ Years", "6 Industries", "GCC & MENA", "Arabic & English", "Budgets up to AED 10M"],
+  tags: ["Dubai, UAE", "Years of Experience", "6 Industries", "GCC & MENA", "Arabic & English", "Budgets up to AED 10M"],
 } as const;
 
 export const experience = [
   {
     role: "Procurement & Supply Chain Operations Manager",
-    company: "Golden Sparrow Trading Co",
+    company: "Golden Sparrow Machinery",
     type: "Heavy Equipment · Dubai",
     logo: "/images/newGoldenSparrowLogo.webp",
     period: "Oct 2025 — Present",
@@ -570,7 +570,7 @@ export const projects = [
   },
   {
     title: "Operations Portal",
-    company: "Golden Sparrow Trading",
+    company: "Golden Sparrow Machinery",
     category: "Operations & Systems" as const,
     description: "Built a comprehensive digital operations backbone from scratch — 11 business workflow phases covering Lead Capture to HR Hiring, with 280+ documented workflow nodes and 45+ standard operating procedures. Successfully pitched Odoo ERP implementation to automate all documented processes.",
     highlights: [
@@ -619,7 +619,7 @@ export const projects = [
   },
   {
     title: "Odoo ERP — Business Lead",
-    company: "Golden Sparrow Trading",
+    company: "Golden Sparrow Machinery",
     category: "Operations & Systems" as const,
     description: "Led the business requirements and process design for Odoo Enterprise ERP — mapped all departmental workflows, defined system requirements, and managed the implementation with Odoo's technical team across procurement, inventory, sales, and operations.",
     highlights: [
@@ -635,7 +635,7 @@ export const projects = [
   },
   {
     title: "Procurement Function — Built From Zero",
-    company: "Golden Sparrow Trading",
+    company: "Golden Sparrow Machinery",
     category: "Procurement & Tenders" as const,
     description: "Built the entire procurement and tendering function from scratch — SOPs, approval matrices, supplier portals, and compliance governance across UAE, KSA, and Oman.",
     highlights: [
@@ -705,7 +705,7 @@ export const services = [
   {
     number: "03",
     title: "Cost Reduction & Sourcing",
-    description: "Strategic sourcing that delivers measurable savings. AED 450K+ saved on a single project. 10-20% average reduction across 30+ events. I find where the money is hiding.",
+    description: "Strategic sourcing that delivers measurable savings. 10-20% average reduction across 30+ events. I find where the money is hiding.",
   },
   {
     number: "04",
@@ -724,11 +724,11 @@ export const certifications = [
     name: "CIPS Level 4 Diploma in Procurement & Supply",
     institution: "Chartered Institute of Procurement & Supply",
     status: "in-progress" as const,
-    detail: "Currently studying L4M3 & L4M2",
+    detail: "3 of 8 modules completed",
     year: "2025 — Present",
-    progress: 25,
+    progress: 38,
     totalModules: 8,
-    completedModules: 2,
+    completedModules: 3,
     verifyUrl: "http://credentials.cips.org/f132e284-43dc-46b1-84fe-bedd3a9a1999",
   },
   {
@@ -797,8 +797,8 @@ export const contactTypes = [
 ] as const;
 
 export const industries = [
-  { name: "Heavy Equipment", company: "Golden Sparrow Trading" },
-  { name: "Construction Equipment", company: "Golden Sparrow Trading" },
+  { name: "Heavy Equipment", company: "Golden Sparrow Machinery" },
+  { name: "Construction Equipment", company: "Golden Sparrow Machinery" },
   { name: "FMCG", company: "Americana Foods" },
   { name: "Food & Beverage", company: "Americana Foods" },
   { name: "Event Technology", company: "Fractal Systems" },

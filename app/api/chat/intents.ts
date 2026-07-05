@@ -190,7 +190,7 @@ const TOPIC_KEYWORDS: Record<Topic, { en: string[]; ar: string[] }> = {
     ar: ["أودو", "اودو"],
   },
   achievements: {
-    en: ["achievement", "accomplish", "success", "impact", "savings", "450", "promoted", "promotion", "award", "results", "numbers", "metrics"],
+    en: ["achievement", "accomplish", "success", "impact", "savings", "promoted", "promotion", "award", "results", "numbers", "metrics"],
     ar: ["انجاز", "إنجاز", "نجاح", "حقق", "وفر", "توفير", "ترقية", "جائزة", "نتائج", "أرقام"],
   },
   operations_portal: {

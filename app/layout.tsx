@@ -11,7 +11,7 @@ const mono = JetBrains_Mono({ variable: "--font-mono", subsets: ["latin"], displ
 export const metadata: Metadata = {
   metadataBase: new URL("https://mahmoudabdallah.com"),
   title: "Mahmoud Abdallah | Procurement & Supply Chain Manager",
-  description: "Strategic Procurement & Supply Chain Manager based in Dubai. AED 450K+ documented savings, 30+ major events procured, 7+ years across UAE, KSA & Egypt. Specializing in sourcing, ERP implementation, tender management, and cost optimization.",
+  description: "Procurement, Supply Chain & Operations Manager in Dubai. Strategic sourcing, ERP implementation, tender management & vendor governance across the GCC & MENA.",
   keywords: ["procurement", "supply chain", "Dubai", "UAE", "tender management", "ERP", "vendor management", "Odoo", "strategic sourcing"],
   authors: [{ name: "Mahmoud Abdallah" }],
   openGraph: {
