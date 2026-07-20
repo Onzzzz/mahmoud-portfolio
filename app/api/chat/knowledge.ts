@@ -18,12 +18,12 @@ export const KNOWLEDGE: KnowledgeBase = {
     en: {
       short: "Mahmoud Abdallah is a **Procurement & Supply Chain Operations Manager** based in Dubai with extensive cross-border experience.",
       detail: "**Mahmoud Abdallah** is a **Procurement & Supply Chain Operations Manager** based in **Dubai, UAE** 🇦🇪 with **extensive** cross-border experience spanning the GCC and Egypt.\n\nHe transforms chaotic operations into **documented, automated, scalable systems**. His career spans military logistics, oil & gas procurement, events technology, FMCG enterprise operations, and heavy equipment trading.\n\n📊 **Key stats:** Millions saved across his career | 30+ major events delivered | Promoted in just 3 months | 11-phase Operations Portal built from scratch\n\nWant to know about his experience, skills, or services?",
-      followUp: "Mahmoud's unique advantage is his **cross-industry perspective**. Starting from the **Egyptian Army** (where he learned systems thinking), he moved through **Hafa Trading** in oil & gas procurement in Saudi Arabia, then **Fractal Systems** delivering events tech for COP28 and Esports World Cup, **Americana Foods** managing P2P across 20+ markets, and now **Golden Sparrow Machinery** where he built an entire operations framework from scratch.\n\nHe's also pursuing his **CIPS Level 4 Diploma** (3 of 8 modules completed) and holds a **B.Sc. in Accounting** from Assiut University. He speaks **Arabic** (native) and **English** (professional).",
+      followUp: "Mahmoud's unique advantage is his **cross-industry perspective**. Starting from the **Egyptian Army** (where he learned systems thinking), he moved through **Hafa Trading** in oil & gas procurement in Saudi Arabia, then **Fractal Systems** delivering events tech for COP28 and Esports World Cup, **Americana Foods** managing P2P across 20+ markets, and now **Golden Sparrow Machinery** where he built an entire operations framework from scratch.\n\nHe's also pursuing his **CIPS Level 4 Diploma** (in progress) and holds a **B.Sc. in Accounting** from Assiut University. He speaks **Arabic** (native) and **English** (professional).",
     },
     ar: {
       short: "محمود عبدالله هو **Procurement & Supply Chain Operations Manager** مقيم في دبي وعنده خبرة واسعة.",
       detail: "**محمود عبدالله** هو **Procurement & Supply Chain Operations Manager** مقيم في **دبي، الإمارات** 🇦🇪 وعنده **خبرة واسعة** في دول الخليج ومصر.\n\nبيحول العمليات الفوضوية لـ **أنظمة موثقة ومؤتمتة وقابلة للتوسع**. مسيرته المهنية شملت لوجستيات عسكرية، مشتريات بترول وغاز، تكنولوجيا فعاليات، عمليات FMCG، وتجارة معدات ثقيلة.\n\n📊 **أرقام مهمة:** وفّر ملايين خلال مسيرته | سلّم 30+ فعالية كبرى | ترقّى في 3 شهور بس | بنى بوابة عمليات من 11 مرحلة من الصفر\n\nعايز تعرف عن خبرته أو مهاراته أو خدماته؟",
-      followUp: "ميزة أونز الفريدة هي **خبرته المتنوعة عبر الصناعات**. بدأ من **الجيش المصري** (اتعلم التفكير المنظومي)، بعدين راح **هافا للتجارة** في مشتريات البترول في السعودية، بعدين **فراكتال سيستمز** لتكنولوجيا الفعاليات لـ COP28 وكأس العالم للرياضات الإلكترونية، و**أمريكانا فودز** يدير P2P عبر 20+ سوق، ودلوقتي في **جولدن سبارو ماشينري** بنى فيها نظام عمليات كامل من الصفر.\n\nكمان بيدرس **CIPS Level 4** (خلّص 3 من 8 مواد) وعنده **بكالوريوس محاسبة** من جامعة أسيوط. بيتكلم **عربي** (لغة أم) و**إنجليزي** (مهني).",
+      followUp: "ميزة أونز الفريدة هي **خبرته المتنوعة عبر الصناعات**. بدأ من **الجيش المصري** (اتعلم التفكير المنظومي)، بعدين راح **هافا للتجارة** في مشتريات البترول في السعودية، بعدين **فراكتال سيستمز** لتكنولوجيا الفعاليات لـ COP28 وكأس العالم للرياضات الإلكترونية، و**أمريكانا فودز** يدير P2P عبر 20+ سوق، ودلوقتي في **جولدن سبارو ماشينري** بنى فيها نظام عمليات كامل من الصفر.\n\nكمان بيدرس **CIPS Level 4** (قيد الدراسة) وعنده **بكالوريوس محاسبة** من جامعة أسيوط. بيتكلم **عربي** (لغة أم) و**إنجليزي** (مهني).",
     },
   },
 
@@ -57,7 +57,7 @@ export const KNOWLEDGE: KnowledgeBase = {
   fractal: {
     en: {
       short: "Procurement & Tender Executive at Fractal Systems — delivered 30+ events including COP28, driving 10-20% cost savings per project.",
-      detail: "At **Fractal Systems** (Events Technology Integrator), Mahmoud was a **Procurement & Tender Executive** (Jan 2024–Apr 2025) in Dubai.\n\n🎪 Led procurement across 30+ high-profile projects — from mega events like World Defense Show, IKTVA, and LEAP, to permanent facade installations for Bank AlBilad and MOIAT.\n\n**Highlights:**\n• Delivered **30+ major events** including **COP28**, **Esports World Cup**, **Art Dubai**\n• Achieved **10-20% cost savings** per project through strategic sourcing\n• Managed procurement for **LED screens, kinetic systems, AV equipment**\n• Handled **AED 600K** single contract negotiations\n• Built vendor network across **UAE, KSA, Europe & Asia**\n• Procured for the award-winning **1001 Seasons of Elie Saab** show (**\"Best Use of Technology\"** — Saudi Event Awards) 🏆",
+      detail: "At **Fractal Systems** (Events Technology Integrator), Mahmoud was a **Procurement & Tender Executive** (Jan 2024–Apr 2025) in Dubai.\n\n🎪 Led procurement across 30+ high-profile projects — from mega events like World Defense Show, IKTVA, and LEAP, to permanent facade installations for Bank AlBilad and MOIAT.\n\n**Highlights:**\n• Delivered **30+ major events** including **COP28**, **Esports World Cup**, **Art Dubai**\n• Achieved **10-20% cost savings** per project through strategic sourcing\n• Managed procurement for **LED screens, kinetic systems, AV equipment**\n• Handled **six-figure** single contract negotiations\n• Built vendor network across **UAE, KSA, Europe & Asia**\n• Procured for the award-winning **1001 Seasons of Elie Saab** show (**\"Best Use of Technology\"** — Saudi Event Awards) 🏆",
     },
     ar: {
       short: "مسؤول مشتريات ومناقصات في فراكتال — سلّم 30+ فعالية منهم COP28 وحقق 10-20% توفير في كل مشروع.",
@@ -117,7 +117,7 @@ export const KNOWLEDGE: KnowledgeBase = {
   procurement: {
     en: {
       short: "Procurement is his strongest domain — strategic sourcing, tenders, vendor negotiation, P2P.",
-      detail: "Procurement is Mahmoud's **strongest domain** with deep expertise 📦:\n\n**What he does:**\n• **Strategic Sourcing** — multi-vendor competitive sourcing, cost comparison matrices\n• **Tender Management** — end-to-end from portal registration to bid submission\n• **Vendor Negotiation** — handled AED 600K single contracts, consistently saves 10-20%\n• **Supplier Management** — expanded networks from ~10 to 50+ vendors across UAE/KSA/Europe/Asia\n• **Government Procurement** — eSupply, Etimad, SABER, Tejari portal expertise\n• **P2P (Procure-to-Pay)** — enterprise-level cycle management across 20+ markets\n\nHis approach: *\"Cost savings aren't about squeezing suppliers — they come from better options, better information, and earlier visibility.\"*",
+      detail: "Procurement is Mahmoud's **strongest domain** with deep expertise 📦:\n\n**What he does:**\n• **Strategic Sourcing** — multi-vendor competitive sourcing, cost comparison matrices\n• **Tender Management** — end-to-end from portal registration to bid submission\n• **Vendor Negotiation** — handled six-figure single contracts, consistently saves 10-20%\n• **Supplier Management** — expanded networks from ~10 to 50+ vendors across UAE/KSA/Europe/Asia\n• **Government Procurement** — eSupply, Etimad, SABER, Tejari portal expertise\n• **P2P (Procure-to-Pay)** — enterprise-level cycle management across 20+ markets\n\nHis approach: *\"Cost savings aren't about squeezing suppliers — they come from better options, better information, and earlier visibility.\"*",
     },
     ar: {
       short: "المشتريات أقوى مجال عنده — توريد استراتيجي، مناقصات، تفاوض، P2P.",
@@ -177,11 +177,11 @@ export const KNOWLEDGE: KnowledgeBase = {
   achievements: {
     en: {
       short: "Millions saved across his career, 3-month promotion, 30+ events, award-winning projects. 📊",
-      detail: "Mahmoud's **key achievements** are backed by real numbers 📊:\n\n💰 **Millions saved** across his career through smarter sourcing and cost control\n⚡ **3-month promotion** — fastest at Golden Sparrow Machinery (Procurement Expert → Operations Manager)\n🏗️ **11-phase Operations Portal** — 280+ workflow nodes, 45+ SOPs, 9 departments covered\n🎪 **30+ major events** delivered including COP28, Esports World Cup, Art Dubai\n🏆 Procured for the award-winning **\"Best Use of Technology\"** show (1001 Seasons of Elie Saab)\n📈 **10-20% cost savings** per project consistently\n🌐 **Thousands of vendors** sourced, evaluated & managed across UAE, KSA, Europe & Asia\n💼 **AED 600K** single contract negotiation\n📉 Reduced procurement error rate from **~25% to <5%**\n⏱️ Cut process time from **5 days to 1.5 days**",
+      detail: "Mahmoud's **key achievements** are backed by real numbers 📊:\n\n💰 **Millions saved** across his career through smarter sourcing and cost control\n⚡ **3-month promotion** — fastest at Golden Sparrow Machinery (Procurement Expert → Operations Manager)\n🏗️ **11-phase Operations Portal** — 280+ workflow nodes, 45+ SOPs, 9 departments covered\n🎪 **30+ major events** delivered including COP28, Esports World Cup, Art Dubai\n🏆 Procured for the award-winning **\"Best Use of Technology\"** show (1001 Seasons of Elie Saab)\n📈 **10-20% cost savings** per project consistently\n🌐 **Thousands of vendors** sourced, evaluated & managed across UAE, KSA, Europe & Asia\n💼 **six-figure** single contract negotiation\n📉 Reduced procurement error rate by **~80%**\n⏱️ Cut process time by **~70%**",
     },
     ar: {
       short: "وفّر ملايين، ترقية في 3 شهور، 30+ فعالية، مشاريع حائزة على جوائز. 📊",
-      detail: "**إنجازات أونز** مبنية على أرقام حقيقية 📊:\n\n💰 **وفّر ملايين** خلال مسيرته من خلال التوريد الاستراتيجي\n⚡ **ترقية في 3 شهور** — الأسرع في جولدن سبارو (من مسؤول مشتريات لمدير عمليات)\n🏗️ **بوابة عمليات من 11 مرحلة** — 280+ عقدة workflow، 45+ إجراء تشغيلي\n🎪 **30+ فعالية كبرى** منهم COP28 وكأس العالم للرياضات الإلكترونية\n🏆 جهّز مشتريات العرض الحائز على جائزة **\"أفضل استخدام للتكنولوجيا\"** (1001 Seasons of Elie Saab)\n📈 **10-20% توفير** في كل مشروع\n🌐 **آلاف الموردين** تم استقطابهم وتقييمهم وإدارتهم عبر 4 مناطق\n📉 قلل نسبة الأخطاء من **~25% لأقل من 5%**\n⏱️ قلل وقت العمليات من **5 أيام لـ 1.5 يوم**",
+      detail: "**إنجازات أونز** مبنية على أرقام حقيقية 📊:\n\n💰 **وفّر ملايين** خلال مسيرته من خلال التوريد الاستراتيجي\n⚡ **ترقية في 3 شهور** — الأسرع في جولدن سبارو (من مسؤول مشتريات لمدير عمليات)\n🏗️ **بوابة عمليات من 11 مرحلة** — 280+ عقدة workflow، 45+ إجراء تشغيلي\n🎪 **30+ فعالية كبرى** منهم COP28 وكأس العالم للرياضات الإلكترونية\n🏆 جهّز مشتريات العرض الحائز على جائزة **\"أفضل استخدام للتكنولوجيا\"** (1001 Seasons of Elie Saab)\n📈 **10-20% توفير** في كل مشروع\n🌐 **آلاف الموردين** تم استقطابهم وتقييمهم وإدارتهم عبر 4 مناطق\n📉 قلل نسبة الأخطاء بـ **~80%**\n⏱️ قلل وقت العمليات بـ **~70%**",
     },
   },
 
@@ -189,35 +189,35 @@ export const KNOWLEDGE: KnowledgeBase = {
   operations_portal: {
     en: {
       short: "11-phase digital operations backbone — 280+ workflow nodes, 45+ SOPs, 9 departments. 🏗️",
-      detail: "The **Operations Portal** is Mahmoud's signature project at Golden Sparrow Machinery 🏗️:\n\n📐 **What it is:** A comprehensive digital operations backbone covering the entire business lifecycle.\n\n**The 11 Business Phases:**\nLead Capture → Quotation → Contract Management → Procurement → Warehouse Operations → Delivery → Invoicing → After-Sales → HR & Administration → Finance → Strategic Planning\n\n📊 **By the numbers:**\n• **280+ workflow nodes** mapped and documented\n• **45+ SOPs** with detailed process flows\n• **9 departments** coordinated\n• Process time reduced from **5 days → 1.5 days**\n• Error rate reduced from **~25% → <5%**\n\n🔗 **ERP Connection:** The portal became the blueprint for **Odoo ERP implementation** — process first, technology second.",
+      detail: "The **Operations Portal** is Mahmoud's signature project at Golden Sparrow Machinery 🏗️:\n\n📐 **What it is:** A comprehensive digital operations backbone covering the entire business lifecycle.\n\n**The 11 Business Phases:**\nLead Capture → Quotation → Contract Management → Procurement → Warehouse Operations → Delivery → Invoicing → After-Sales → HR & Administration → Finance → Strategic Planning\n\n📊 **By the numbers:**\n• **280+ workflow nodes** mapped and documented\n• **45+ SOPs** with detailed process flows\n• **9 departments** coordinated\n• Process time cut by **~70%**\n• Error rate reduced by **~80%**\n\n🔗 **ERP Connection:** The portal became the blueprint for **Odoo ERP implementation** — process first, technology second.",
     },
     ar: {
       short: "بوابة عمليات من 11 مرحلة — 280+ عقدة، 45+ إجراء، 9 أقسام. 🏗️",
-      detail: "**بوابة العمليات** هي أهم مشروع لأونز في جولدن سبارو 🏗️:\n\n📐 **إيه هي:** عمود فقري رقمي شامل بيغطي كل دورة حياة الأعمال.\n\n**الـ 11 مرحلة:**\nاستقطاب عملاء → عروض أسعار → إدارة عقود → مشتريات → مخازن → توصيل → فواتير → ما بعد البيع → موارد بشرية → مالية → تخطيط استراتيجي\n\n📊 **بالأرقام:**\n• **280+ عقدة workflow** موثقة\n• **45+ إجراء تشغيلي** بخرائط عمليات مفصلة\n• **9 أقسام** منسقة\n• وقت العمليات اتقلل من **5 أيام لـ 1.5 يوم**\n• نسبة الأخطاء اتقللت من **~25% لأقل من 5%**\n\n🔗 البوابة بقت الخريطة لتطبيق **نظام Odoo ERP**.",
+      detail: "**بوابة العمليات** هي أهم مشروع لأونز في جولدن سبارو 🏗️:\n\n📐 **إيه هي:** عمود فقري رقمي شامل بيغطي كل دورة حياة الأعمال.\n\n**الـ 11 مرحلة:**\nاستقطاب عملاء → عروض أسعار → إدارة عقود → مشتريات → مخازن → توصيل → فواتير → ما بعد البيع → موارد بشرية → مالية → تخطيط استراتيجي\n\n📊 **بالأرقام:**\n• **280+ عقدة workflow** موثقة\n• **45+ إجراء تشغيلي** بخرائط عمليات مفصلة\n• **9 أقسام** منسقة\n• وقت العمليات اتقلل بـ **~70%**\n• نسبة الأخطاء اتقللت بـ **~80%**\n\n🔗 البوابة بقت الخريطة لتطبيق **نظام Odoo ERP**.",
     },
   },
 
   // ═══ EDUCATION ═══
   education: {
     en: {
-      short: "B.Sc. Accounting (Assiut University) + CIPS Level 4 Diploma in progress (3 of 8 modules). 🎓",
-      detail: "Mahmoud's **education** 🎓:\n\n📜 **B.Sc. Accounting** — Assiut University, Faculty of Commerce (English Section), 2019\n\n📚 **CIPS Level 4 Diploma in Procurement & Supply** — Currently in progress (3 of 8 modules completed)\n\n✅ **CIPS Ethical Procurement & Supply Certificate** — Completed 2025\nCovered: Ethics in Practice, Conflicts of Interest, Anti-Bribery, Modern Slavery, Environmental Responsibility\n\nHe combines formal accounting knowledge with specialized procurement certification.",
+      short: "B.Sc. Accounting (Assiut University) + CIPS Level 4 Diploma in progress (in progress). 🎓",
+      detail: "Mahmoud's **education** 🎓:\n\n📜 **B.Sc. Accounting** — Assiut University, Faculty of Commerce (English Section), 2019\n\n📚 **CIPS Level 4 Diploma in Procurement & Supply** — Currently in progress (in progress)\n\n✅ **CIPS Ethical Procurement & Supply Certificate** — Completed 2025\nCovered: Ethics in Practice, Conflicts of Interest, Anti-Bribery, Modern Slavery, Environmental Responsibility\n\nHe combines formal accounting knowledge with specialized procurement certification.",
     },
     ar: {
-      short: "بكالوريوس محاسبة (جامعة أسيوط) + دبلوم CIPS المستوى 4 قيد الدراسة (3 من 8 مواد). 🎓",
-      detail: "**تعليم أونز** 🎓:\n\n📜 **بكالوريوس محاسبة** — جامعة أسيوط، كلية التجارة (شعبة إنجليزي)، 2019\n\n📚 **دبلوم CIPS المستوى 4 في المشتريات والتوريد** — قيد الدراسة حالياً (3 من 8 مواد)\n\n✅ **شهادة CIPS في المشتريات الأخلاقية** — مكتملة 2025\n\nبيجمع بين معرفة المحاسبة الأكاديمية وتخصص المشتريات المعتمد.",
+      short: "بكالوريوس محاسبة (جامعة أسيوط) + دبلوم CIPS المستوى 4 قيد الدراسة. 🎓",
+      detail: "**تعليم أونز** 🎓:\n\n📜 **بكالوريوس محاسبة** — جامعة أسيوط، كلية التجارة (شعبة إنجليزي)، 2019\n\n📚 **دبلوم CIPS المستوى 4 في المشتريات والتوريد** — قيد الدراسة حالياً\n\n✅ **شهادة CIPS في المشتريات الأخلاقية** — مكتملة 2025\n\nبيجمع بين معرفة المحاسبة الأكاديمية وتخصص المشتريات المعتمد.",
     },
   },
 
   // ═══ CERTIFICATIONS ═══
   certifications: {
     en: {
-      short: "CIPS Level 4 Diploma (3 of 8 modules done) + CIPS Ethical Procurement Certificate (2025). 📋",
-      detail: "Mahmoud's **certifications** 📋:\n\n📚 **CIPS Level 4 Diploma in Procurement & Supply** — In Progress (3 of 8 modules completed)\n• Chartered Institute of Procurement & Supply (UK)\n\n✅ **CIPS Ethical Procurement & Supply Certificate** — Completed 2025\n• Ethics in Practice, Conflicts of Interest, Gifts & Hospitality, Anti-Bribery, Modern Slavery, Environmental Responsibility\n\n🎓 **B.Sc. Accounting** — Assiut University, 2019\n\nCIPS is one of the most respected procurement certifications globally!",
+      short: "CIPS Level 4 Diploma (in progress) + CIPS Ethical Procurement Certificate (2025). 📋",
+      detail: "Mahmoud's **certifications** 📋:\n\n📚 **CIPS Level 4 Diploma in Procurement & Supply** — In Progress\n• Chartered Institute of Procurement & Supply (UK)\n\n✅ **CIPS Ethical Procurement & Supply Certificate** — Completed 2025\n• Ethics in Practice, Conflicts of Interest, Gifts & Hospitality, Anti-Bribery, Modern Slavery, Environmental Responsibility\n\n🎓 **B.Sc. Accounting** — Assiut University, 2019\n\nCIPS is one of the most respected procurement certifications globally!",
     },
     ar: {
-      short: "دبلوم CIPS المستوى 4 (3 من 8 مواد) + شهادة CIPS للمشتريات الأخلاقية (2025). 📋",
-      detail: "**شهادات أونز** 📋:\n\n📚 **دبلوم CIPS المستوى 4** — قيد الدراسة (3 من 8 مواد)\n• المعهد القانوني للمشتريات والتوريد (بريطانيا)\n\n✅ **شهادة CIPS للمشتريات الأخلاقية** — مكتملة 2025\n\n🎓 **بكالوريوس محاسبة** — جامعة أسيوط، 2019\n\nCIPS من أكتر شهادات المشتريات احتراماً عالمياً!",
+      short: "دبلوم CIPS المستوى 4 (قيد الدراسة) + شهادة CIPS للمشتريات الأخلاقية (2025). 📋",
+      detail: "**شهادات أونز** 📋:\n\n📚 **دبلوم CIPS المستوى 4** — قيد الدراسة\n• المعهد القانوني للمشتريات والتوريد (بريطانيا)\n\n✅ **شهادة CIPS للمشتريات الأخلاقية** — مكتملة 2025\n\n🎓 **بكالوريوس محاسبة** — جامعة أسيوط، 2019\n\nCIPS من أكتر شهادات المشتريات احتراماً عالمياً!",
     },
   },
 
@@ -356,12 +356,12 @@ export const KNOWLEDGE: KnowledgeBase = {
   // ═══ GOALS ═══
   goals: {
     en: {
-      short: "2026 goals: automate processes, master Odoo, complete CIPS (3 of 8 modules done), grow personal brand. 🎯",
-      detail: "Mahmoud's **2026 goals** 🎯:\n\n1. ✅ **Automate 10 Business Processes** — strong progress\n2. 🟢 **Master Odoo ERP Administration** — ongoing\n3. 📚 **Complete CIPS Level 4 Diploma** — 3 of 8 modules done\n4. 🌐 **Build Personal Brand** (1000 LinkedIn followers) — in progress\n5. 💼 **Secure senior-level role** — actively exploring opportunities\n\nHe's making solid progress, especially in automation and ERP mastery!",
+      short: "2026 goals: automate processes, master Odoo, complete CIPS (in progress), grow personal brand. 🎯",
+      detail: "Mahmoud's **2026 goals** 🎯:\n\n1. ✅ **Automate 10 Business Processes** — strong progress\n2. 🟢 **Master Odoo ERP Administration** — ongoing\n3. 📚 **Complete CIPS Level 4 Diploma**\n4. 🌐 **Build Personal Brand** (1000 LinkedIn followers) — in progress\n5. 💼 **Secure senior-level role** — actively exploring opportunities\n\nHe's making solid progress, especially in automation and ERP mastery!",
     },
     ar: {
-      short: "أهداف 2026: أتمتة عمليات، إتقان Odoo، إكمال CIPS (3 من 8 مواد)، تنمية العلامة الشخصية. 🎯",
-      detail: "**أهداف أونز لـ 2026** 🎯:\n\n1. ✅ **أتمتة 10 عمليات** — تقدم قوي\n2. 🟢 **إتقان Odoo ERP** — مستمر\n3. 📚 **إكمال CIPS Level 4** — 3 من 8 مواد\n4. 🌐 **بناء علامة شخصية** (1000 متابع LinkedIn) — مستمر\n5. 💼 **الحصول على وظيفة قيادية** — بيستكشف فرص بشكل نشط\n\nبيحقق تقدم ممتاز خصوصاً في الأتمتة وإتقان ERP!",
+      short: "أهداف 2026: أتمتة عمليات، إتقان Odoo، إكمال CIPS (قيد الدراسة)، تنمية العلامة الشخصية. 🎯",
+      detail: "**أهداف أونز لـ 2026** 🎯:\n\n1. ✅ **أتمتة 10 عمليات** — تقدم قوي\n2. 🟢 **إتقان Odoo ERP** — مستمر\n3. 📚 **إكمال CIPS Level 4**\n4. 🌐 **بناء علامة شخصية** (1000 متابع LinkedIn) — مستمر\n5. 💼 **الحصول على وظيفة قيادية** — بيستكشف فرص بشكل نشط\n\nبيحقق تقدم ممتاز خصوصاً في الأتمتة وإتقان ERP!",
     },
   },
 

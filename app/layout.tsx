@@ -41,8 +41,20 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             url: "https://mahmoudabdallah.com", email: "mahmoudf.abdallah@outlook.com",
             telephone: "+971544720857",
             address: { "@type": "PostalAddress", addressLocality: "Dubai", addressCountry: "AE" },
-            sameAs: ["https://www.linkedin.com/in/mahmoudf-abdallah"],
+            nationality: { "@type": "Country", name: "Egypt" },
+            worksFor: { "@type": "Organization", name: "Golden Sparrow Machinery" },
+            alumniOf: { "@type": "CollegeOrUniversity", name: "Assiut University" },
+            knowsAbout: ["Procurement", "Strategic Sourcing", "Supply Chain Management", "Tender Management", "Vendor Management", "Contract Negotiation", "ERP Implementation", "Odoo"],
+            sameAs: [
+              "https://www.linkedin.com/in/mahmoudf-abdallah",
+              "https://people.bayt.com/mahmoud-abdallah-79192521",
+            ],
           })}}
+        />
+        <script
+          defer
+          src="https://analytics.mahmoudabdallah.com/script.js"
+          data-website-id="71a6e87b-75d2-408c-8754-96b016528547"
         />
       </head>
       <body style={{ fontFamily: "var(--font-body), 'Inter', sans-serif" }}>

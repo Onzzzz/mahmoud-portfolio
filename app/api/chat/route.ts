@@ -32,7 +32,7 @@ Personality: Systems thinker, problem solver, automation obsessed, Camaro enthus
    - Created ESG & Sustainability Policy, QHSE Policy, Anti-Bribery & Corruption Policy, Code of Conduct — ALL from scratch
    - Designed full organizational structure & cross-department coordination framework
    - Reports directly to General Manager as the operational backbone of the company
-   - CASE STUDY: Process time reduced from 5 days → 1.5 days (70% faster), Error rate from ~25% → <5% (80% reduction), Documentation from 0 → 45+ SOPs
+   - CASE STUDY: Cut process time by ~70% and error rate by ~80%; built 45+ SOPs from zero
 
 2. AMERICANA FOODS — P2P & Master Data Executive
    Dubai, UAE | Apr 2025–Oct 2025 | FMCG Enterprise (parent of KFC, Pizza Hut, Hardee's, Krispy Kreme)
@@ -46,7 +46,7 @@ Personality: Systems thinker, problem solver, automation obsessed, Camaro enthus
    - Delivered 30+ major events including COP28, Esports World Cup, Art Dubai, LEAP, World Defense Show
    - Drove strategic sourcing savings of 10-20% per project
    - Managed procurement for LED screens, kinetic systems, AV equipment, immersive tech
-   - Handled single contract negotiations up to AED 600K
+   - Handled six-figure single-contract negotiations
    - Built vendor network spanning 50+ suppliers across UAE, KSA, Europe & Asia
    - Procured for the award-winning Elie Saab show ("Best Use of Technology" — Saudi Event Awards)
 
@@ -77,10 +77,10 @@ Personality: Systems thinker, problem solver, automation obsessed, Camaro enthus
 - 45+ SOPs documented from scratch
 - 30+ major events delivered (COP28, Esports World Cup, Elie Saab, LEAP, World Defense Show, Art Dubai)
 - Procured for the award-winning "Best Use of Technology" show (1001 Seasons of Elie Saab — featuring Celine Dion & Jennifer Lopez)
-- Error rate reduced from 25% → <5%
-- Process time from 5 days → 1.5 days
+- Error rate reduced by ~80%
+- Process time cut by ~70%
 - 50+ vendor network across UAE, KSA, Europe, Asia
-- AED 600K single contract negotiations
+- Six-figure single-contract negotiations
 - 14 LinkedIn recommendations
 
 ══════════════════════════════════════
@@ -124,7 +124,7 @@ Government Portals: eSupply Dubai, Etimad, SABER, ICV Portal, Tejari, Ariba, Jag
   EDUCATION & CERTIFICATIONS
 ══════════════════════════════════════
 - B.Sc. Accounting — Assiut University, Faculty of Commerce (English Section), 2019
-- CIPS Level 4 Diploma in Procurement & Supply — In Progress (3 of 8 modules completed)
+- CIPS Level 4 Diploma in Procurement & Supply — In Progress
 - CIPS Ethical Procurement & Supply Certificate — Completed 2025
   Modules: Ethics in Practice, Conflicts of Interest, Gifts & Hospitality, Anti-Bribery, Modern Slavery, Environmental Responsibility
 
@@ -162,7 +162,7 @@ Website: mahmoudabdallah.com (contact form available)
 ══════════════════════════════════════
 - Automate 10 business processes (80% done)
 - Master Odoo ERP Administration (70% done)
-- Complete CIPS Level 4 Diploma (3 of 8 modules done)
+- Complete CIPS Level 4 Diploma (in progress)
 - Build personal brand — 1000 LinkedIn followers (45% done)
 - Launch independent consulting practice (35% done)
 
